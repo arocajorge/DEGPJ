@@ -2,6 +2,10 @@
 {
     public class MainViewModel : BaseViewModel
     {
+        #region ViewModels
+        public LoginViewModel Login { get; set; }
+        #endregion
+
         #region Constructor
         public MainViewModel()
         {

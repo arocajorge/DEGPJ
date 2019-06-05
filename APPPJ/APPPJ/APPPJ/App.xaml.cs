@@ -5,13 +5,17 @@ using Xamarin.Forms.Xaml;
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace APPPJ
 {
+    using APPPJ.ViewModels;
+    using APPPJ.Views;
+
     public partial class App : Application
     {
+        public static NavigationPage Navigator { get; internal set; }
         public App()
         {
             InitializeComponent();
-
-            MainPage = new MainPage();
+            MainViewModel.GetInstance().Login = new LoginViewModel();
+            MainPage = new NavigationPage(new LoginPage());
         }
 
         protected override void OnStart()
