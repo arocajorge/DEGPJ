@@ -12,12 +12,14 @@ namespace WEBPJ.Base
     using System;
     using System.Collections.Generic;
     
-    public partial class Usuario
+    public partial class ProductoDetalle
     {
-        public string IdUsuario { get; set; }
-        public string Nombre { get; set; }
-        public string Clave { get; set; }
-        public string TipoUsuario { get; set; }
-        public bool Estado { get; set; }
+        public int IdProducto { get; set; }
+        public int Secuencia { get; set; }
+        public string Descripcion { get; set; }
+        public decimal Minimo { get; set; }
+        public decimal Maximo { get; set; }
+    
+        public virtual Producto Producto { get; set; }
     }
 }

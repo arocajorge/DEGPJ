@@ -1,0 +1,119 @@
+﻿@model WEBPJ.Info.Producto_Info
+@{
+    ViewBag.Title = "Nuevo grupo";
+    if (string.IsNullOrEmpty(@WEBPJ.Helps.SessionFixed.IdUsuario))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Anular", "Producto", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+
+    @Html.HiddenFor(q => q.IdProducto);
+    @Html.HiddenFor(q => q.IdTransaccionSession);
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Descripcion">Codigo</label>
+                    @Html.TextBoxFor(q => q.Codigo, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.Codigo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="form-group">
+                    <label for="Descripcion">Descripción*</label>
+                    @Html.TextBoxFor(q => q.Descripcion, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.Descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Descripcion">Calificacion A*</label>
+                    @Html.TextBoxFor(q => q.CalificacionA, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.CalificacionA, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Descripcion">Calificacion B*</label>
+                    @Html.TextBoxFor(q => q.CalificacionB, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.CalificacionB, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Descripcion">Calificacion C*</label>
+                    @Html.TextBoxFor(q => q.CalificacionC, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.CalificacionC, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Descripcion">Calificacion D*</label>
+                    @Html.TextBoxFor(q => q.CalificacionD, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.CalificacionD, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Descripcion">Precio A*</label>
+                    @Html.TextBoxFor(q => q.PrecioA, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.PrecioA, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Descripcion">Precio B*</label>
+                    @Html.TextBoxFor(q => q.PrecioB, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.PrecioB, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Descripcion">Precio C*</label>
+                    @Html.TextBoxFor(q => q.PrecioC, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.PrecioC, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Descripcion">Precio D*</label>
+                    @Html.TextBoxFor(q => q.PrecioD, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.PrecioD, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body">
+        @Html.Action("GridViewPartial_ProductoDetalle")
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-danger">Anular</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "Producto", new { Area ="General" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+
+

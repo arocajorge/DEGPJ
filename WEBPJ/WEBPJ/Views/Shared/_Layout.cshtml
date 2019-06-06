@@ -80,9 +80,9 @@
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
 
-                        <li><a href="/General/Buzon/Buzon_entrada" title="Asignadas"><i class="fa fa fa-envelope text-white"></i></a></li>
+                        @*<li><a href="/General/Buzon/Buzon_entrada" title="Asignadas"><i class="fa fa fa-envelope text-white"></i></a></li>
                         <li><a href="/General/Buzon/Buzon_salida" title="Enviadas"><i class="fa fa-upload text-white"></i> </a></li>
-                        <li><a href="/General/MisTareas/CargaLaboral" title="Estadísticas"><i class="fa fa-line-chart text-white"></i></a></li>
+                        <li><a href="/General/MisTareas/CargaLaboral" title="Estadísticas"><i class="fa fa-line-chart text-white"></i></a></li>*@
 
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="dropdown user user-menu">
@@ -113,65 +113,46 @@
                             <span>MENÚ</span>
                         </a>
                         <ul class="treeview-menu">
-                            @if (@WEBPJ.Helps.SessionFixed.TipoUsuario == "1")
+                            @if (@WEBPJ.Helps.SessionFixed.TipoUsuario == @WEBPJ.Info.Enumeradores.eTipoUsuario.ADMINISTRADOR.ToString() )
                             {
                                 <li class="treeview">
                                     <a href="#">
-
                                         <i class="fa fa-circle-o"></i> Mantenimientos
                                         <span class="pull-right-container">
                                             <i class="fa fa-angle-left pull-right"></i>
                                         </span>
                                     </a>
                                     <ul class="treeview-menu">
-
-                                        <li><a href="/General/Parametro/Index"><i class="fa fa-circle-o"></i>Parámetros</a></li>
-
-                                        <li><a href="/General/EstadoTipo/Index"><i class="fa fa-circle-o"></i>Tipo estado</a></li>
-                                        <li><a href="/General/Usuario/Index"><i class="fa fa-circle-o"></i>Usuarios</a></li>
-                                        <li><a href="/General/Grupo/Index"><i class="fa fa-circle-o"></i>Grupos</a></li>
-                                        <li><a href="/General/Archivo/Index"><i class="fa fa-circle-o"></i>Formatos ISO</a></li>
-                                        <li><a href="/General/EliminarTarea/Index"><i class="fa fa-circle-o"></i>Eliminar Tarea</a></li>
+                                        <li><a href="/Usuario/Index"><i class="fa fa-circle-o"></i>Usuario</a></li>
+                                        <li><a href="/Producto/Index"><i class="fa fa-circle-o"></i>Producto</a></li>
+                                    </ul>
+                                </li>
+                                <li class="treeview">
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i> Transacciones
+                                        <span class="pull-right-container">
+                                            <i class="fa fa-angle-left pull-right"></i>
+                                        </span>
+                                    </a>
+                                    <ul class="treeview-menu">
+                                        <li><a href="/General/Perfil/Index"><i class="fa fa-circle-o"></i>Precio Justo</a></li>
                                     </ul>
                                 </li>
                             }
-                            <li class="treeview active">
-                                <a href="#">
-                                    <i class="fa fa-circle-o"></i> Transacciones
-                                    <span class="pull-right-container">
-                                        <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu active">
-                                    <li><a href="/General/Tarea/Nuevo"><i class="fa fa-circle-o"></i>Nueva tarea</a></li>
-                                    <li><a href="/General/AsignarTarea/Index"><i class="fa fa-circle-o"></i>Asignar subtareas</a></li>
-                                    <li><a href="/General/MisTareas/CargaLaboral"><i class="fa fa-circle-o"></i>Estadística</a></li>
-                                </ul>
-                            </li>
-                            <li class="treeview active">
-                                <a href="#">
-                                    <i class="fa fa-circle-o"></i> Buzon
-                                    <span class="pull-right-container">
-                                        <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li><a href="/General/Buzon/Buzon_eliminado"><i class="fa fa-circle-o text-aqua"></i> <span>Tareas Anuladas</span></a></li>
-                                </ul>
-                            </li>
-                            <li class="treeview">
-                                <a href="#">
-                                    <i class="fa fa-circle-o"></i> Reportes
-                                    <span class="pull-right-container">
-                                        <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu active">
-                                    <li><a href="/Reportes/GeneralReportes/GEN_001" target="_blank"><i class="fa fa-circle-o"></i>Detallado</a></li>
-                                    <li><a href="/Reportes/GeneralReportes/GEN_002" target="_blank"><i class="fa fa-circle-o"></i>Resumido</a></li>
-                                </ul>
-                            </li>
-
+                            else
+                            {
+                                <li class="treeview">
+                                    <a href="#">
+                                        <i class="fa fa-circle-o"></i> Transacciones
+                                        <span class="pull-right-container">
+                                            <i class="fa fa-angle-left pull-right"></i>
+                                        </span>
+                                    </a>
+                                    <ul class="treeview-menu">
+                                        <li><a href="/General/Perfil/Index"><i class="fa fa-circle-o"></i>Precio Justo</a></li>
+                                    </ul>
+                                </li>
+                            }                          
 
                         </ul>
                     </li>

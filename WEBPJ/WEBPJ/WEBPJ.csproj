@@ -196,15 +196,28 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelGeneral.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Base\Producto.cs">
+      <DependentUpon>ModelGeneral.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Base\ProductoDetalle.cs">
+      <DependentUpon>ModelGeneral.tt</DependentUpon>
+    </Compile>
     <Compile Include="Base\Usuario.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ProductoController.cs" />
+    <Compile Include="Controllers\UsuarioController.cs" />
+    <Compile Include="Data\ProductoDetalle_Data.cs" />
+    <Compile Include="Data\Producto_Data.cs" />
     <Compile Include="Data\Usuario_Data.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helps\SessionFixed.cs" />
+    <Compile Include="Info\Enumeradores.cs" />
+    <Compile Include="Info\ProductoDetalle_Info.cs" />
+    <Compile Include="Info\Producto_Info.cs" />
     <Compile Include="Info\Usuario_Info.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -7392,11 +7405,22 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Usuario\Nuevo.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Usuario\Index.cshtml" />
+    <Content Include="Views\Usuario\_GridViewPartial_Usuario.cshtml" />
+    <Content Include="Views\Usuario\Modificar.cshtml" />
+    <Content Include="Views\Usuario\Anular.cshtml" />
+    <Content Include="Views\Producto\Index.cshtml" />
+    <Content Include="Views\Producto\_GridViewPartial_Producto.cshtml" />
+    <Content Include="Views\Producto\_GridViewPartial_ProductoDetalle.cshtml" />
+    <Content Include="Views\Producto\Nuevo.cshtml" />
+    <Content Include="Views\Producto\Modificar.cshtml" />
+    <Content Include="Views\Producto\Anular.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Account\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

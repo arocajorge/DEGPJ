@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ModelGeneral.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ModelGeneral.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="LogError">
           <Key>
             <PropertyRef Name="ID" />
@@ -15,6 +15,34 @@
           <Property Name="IdUsuario" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Fecha" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="IdProducto" />
+          </Key>
+          <Property Name="IdProducto" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Codigo" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="CalificacionA" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CalificacionB" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CalificacionC" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CalificacionD" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="PrecioA" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="PrecioB" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="PrecioC" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="PrecioD" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductoDetalle">
+          <Key>
+            <PropertyRef Name="IdProducto" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdProducto" Type="int" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar(max)" />
+          <Property Name="Minimo" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Maximo" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
         <EntityType Name="Usuario">
           <Key>
             <PropertyRef Name="IdUsuario" />
@@ -22,14 +50,32 @@
           <Property Name="IdUsuario" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="Clave" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="TipoUsuario" Type="varchar" MaxLength="50" />
           <Property Name="Estado" Type="bit" Nullable="false" />
         </EntityType>
+        <Association Name="FK_ProductoDetalle_Producto">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="ProductoDetalle" Type="Self.ProductoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="ProductoDetalle">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ModelGeneralStoreContainer">
           <EntitySet Name="LogError" EntityType="Self.LogError" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductoDetalle" EntityType="Self.ProductoDetalle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ProductoDetalle_Producto" Association="Self.FK_ProductoDetalle_Producto">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="ProductoDetalle" EntitySet="ProductoDetalle" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ModelGeneral" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -43,19 +89,68 @@
           <Property Name="IdUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
+        <EntityContainer Name="EntitiesGeneral" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="LogError" EntityType="Self.LogError" />
+          <EntitySet Name="Usuario" EntityType="ModelGeneral.Usuario" />
+          <EntitySet Name="ProductoDetalle" EntityType="ModelGeneral.ProductoDetalle" />
+          <EntitySet Name="Producto" EntityType="ModelGeneral.Producto" />
+          <AssociationSet Name="FK_ProductoDetalle_Producto" Association="ModelGeneral.FK_ProductoDetalle_Producto">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="ProductoDetalle" EntitySet="ProductoDetalle" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="Usuario">
           <Key>
             <PropertyRef Name="IdUsuario" />
           </Key>
-          <Property Name="IdUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Nombre" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Clave" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Clave" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="TipoUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Estado" Type="Boolean" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="EntitiesGeneral" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="LogError" EntityType="Self.LogError" />
-          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
-        </EntityContainer>
+        <EntityType Name="ProductoDetalle">
+          <Key>
+            <PropertyRef Name="IdProducto" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdProducto" Type="Int32" Nullable="false" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Minimo" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Maximo" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <NavigationProperty Name="Producto" Relationship="ModelGeneral.FK_ProductoDetalle_Producto" FromRole="ProductoDetalle" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="IdProducto" />
+          </Key>
+          <Property Name="IdProducto" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Codigo" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CalificacionA" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="CalificacionB" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="CalificacionC" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="CalificacionD" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="PrecioA" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="PrecioB" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="PrecioC" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="PrecioD" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ProductoDetalle" Relationship="ModelGeneral.FK_ProductoDetalle_Producto" FromRole="Producto" ToRole="ProductoDetalle" />
+        </EntityType>
+        <Association Name="FK_ProductoDetalle_Producto">
+          <End Type="ModelGeneral.Producto" Role="Producto" Multiplicity="1" />
+          <End Type="ModelGeneral.ProductoDetalle" Role="ProductoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="ProductoDetalle">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -76,10 +171,40 @@
           <EntitySetMapping Name="Usuario">
             <EntityTypeMapping TypeName="ModelGeneral.Usuario">
               <MappingFragment StoreEntitySet="Usuario">
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Clave" ColumnName="Clave" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="TipoUsuario" ColumnName="TipoUsuario" />
+                <ScalarProperty Name="Clave" ColumnName="Clave" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductoDetalle">
+            <EntityTypeMapping TypeName="ModelGeneral.ProductoDetalle">
+              <MappingFragment StoreEntitySet="ProductoDetalle">
+                <ScalarProperty Name="Maximo" ColumnName="Maximo" />
+                <ScalarProperty Name="Minimo" ColumnName="Minimo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Producto">
+            <EntityTypeMapping TypeName="ModelGeneral.Producto">
+              <MappingFragment StoreEntitySet="Producto">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="PrecioD" ColumnName="PrecioD" />
+                <ScalarProperty Name="PrecioC" ColumnName="PrecioC" />
+                <ScalarProperty Name="PrecioB" ColumnName="PrecioB" />
+                <ScalarProperty Name="PrecioA" ColumnName="PrecioA" />
+                <ScalarProperty Name="CalificacionD" ColumnName="CalificacionD" />
+                <ScalarProperty Name="CalificacionC" ColumnName="CalificacionC" />
+                <ScalarProperty Name="CalificacionB" ColumnName="CalificacionB" />
+                <ScalarProperty Name="CalificacionA" ColumnName="CalificacionA" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

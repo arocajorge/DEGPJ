@@ -27,5 +27,7 @@ namespace WEBPJ.Base
     
         public virtual DbSet<LogError> LogError { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
+        public virtual DbSet<ProductoDetalle> ProductoDetalle { get; set; }
+        public virtual DbSet<Producto> Producto { get; set; }
     }
 }

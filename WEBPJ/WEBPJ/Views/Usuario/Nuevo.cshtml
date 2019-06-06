@@ -1,0 +1,66 @@
+﻿@model WEBPJ.Info.Usuario_Info
+@{
+    ViewBag.Title = "Nuevo usuario";
+    if (string.IsNullOrEmpty(@WEBPJ.Helps.SessionFixed.IdUsuario))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Nuevo", "Usuario", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+
+    }
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-9">
+                <div class="form-group">
+                    <label for="Nombre">Nombre</label>
+                    @Html.TextBoxFor(q => q.Nombre, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdUsuario">Tipo Usuario*</label>
+                    @Html.DropDownListFor(q => q.TipoUsuario, new SelectList(ViewBag.lst_TipoUsuario, "Key", "Value"), new { @class = "form-control", @id = "TipoUsuario" })
+                    @Html.ValidationMessageFor(q => q.TipoUsuario, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdUsuario">Usuario*</label>
+                    @Html.TextBoxFor(q => q.IdUsuario, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.IdUsuario, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdUsuario">Contraseña*</label>
+                    @Html.PasswordFor(q => q.Clave, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Clave, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","Usuario",new { Area = "General" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+    }

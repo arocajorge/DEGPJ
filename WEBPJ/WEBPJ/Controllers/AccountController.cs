@@ -22,19 +22,18 @@ namespace WEBPJ.Controllers
         [AllowAnonymous]
         public ActionResult Login(Usuario_Info model)
         {
-
-
             bool usuario_clave_exist = data_usuario.validar_login(model.IdUsuario, model.Clave);
             if (usuario_clave_exist)
             {
-                var infousuario = data_usuario.get_info(model.IdUsuario);
-                SessionFixed.TipoUsuario = infousuario.TipoUsuario.ToString();
+                Usuario_Info info_usuario = data_usuario.get_info(model.IdUsuario);
                 SessionFixed.IdUsuario = model.IdUsuario;
+                SessionFixed.TipoUsuario = info_usuario.TipoUsuario;
 
                 SessionFixed.IdTransaccionSession = 1 + "000000000";
                 SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
-                return RedirectToAction("CargaLaboral", "MisTareas", new { @Area = "General" });
+                return RedirectToAction("Index", "Usuario", new { @Area = "General" });
             }
+
             ViewBag.mensaje = "Credenciales incorrectas";
             return View(model);
         }
