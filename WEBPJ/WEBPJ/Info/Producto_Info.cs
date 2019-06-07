@@ -12,7 +12,7 @@ namespace WEBPJ.Info
         public int IdProducto { get; set; }
         [Required(ErrorMessage = ("el campo descripcion es obligatorio"))]
         public string Descripcion { get; set; }
-        public string Codigo { get; set; }
+        public string Codigo { get; set; }        
         [Required(ErrorMessage = ("el campo calificación es obligatorio"))]
         public decimal CalificacionA { get; set; }
         [Required(ErrorMessage = ("el campo calificación es obligatorio"))]
