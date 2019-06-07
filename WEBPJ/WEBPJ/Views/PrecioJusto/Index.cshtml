@@ -1,0 +1,148 @@
+﻿@model WEBPJ.Info.Filtros_Info
+@using WEBPJ.Info
+@{
+    ViewBag.Title = "Precio Justo";
+    if (string.IsNullOrEmpty(@WEBPJ.Helps.SessionFixed.IdUsuario))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Index", "PrecioJusto", FormMethod.Post, new { @role = "form", @class = "form", @id = "myform" }))
+{
+    @Html.HiddenFor(q => q.IdTransaccionSession);
+    <div class="box ">
+        <div class="box-header with-border">
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary">Aplicar filtros</button>
+                </div>
+            </div>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="IdSucursal">Usuario*</label>
+                            <div class="form-group">
+                                @Html.DropDownListFor(q => q.IdUsuario, new SelectList(ViewBag.lst_Usuarios, "IdUsuario", "Nombre"), new { @class = "form-control", @id = "IdUsuario" })
+                                @Html.ValidationMessageFor(q => q.IdUsuario, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="">Fecha inicio*</label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                @Html.DevExpress().DateEditFor(q => q.fecha_ini, settings =>
+                           {
+                               settings.Name = "fecha_ini";
+                               settings.Properties.UseMaskBehavior = true;
+                               settings.Properties.EditFormat = EditFormat.Date;
+                               settings.Properties.EditFormatString = "dd/MM/yyyy";
+                               settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                           }).GetHtml()
+                                @Html.ValidationMessageFor(q => q.fecha_ini, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="">Fecha fin*</label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                @Html.DevExpress().DateEditFor(q => q.fecha_fin, settings =>
+                           {
+                               settings.Name = "fecha_fin";
+                               settings.Properties.UseMaskBehavior = true;
+                               settings.Properties.EditFormat = EditFormat.Date;
+                               settings.Properties.EditFormatString = "dd/MM/yyyy";
+                               settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                           }).GetHtml()
+                                @Html.ValidationMessageFor(q => q.fecha_fin, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="IdSucursal">Estado*</label>
+                            <div class="form-group">
+                                @Html.DropDownListFor(q => q.Estado, new SelectList(ViewBag.lst_Estado, "Key", "Value"), new { @class = "form-control", @id = "Estado" })
+                                @Html.ValidationMessageFor(q => q.Estado, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.box-body -->
+    </div>
+
+    <div class="box">
+        <div class="box-body">
+            @Html.Action("GridViewPartial_PrecioJusto", new { Fecha_ini = Model.fecha_ini, Fecha_fin = Model.fecha_fin, IdUsuario = Model.IdUsuario, Estado = Model.Estado })
+        </div>       
+    </div>
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-success" id="btn_guardar" onclick="guardar();">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+     function guardar() {
+        var datos = {
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+            }        
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GuardarLista", "PrecioJusto", new { Area = "General" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#myform").submit();
+                GridViewPartial_PrecioJusto.PerformCallback();
+            },
+            error: function (error) {
+            }
+        });
+    }
+</script>

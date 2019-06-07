@@ -1,0 +1,190 @@
+﻿@using System.Web.UI.WebControls;
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridViewPartial_PrecioJusto";
+        settings.CallbackRouteValues = new { Controller = "PrecioJusto", Action = "GridViewPartial_PrecioJusto", Fecha_ini = ViewBag.Fecha_ini, Fecha_fin = ViewBag.Fecha_fin, IdUsuario = ViewBag.IdUsuario, Estado = ViewBag.Estado };
+        settings.KeyFieldName = "IdPrecioJusto";
+        settings.Width = Unit.Percentage(100);
+
+        settings.Width = Unit.Percentage(100);
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "PrecioJusto", Action = "EditingUpdate", Area = "General" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "PrecioJusto", Action = "EditingAnular", Area = "General" };
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.Control;
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+
+        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsContextMenu.RowMenuItemVisibility.NewRow = true;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+        //Configuración scrolling y pager
+        settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Hidden;
+        settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+        settings.Settings.VerticalScrollableHeight = 400;
+        settings.SettingsPager.Visible = true;
+        settings.SettingsPager.PageSize = 10;
+        settings.SettingsPager.Mode = GridViewPagerMode.ShowPager;
+        settings.SettingsPager.AlwaysShowPager = true;
+
+        //Funcion para inicializar fila al presionar nuevo
+        settings.InitNewRow = (s, e) =>
+        {
+            e.NewValues["IdUsuario"] = "";
+            e.NewValues["IdProducto"] = "";
+            e.NewValues["Estado"] = "";
+        };
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdPrecioJusto";
+            column.Caption = "Código";
+            column.Width = Unit.Percentage(10);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdUsuario";
+            column.Caption = "Usuario";
+            column.Width = Unit.Percentage(20);
+            column.EditorProperties().ComboBox(p =>
+            {
+                p.Columns.Add("IdUsuario", "Código").Width = Unit.Percentage(30);
+                p.Columns.Add("Nombre", "Usuario").Width = Unit.Percentage(70);
+                p.ValueField = "IdUsuario";
+                p.ValueType = typeof(string);
+                p.DataSource = ViewBag.lst_Usuarios;
+            });
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdProducto";
+            column.Caption = "Producto";
+            column.Width = Unit.Percentage(20);
+            column.EditorProperties().ComboBox(p =>
+            {
+                p.Columns.Add("IdProducto", "Código").Width = Unit.Percentage(30);
+                p.Columns.Add("Descripcion", "Descripcion").Width = Unit.Percentage(70);
+                p.ValueField = "IdProducto";
+                p.ValueType = typeof(int);
+                p.DataSource = ViewBag.lst_Productos;
+            });
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Fecha";
+            column.Caption = "Fecha";
+            column.Width = Unit.Percentage(10);
+            column.PropertiesEdit.DisplayFormatString = "d";
+            column.EditorProperties().DateEdit(sp =>
+            {
+                column.PropertiesEdit.DisplayFormatString = "d";
+                sp.Width = Unit.Percentage(100);
+            });
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Calificacion";
+            column.Caption = "Calificacion";
+            column.Width = Unit.Percentage(10);
+            column.EditorProperties().SpinEdit(sp =>
+            {
+                sp.MinValue = 0;
+                sp.MaxValue = 999999999;
+                sp.Width = Unit.Percentage(100);
+                column.PropertiesEdit.DisplayFormatString = "n2";
+
+            });
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Cantidad";
+            column.Caption = "Cantidad";
+            column.Width = Unit.Percentage(10);
+            column.EditorProperties().SpinEdit(sp =>
+            {
+                sp.MinValue = 0;
+                sp.MaxValue = 999999999;
+                sp.Width = Unit.Percentage(100);
+                column.PropertiesEdit.DisplayFormatString = "n2";
+
+            });
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Precio";
+            column.Caption = "Precio";
+            column.Width = Unit.Percentage(10);
+            column.EditorProperties().SpinEdit(sp =>
+            {
+                sp.MinValue = 0;
+                sp.MaxValue = 999999999;
+                sp.Width = Unit.Percentage(100);
+                column.PropertiesEdit.DisplayFormatString = "n2";
+
+            });
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Total";
+            column.Caption = "Total";
+            column.Width = Unit.Percentage(10);
+            column.EditorProperties().SpinEdit(sp =>
+            {
+                sp.MinValue = 0;
+                sp.MaxValue = 999999999;
+                sp.Width = Unit.Percentage(100);
+                column.PropertiesEdit.DisplayFormatString = "n2";
+
+            });
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Comentario";
+            column.Caption = "Comentario";
+            column.Width = Unit.Percentage(10);
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Estado";
+            column.Caption = "Estado";
+            column.Width = Unit.Percentage(10);
+            column.EditorProperties().ComboBox(p =>
+            {
+                p.Columns.Add("Key", "Código").Width = Unit.Percentage(30);
+                p.Columns.Add("Value", "Estado").Width = Unit.Percentage(70);
+                p.ValueField = "Key";
+                p.ValueType = typeof(string);
+                p.DataSource = ViewBag.lst_Estado;
+            });
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+        });
+
+    });
+}
+@grid.Bind(Model).GetHtml()

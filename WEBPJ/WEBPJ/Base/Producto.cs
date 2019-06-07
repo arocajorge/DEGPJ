@@ -18,6 +18,7 @@ namespace WEBPJ.Base
         public Producto()
         {
             this.ProductoDetalle = new HashSet<ProductoDetalle>();
+            this.PrecioJusto = new HashSet<PrecioJusto>();
         }
     
         public int IdProducto { get; set; }
@@ -35,5 +36,7 @@ namespace WEBPJ.Base
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductoDetalle> ProductoDetalle { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PrecioJusto> PrecioJusto { get; set; }
     }
 }

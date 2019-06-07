@@ -15,6 +15,22 @@
           <Property Name="IdUsuario" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Fecha" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="PrecioJusto">
+          <Key>
+            <PropertyRef Name="IdPrecioJusto" />
+          </Key>
+          <Property Name="IdPrecioJusto" Type="int" Nullable="false" />
+          <Property Name="CedulaProveedor" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdUsuario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdProducto" Type="int" Nullable="false" />
+          <Property Name="Calificacion" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
+          <Property Name="Precio" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Cantidad" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Total" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Comentario" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Estado" Type="varchar" MaxLength="1" Nullable="false" />
+        </EntityType>
         <EntityType Name="Producto">
           <Key>
             <PropertyRef Name="IdProducto" />
@@ -53,6 +69,62 @@
           <Property Name="TipoUsuario" Type="varchar" MaxLength="50" />
           <Property Name="Estado" Type="bit" Nullable="false" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DB_PRECIOJUSTO.dbo.vwPrecioJusto' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwPrecioJusto">
+          <Key>
+            <PropertyRef Name="IdPrecioJusto" />
+            <PropertyRef Name="CedulaProveedor" />
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="IdProducto" />
+            <PropertyRef Name="Calificacion" />
+            <PropertyRef Name="Fecha" />
+            <PropertyRef Name="Precio" />
+            <PropertyRef Name="Cantidad" />
+            <PropertyRef Name="Total" />
+            <PropertyRef Name="Comentario" />
+            <PropertyRef Name="Estado" />
+            <PropertyRef Name="Descripcion" />
+            <PropertyRef Name="Nombre" />
+          </Key>
+          <Property Name="IdPrecioJusto" Type="int" Nullable="false" />
+          <Property Name="CedulaProveedor" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdUsuario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdProducto" Type="int" Nullable="false" />
+          <Property Name="Calificacion" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
+          <Property Name="Precio" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Cantidad" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Total" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Comentario" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Estado" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_PrecioJusto_Producto">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="PrecioJusto" Type="Self.PrecioJusto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="PrecioJusto">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PrecioJusto_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="PrecioJusto" Type="Self.PrecioJusto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="PrecioJusto">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ProductoDetalle_Producto">
           <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
           <End Role="ProductoDetalle" Type="Self.ProductoDetalle" Multiplicity="*" />
@@ -67,9 +139,35 @@
         </Association>
         <EntityContainer Name="ModelGeneralStoreContainer">
           <EntitySet Name="LogError" EntityType="Self.LogError" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PrecioJusto" EntityType="Self.PrecioJusto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductoDetalle" EntityType="Self.ProductoDetalle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vwPrecioJusto" EntityType="Self.vwPrecioJusto" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwPrecioJusto].[IdPrecioJusto] AS [IdPrecioJusto], 
+    [vwPrecioJusto].[CedulaProveedor] AS [CedulaProveedor], 
+    [vwPrecioJusto].[IdUsuario] AS [IdUsuario], 
+    [vwPrecioJusto].[IdProducto] AS [IdProducto], 
+    [vwPrecioJusto].[Calificacion] AS [Calificacion], 
+    [vwPrecioJusto].[Fecha] AS [Fecha], 
+    [vwPrecioJusto].[Precio] AS [Precio], 
+    [vwPrecioJusto].[Cantidad] AS [Cantidad], 
+    [vwPrecioJusto].[Total] AS [Total], 
+    [vwPrecioJusto].[Comentario] AS [Comentario], 
+    [vwPrecioJusto].[Estado] AS [Estado], 
+    [vwPrecioJusto].[Descripcion] AS [Descripcion], 
+    [vwPrecioJusto].[Nombre] AS [Nombre]
+    FROM [dbo].[vwPrecioJusto] AS [vwPrecioJusto]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_PrecioJusto_Producto" Association="Self.FK_PrecioJusto_Producto">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="PrecioJusto" EntitySet="PrecioJusto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PrecioJusto_Usuario" Association="Self.FK_PrecioJusto_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="PrecioJusto" EntitySet="PrecioJusto" />
+          </AssociationSet>
           <AssociationSet Name="FK_ProductoDetalle_Producto" Association="Self.FK_ProductoDetalle_Producto">
             <End Role="Producto" EntitySet="Producto" />
             <End Role="ProductoDetalle" EntitySet="ProductoDetalle" />
@@ -98,6 +196,16 @@
             <End Role="Producto" EntitySet="Producto" />
             <End Role="ProductoDetalle" EntitySet="ProductoDetalle" />
           </AssociationSet>
+          <EntitySet Name="PrecioJusto" EntityType="ModelGeneral.PrecioJusto" />
+          <AssociationSet Name="FK_PrecioJusto_Producto" Association="ModelGeneral.FK_PrecioJusto_Producto">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="PrecioJusto" EntitySet="PrecioJusto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PrecioJusto_Usuario" Association="ModelGeneral.FK_PrecioJusto_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="PrecioJusto" EntitySet="PrecioJusto" />
+          </AssociationSet>
+          <EntitySet Name="vwPrecioJusto" EntityType="ModelGeneral.vwPrecioJusto" />
         </EntityContainer>
         <EntityType Name="Usuario">
           <Key>
@@ -108,6 +216,7 @@
           <Property Name="Clave" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="TipoUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="PrecioJusto" Relationship="ModelGeneral.FK_PrecioJusto_Usuario" FromRole="Usuario" ToRole="PrecioJusto" />
         </EntityType>
         <EntityType Name="ProductoDetalle">
           <Key>
@@ -138,6 +247,7 @@
           <Property Name="PrecioD" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="Estado" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ProductoDetalle" Relationship="ModelGeneral.FK_ProductoDetalle_Producto" FromRole="Producto" ToRole="ProductoDetalle" />
+          <NavigationProperty Name="PrecioJusto" Relationship="ModelGeneral.FK_PrecioJusto_Producto" FromRole="Producto" ToRole="PrecioJusto" />
         </EntityType>
         <Association Name="FK_ProductoDetalle_Producto">
           <End Type="ModelGeneral.Producto" Role="Producto" Multiplicity="1" />
@@ -151,6 +261,78 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="PrecioJusto">
+          <Key>
+            <PropertyRef Name="IdPrecioJusto" />
+          </Key>
+          <Property Name="IdPrecioJusto" Type="Int32" Nullable="false" />
+          <Property Name="CedulaProveedor" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdProducto" Type="Int32" Nullable="false" />
+          <Property Name="Calificacion" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Precio" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Cantidad" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Total" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Comentario" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Producto" Relationship="ModelGeneral.FK_PrecioJusto_Producto" FromRole="PrecioJusto" ToRole="Producto" />
+          <NavigationProperty Name="Usuario" Relationship="ModelGeneral.FK_PrecioJusto_Usuario" FromRole="PrecioJusto" ToRole="Usuario" />
+        </EntityType>
+        <Association Name="FK_PrecioJusto_Producto">
+          <End Type="ModelGeneral.Producto" Role="Producto" Multiplicity="1" />
+          <End Type="ModelGeneral.PrecioJusto" Role="PrecioJusto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="PrecioJusto">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PrecioJusto_Usuario">
+          <End Type="ModelGeneral.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="ModelGeneral.PrecioJusto" Role="PrecioJusto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="PrecioJusto">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="vwPrecioJusto">
+          <Key>
+            <PropertyRef Name="IdPrecioJusto" />
+            <PropertyRef Name="CedulaProveedor" />
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="IdProducto" />
+            <PropertyRef Name="Calificacion" />
+            <PropertyRef Name="Fecha" />
+            <PropertyRef Name="Precio" />
+            <PropertyRef Name="Cantidad" />
+            <PropertyRef Name="Total" />
+            <PropertyRef Name="Comentario" />
+            <PropertyRef Name="Estado" />
+            <PropertyRef Name="Descripcion" />
+            <PropertyRef Name="Nombre" />
+          </Key>
+          <Property Name="IdPrecioJusto" Type="Int32" Nullable="false" />
+          <Property Name="CedulaProveedor" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdProducto" Type="Int32" Nullable="false" />
+          <Property Name="Calificacion" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Precio" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Cantidad" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Total" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Comentario" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -205,6 +387,42 @@
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PrecioJusto">
+            <EntityTypeMapping TypeName="ModelGeneral.PrecioJusto">
+              <MappingFragment StoreEntitySet="PrecioJusto">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Comentario" ColumnName="Comentario" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Calificacion" ColumnName="Calificacion" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="CedulaProveedor" ColumnName="CedulaProveedor" />
+                <ScalarProperty Name="IdPrecioJusto" ColumnName="IdPrecioJusto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwPrecioJusto">
+            <EntityTypeMapping TypeName="ModelGeneral.vwPrecioJusto">
+              <MappingFragment StoreEntitySet="vwPrecioJusto">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Comentario" ColumnName="Comentario" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Calificacion" ColumnName="Calificacion" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="CedulaProveedor" ColumnName="CedulaProveedor" />
+                <ScalarProperty Name="IdPrecioJusto" ColumnName="IdPrecioJusto" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

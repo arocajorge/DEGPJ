@@ -248,30 +248,5 @@ namespace WEBPJ.Data
                 throw;
             }
         }
-
-        //public List<Producto_Info> GetList_x_Usuario(int IdEmpresa, string IdUsuario)
-        //{
-        //    try
-        //    {
-        //        List<Producto_Info> Lista = new List<Producto_Info>();
-
-        //        using (EntitiesGeneral db = new EntitiesGeneral())
-        //        {
-        //            Lista = db.vwpre_Grupo.Where(q => q.IdEmpresa == IdEmpresa && q.IdUsuario == IdUsuario && q.Estado == true).Select(q => new Producto_Info
-        //            {
-        //                IdEmpresa = q.IdEmpresa,
-        //                IdGrupo = q.IdGrupo,
-        //                Descripcion = q.Descripcion,
-        //                Estado = q.Estado
-        //            }).ToList();
-
-        //            return Lista;
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw;
-        //    }
-        //}
     }
 }

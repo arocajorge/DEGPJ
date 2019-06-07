@@ -12,21 +12,20 @@ namespace WEBPJ.Base
     using System;
     using System.Collections.Generic;
     
-    public partial class Usuario
+    public partial class vwPrecioJusto
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Usuario()
-        {
-            this.PrecioJusto = new HashSet<PrecioJusto>();
-        }
-    
+        public int IdPrecioJusto { get; set; }
+        public string CedulaProveedor { get; set; }
         public string IdUsuario { get; set; }
+        public int IdProducto { get; set; }
+        public decimal Calificacion { get; set; }
+        public System.DateTime Fecha { get; set; }
+        public decimal Precio { get; set; }
+        public decimal Cantidad { get; set; }
+        public decimal Total { get; set; }
+        public string Comentario { get; set; }
+        public string Estado { get; set; }
+        public string Descripcion { get; set; }
         public string Nombre { get; set; }
-        public string Clave { get; set; }
-        public string TipoUsuario { get; set; }
-        public bool Estado { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PrecioJusto> PrecioJusto { get; set; }
     }
 }
