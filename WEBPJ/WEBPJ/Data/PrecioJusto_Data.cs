@@ -17,9 +17,9 @@ namespace WEBPJ.Data
 
                 using (EntitiesGeneral db = new EntitiesGeneral())
                 {
-                    if (Estado == "")
+                    if ( Estado == "" || Estado == null)
                     {
-                        if (IdUsuario == "")
+                        if (IdUsuario == "" || IdUsuario == null)
                         {
                             Lista = db.vwPrecioJusto.Select(q => new PrecioJusto_Info
                             {
@@ -60,7 +60,7 @@ namespace WEBPJ.Data
                     }
                     else
                     {
-                        if (IdUsuario == "")
+                        if (IdUsuario == "" || IdUsuario == null)
                         {
                             Lista = db.vwPrecioJusto.Where(q => q.Estado == Estado).Select(q => new PrecioJusto_Info
                             {

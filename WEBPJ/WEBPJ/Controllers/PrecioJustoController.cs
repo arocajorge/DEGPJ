@@ -30,17 +30,22 @@ namespace WEBPJ.Controllers
             {
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
                 IdUsuario = SessionFixed.IdUsuario,
-                Estado = ""
+                Estado = "",
+                fecha_ini = DateTime.Now.Date.AddMonths(-1),
+                fecha_fin = DateTime.Now.Date
             };
 
-            Lista_PrecioJusto.set_list(new List<PrecioJusto_Info>(), model.IdTransaccionSession);        
+            List<PrecioJusto_Info> lst_PrecioJusto = data_preciojusto.get_list(model.fecha_ini, model.fecha_fin, model.IdUsuario, model.Estado);
+            Lista_PrecioJusto.set_list(lst_PrecioJusto, model.IdTransaccionSession);        
             cargar_combos_consulta();
             return View(model);
         }
         [HttpPost]
         public ActionResult Index(Filtros_Info model)
         {
-            Lista_PrecioJusto.get_list(model.IdTransaccionSession);
+            //Lista_PrecioJusto.get_list(model.IdTransaccionSession);
+            List<PrecioJusto_Info> lst_PrecioJusto = data_preciojusto.get_list(model.fecha_ini, model.fecha_fin, model.IdUsuario, model.Estado);
+            Lista_PrecioJusto.set_list(lst_PrecioJusto, model.IdTransaccionSession);
             cargar_combos_consulta();
             return View(model);
         }
@@ -55,8 +60,9 @@ namespace WEBPJ.Controllers
 
             cargar_combos_grid();
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
-            List<PrecioJusto_Info> lst_PrecioJusto = data_preciojusto.get_list(ViewBag.Fecha_ini, ViewBag.Fecha_fin, IdUsuario, Estado);
-            Lista_PrecioJusto.set_list(lst_PrecioJusto, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            //List<PrecioJusto_Info> lst_PrecioJusto = data_preciojusto.get_list(ViewBag.Fecha_ini, ViewBag.Fecha_fin, IdUsuario, Estado);
+            //Lista_PrecioJusto.set_list(lst_PrecioJusto, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            List<PrecioJusto_Info> lst_PrecioJusto = Lista_PrecioJusto.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_PrecioJusto", lst_PrecioJusto);
         }
 

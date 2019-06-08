@@ -150,7 +150,7 @@ namespace WEBPJ.Data
                             db.ProductoDetalle.Add(new ProductoDetalle
                             {
                                 IdProducto = info.IdProducto,
-                                Descripcion = info.Descripcion,
+                                Descripcion = item.Descripcion,
                                 Secuencia = Secuencia++,
                                 Minimo = item.Minimo,
                                 Maximo = item.Maximo
@@ -163,7 +163,7 @@ namespace WEBPJ.Data
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception EX)
             {
                 throw;
             }
