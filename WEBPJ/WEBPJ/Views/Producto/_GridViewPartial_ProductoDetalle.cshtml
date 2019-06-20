@@ -53,12 +53,24 @@
         {
             column.FieldName = "Minimo";
             column.Caption = "Minimo";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.EditorProperties().SpinEdit(sp =>
+            {
+                sp.MinValue = 0;
+                sp.MaxValue = 999999999;
+            });
             column.Width = Unit.Percentage(15);
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "Maximo";
             column.Caption = "Maximo";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.EditorProperties().SpinEdit(sp =>
+            {
+                sp.MinValue = 0;
+                sp.MaxValue = 999999999;
+            });
             column.Width = Unit.Percentage(15);
         });
 

@@ -17,26 +17,26 @@ namespace WEBPJ.Base
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Producto()
         {
-            this.ProductoDetalle = new HashSet<ProductoDetalle>();
             this.PrecioJusto = new HashSet<PrecioJusto>();
+            this.ProductoDetalle = new HashSet<ProductoDetalle>();
         }
     
         public int IdProducto { get; set; }
         public string Descripcion { get; set; }
         public string Codigo { get; set; }
-        public decimal CalificacionA { get; set; }
-        public decimal CalificacionB { get; set; }
-        public decimal CalificacionC { get; set; }
-        public decimal CalificacionD { get; set; }
-        public decimal PrecioA { get; set; }
-        public decimal PrecioB { get; set; }
-        public decimal PrecioC { get; set; }
-        public decimal PrecioD { get; set; }
+        public double CalificacionA { get; set; }
+        public double CalificacionB { get; set; }
+        public double CalificacionC { get; set; }
+        public double CalificacionD { get; set; }
+        public double PrecioA { get; set; }
+        public double PrecioB { get; set; }
+        public double PrecioC { get; set; }
+        public double PrecioD { get; set; }
         public bool Estado { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProductoDetalle> ProductoDetalle { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PrecioJusto> PrecioJusto { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProductoDetalle> ProductoDetalle { get; set; }
     }
 }

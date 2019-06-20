@@ -12,24 +12,18 @@ namespace WEBPJ.Info
         public int IdProducto { get; set; }
         [Required(ErrorMessage = ("el campo descripcion es obligatorio"))]
         public string Descripcion { get; set; }
-        public string Codigo { get; set; }        
-        [Required(ErrorMessage = ("el campo calificación es obligatorio"))]
-        public decimal CalificacionA { get; set; }
-        [Required(ErrorMessage = ("el campo calificación es obligatorio"))]
-        public decimal CalificacionB { get; set; }
-        [Required(ErrorMessage = ("el campo calificación es obligatorio"))]
-        public decimal CalificacionC { get; set; }
-        [Required(ErrorMessage = ("el campo calificación es obligatorio"))]
-        public decimal CalificacionD { get; set; }
-        [Required(ErrorMessage = ("el campo precio es obligatorio"))]
-        public decimal PrecioA { get; set; }
-        [Required(ErrorMessage = ("el campo precio es obligatorio"))]
-        public decimal PrecioB { get; set; }
-        [Required(ErrorMessage = ("el campo precio es obligatorio"))]
-        public decimal PrecioC { get; set; }
-        [Required(ErrorMessage = ("el campo precio es obligatorio"))]
-        public decimal PrecioD { get; set; }
+        public string Codigo { get; set; }
+
+        public double CalificacionA { get; set; }
+        public double CalificacionB { get; set; }
+        public double CalificacionC { get; set; }
+        public double CalificacionD { get; set; }
+        public double PrecioA { get; set; }
+        public double PrecioB { get; set; }
+        public double PrecioC { get; set; }
+        public double PrecioD { get; set; }
         public bool Estado { get; set; }
+
 
         #region Campos que no existen en la tabla
         public List<ProductoDetalle_Info> ListaProductoDetalle { get; set; }

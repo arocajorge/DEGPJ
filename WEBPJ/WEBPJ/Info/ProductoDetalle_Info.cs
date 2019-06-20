@@ -11,7 +11,7 @@ namespace WEBPJ.Info
         public int IdProducto { get; set; }
         public int Secuencia { get; set; }
         public string Descripcion { get; set; }
-        public decimal Minimo { get; set; }
-        public decimal Maximo { get; set; }
+        public double Minimo { get; set; }
+        public double Maximo { get; set; }
     }
 }

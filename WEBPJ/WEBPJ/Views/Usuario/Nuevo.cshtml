@@ -27,6 +27,7 @@
                 <div class="form-group">
                     <label for="Nombre">Nombre</label>
                     @Html.TextBoxFor(q => q.Nombre, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Nombre, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>

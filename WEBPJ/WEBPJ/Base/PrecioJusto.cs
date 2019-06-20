@@ -18,11 +18,11 @@ namespace WEBPJ.Base
         public string CedulaProveedor { get; set; }
         public string IdUsuario { get; set; }
         public int IdProducto { get; set; }
-        public decimal Calificacion { get; set; }
+        public double Calificacion { get; set; }
         public System.DateTime Fecha { get; set; }
-        public decimal Precio { get; set; }
-        public decimal Cantidad { get; set; }
-        public decimal Total { get; set; }
+        public double Precio { get; set; }
+        public double Cantidad { get; set; }
+        public double Total { get; set; }
         public string Comentario { get; set; }
         public string Estado { get; set; }
     
