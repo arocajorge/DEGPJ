@@ -4,6 +4,7 @@
     {
         #region ViewModels
         public LoginViewModel Login { get; set; }
+        public ConfiguracionViewModel Configuracion { get; set; }
         #endregion
 
         #region Constructor

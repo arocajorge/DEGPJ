@@ -3,22 +3,22 @@
     using Newtonsoft.Json;
     using SQLite;
 
-    public class UsuarioModel
+    public class ProveedorModel
     {
         [PrimaryKey]
         public int PKSQLite { get; set; }
 
-        [JsonProperty("IdUsuario")]
-        public string IdUsuario { get; set; }
+        [JsonProperty("Tipo")]
+        public string Tipo { get; set; }
+
+        [JsonProperty("Codigo")]
+        public string Codigo { get; set; }
 
         [JsonProperty("Nombre")]
         public string Nombre { get; set; }
 
-        [JsonProperty("Clave")]
-        public string Clave { get; set; }
-
-        [JsonProperty("Estado")]
-        public bool Estado { get; set; }
+        [JsonProperty("RUC")]
+        public string Ruc { get; set; }
 
         public override int GetHashCode()
         {
@@ -26,4 +26,3 @@
         }
     }
 }
-
