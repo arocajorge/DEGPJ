@@ -19,7 +19,7 @@ namespace APPPJ.Helpers
             connection.CreateTable<ProveedorModel>();
             connection.CreateTable<ProductoDetalleModel>();
         }
-
+        #region Funciones generales
         public void Insert<T>(T model)
         {
             this.connection.Insert(model);
@@ -49,5 +49,13 @@ namespace APPPJ.Helpers
         {
             connection.Dispose();
         }
+        #endregion
+
+        #region Funciones varias
+        public UsuarioModel GetUsuario(string IdUsuario, string Clave)
+        {
+            return this.connection.Table<UsuarioModel>().Where(q => q.IdUsuario.ToLower() == IdUsuario.ToLower() && q.Clave.ToLower() == Clave.ToLower()).FirstOrDefault();
+        }
+        #endregion
     }
 }

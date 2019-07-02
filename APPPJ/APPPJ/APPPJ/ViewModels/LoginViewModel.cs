@@ -96,6 +96,19 @@
                     return;
                 }
 
+                var ModelUsuario = data.GetUsuario(usuario, contrasenia);
+                if (ModelUsuario == null)
+                {
+                    IsRunning = false;
+                    IsEnabled = true;
+                    await Application.Current.MainPage.DisplayAlert(
+                            "Alerta",
+                            "Credenciales incorrectas",
+                            "Aceptar");
+                    return;
+                }
+
+                Settings.IdUsuario = ModelUsuario.IdUsuario;
                 IsRunning = false;
                 IsEnabled = true;
             }
