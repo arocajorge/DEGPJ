@@ -178,6 +178,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Base\Compra.cs">
+      <DependentUpon>ModelGeneral.tt</DependentUpon>
+    </Compile>
     <Compile Include="Base\LogError.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
@@ -196,9 +199,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelGeneral.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Base\PrecioJusto.cs">
-      <DependentUpon>ModelGeneral.tt</DependentUpon>
-    </Compile>
     <Compile Include="Base\Producto.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
@@ -208,14 +208,14 @@
     <Compile Include="Base\Usuario.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
-    <Compile Include="Base\vwPrecioJusto.cs">
+    <Compile Include="Base\vwCompra.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\PrecioJustoController.cs" />
+    <Compile Include="Controllers\CompraController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
-    <Compile Include="Data\PrecioJusto_Data.cs" />
+    <Compile Include="Data\Compra_Data.cs" />
     <Compile Include="Data\ProductoDetalle_Data.cs" />
     <Compile Include="Data\Producto_Data.cs" />
     <Compile Include="Data\Usuario_Data.cs" />
@@ -225,7 +225,7 @@
     <Compile Include="Helps\SessionFixed.cs" />
     <Compile Include="Info\Enumeradores.cs" />
     <Compile Include="Info\Filtros_Info.cs" />
-    <Compile Include="Info\PrecioJusto_Info.cs" />
+    <Compile Include="Info\Compra_Info.cs" />
     <Compile Include="Info\ProductoDetalle_Info.cs" />
     <Compile Include="Info\Producto_Info.cs" />
     <Compile Include="Info\Usuario_Info.cs" />
@@ -7427,8 +7427,8 @@
     <Content Include="Views\Producto\Nuevo.cshtml" />
     <Content Include="Views\Producto\Modificar.cshtml" />
     <Content Include="Views\Producto\Anular.cshtml" />
-    <Content Include="Views\PrecioJusto\Index.cshtml" />
-    <Content Include="Views\PrecioJusto\_GridViewPartial_PrecioJusto.cshtml" />
+    <Content Include="Views\Compra\Index.cshtml" />
+    <Content Include="Views\Compra\_GridViewPartial_Compra.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

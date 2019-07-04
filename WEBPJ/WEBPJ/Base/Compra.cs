@@ -12,10 +12,12 @@ namespace WEBPJ.Base
     using System;
     using System.Collections.Generic;
     
-    public partial class vwPrecioJusto
+    public partial class Compra
     {
-        public int IdPrecioJusto { get; set; }
-        public string CedulaProveedor { get; set; }
+        public decimal IdCompra { get; set; }
+        public string ProvCedulaRuc { get; set; }
+        public string ProvNombre { get; set; }
+        public string ProvCodigo { get; set; }
         public string IdUsuario { get; set; }
         public int IdProducto { get; set; }
         public double Calificacion { get; set; }
@@ -25,7 +27,8 @@ namespace WEBPJ.Base
         public double Total { get; set; }
         public string Comentario { get; set; }
         public string Estado { get; set; }
-        public string Descripcion { get; set; }
-        public string Nombre { get; set; }
+    
+        public virtual Producto Producto { get; set; }
+        public virtual Usuario Usuario { get; set; }
     }
 }

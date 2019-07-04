@@ -26,10 +26,10 @@ namespace WEBPJ.Base
         }
     
         public virtual DbSet<LogError> LogError { get; set; }
-        public virtual DbSet<PrecioJusto> PrecioJusto { get; set; }
         public virtual DbSet<Producto> Producto { get; set; }
         public virtual DbSet<ProductoDetalle> ProductoDetalle { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
-        public virtual DbSet<vwPrecioJusto> vwPrecioJusto { get; set; }
+        public virtual DbSet<Compra> Compra { get; set; }
+        public virtual DbSet<vwCompra> vwCompra { get; set; }
     }
 }

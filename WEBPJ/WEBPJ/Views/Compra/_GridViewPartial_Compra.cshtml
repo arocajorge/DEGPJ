@@ -2,15 +2,15 @@
 @{
     var grid = Html.DevExpress().GridView(settings =>
     {
-        settings.Name = "GridViewPartial_PrecioJusto";
-        settings.CallbackRouteValues = new { Controller = "PrecioJusto", Action = "GridViewPartial_PrecioJusto", Fecha_ini = ViewBag.Fecha_ini, Fecha_fin = ViewBag.Fecha_fin, IdUsuario = ViewBag.IdUsuario, Estado = ViewBag.Estado };
-        settings.KeyFieldName = "IdPrecioJusto";
+        settings.Name = "GridViewPartial_Compra";
+        settings.CallbackRouteValues = new { Controller = "Compra", Action = "GridViewPartial_Compra", Fecha_ini = ViewBag.Fecha_ini, Fecha_fin = ViewBag.Fecha_fin, IdUsuario = ViewBag.IdUsuario, Estado = ViewBag.Estado };
+        settings.KeyFieldName = "IdCompra";
         settings.Width = Unit.Percentage(100);
 
         settings.Width = Unit.Percentage(100);
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
-        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "PrecioJusto", Action = "EditingUpdate", Area = "General" };
-        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "PrecioJusto", Action = "EditingAnular", Area = "General" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Compra", Action = "EditingUpdate", Area = "General" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Compra", Action = "EditingAnular", Area = "General" };
 
         //Configuración para que la grilla no muestre texto completo
         settings.SettingsBehavior.AllowEllipsisInText = true;
@@ -54,7 +54,7 @@
         };
         settings.Columns.Add(column =>
         {
-            column.FieldName = "IdPrecioJusto";
+            column.FieldName = "IdCompra";
             column.Caption = "Código";
             column.Width = Unit.Percentage(10);
             column.EditFormSettings.Visible = DefaultBoolean.False;

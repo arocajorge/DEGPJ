@@ -7,7 +7,9 @@
     }
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
 @using (Html.BeginForm("Modificar", "Producto", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     if (ViewBag.mensaje != null)
@@ -18,23 +20,25 @@
             </h4>
         </div>
     }
-
-    @Html.HiddenFor(q => q.IdProducto);
     @Html.HiddenFor(q => q.IdTransaccionSession);
+    @Html.HiddenFor(q => q.IdProducto);
+
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="Descripcion">Codigo</label>
-                    @Html.TextBoxFor(q => q.Codigo, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(q => q.Codigo, "", new { @class = "text-danger" })
+                    <label for="Codigo">Código</label>
+                    <input class="form-control" type="text" name="Codigo" id="Codigo" value= @Model.Codigo>
+                    @*@Html.TextBoxFor(q => q.Codigo, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Codigo, "", new { @class = "text-danger" })*@
                 </div>
             </div>
             <div class="col-md-9">
                 <div class="form-group">
-                    <label for="Descripcion">Descripción*</label>
-                    @Html.TextBoxFor(q => q.Descripcion, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(q => q.Descripcion, "", new { @class = "text-danger" })
+                    <label for="Descripcion">Descripción</label>
+                    <input class="form-control" type="text" name="Descripcion" id="Descripcion" value= @Model.Descripcion>
+                    @*@Html.TextBoxFor(q => q.Descripcion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Descripcion, "", new { @class = "text-danger" })*@
                 </div>
             </div>
         </div>
@@ -43,30 +47,34 @@
         <div class="col-md-12">
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="Descripcion">Calificacion A*</label>
-                    @Html.TextBoxFor(q => q.CalificacionA, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(q => q.CalificacionA, "", new { @class = "text-danger" })
+                    <label for="CalificacionA">Calificación A</label>
+                    <input class="form-control" type="text" name="CalificacionA" id="CalificacionA" value= @Model.CalificacionA>
+                    @*@Html.TextBoxFor(q => q.CalificacionA, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.CalificacionA, "", new { @class = "text-danger" })*@
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="Descripcion">Calificacion B*</label>
-                    @Html.TextBoxFor(q => q.CalificacionB, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(q => q.CalificacionB, "", new { @class = "text-danger" })
+                    <label for="CalificacionB">Calificación B</label>
+                    <input class="form-control" type="text" name="CalificacionB" id="CalificacionB"  value= @Model.CalificacionB>
+                    @*@Html.TextBoxFor(q => q.CalificacionB, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.CalificacionB, "", new { @class = "text-danger" })*@
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="Descripcion">Calificacion C*</label>
-                    @Html.TextBoxFor(q => q.CalificacionC, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(q => q.CalificacionC, "", new { @class = "text-danger" })
+                    <label for="CalificacionC">Calificación C</label>
+                    <input class="form-control" type="text" name="CalificacionC" id="CalificacionC"  value= @Model.CalificacionC>
+                    @*@Html.TextBoxFor(q => q.CalificacionC, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.CalificacionC, "", new { @class = "text-danger" })*@
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="Descripcion">Calificacion D*</label>
-                    @Html.TextBoxFor(q => q.CalificacionD, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(q => q.CalificacionD, "", new { @class = "text-danger" })
+                    <label for="CalificacionD">Calificación D</label>
+                    <input class="form-control" type="text" name="CalificacionD" id="CalificacionD"  value= @Model.CalificacionD>
+                    @*@Html.TextBoxFor(q => q.CalificacionD, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.CalificacionD, "", new { @class = "text-danger" })*@
                 </div>
             </div>
         </div>
@@ -75,30 +83,34 @@
         <div class="col-md-12">
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="Descripcion">Precio A*</label>
-                    @Html.TextBoxFor(q => q.PrecioA, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(q => q.PrecioA, "", new { @class = "text-danger" })
+                    <label for="PrecioA">Precio A</label>
+                    <input class="form-control" type="text" name="PrecioA" id="PrecioA" value= @Model.PrecioA>
+                    @*@Html.TextBoxFor(q => q.PrecioA, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.PrecioA, "", new { @class = "text-danger" })*@
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="Descripcion">Precio B*</label>
-                    @Html.TextBoxFor(q => q.PrecioB, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(q => q.PrecioB, "", new { @class = "text-danger" })
+                    <label for="PrecioB">Precio B</label>
+                    <input class="form-control" type="text" name="PrecioB" id="PrecioB" value= @Model.PrecioB>
+                    @*@Html.TextBoxFor(q => q.PrecioB, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.PrecioB, "", new { @class = "text-danger" })*@
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="Descripcion">Precio C*</label>
-                    @Html.TextBoxFor(q => q.PrecioC, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(q => q.PrecioC, "", new { @class = "text-danger" })
+                    <label for="PrecioC">Precio C</label>
+                    <input class="form-control" type="text" name="PrecioC" id="PrecioC" value= @Model.PrecioC>
+                    @*@Html.TextBoxFor(q => q.PrecioC, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.PrecioC, "", new { @class = "text-danger" })*@
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="Descripcion">Precio D*</label>
-                    @Html.TextBoxFor(q => q.PrecioD, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(q => q.PrecioD, "", new { @class = "text-danger" })
+                    <label for="PrecioD">Precio D</label>
+                    <input class="form-control" type="text" name="PrecioD" id="PrecioD" value= @Model.PrecioD>
+                    @*@Html.TextBoxFor(q => q.PrecioD, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.PrecioD, "", new { @class = "text-danger" })*@
                 </div>
             </div>
         </div>
@@ -106,6 +118,7 @@
     <div class="modal-body">
         @Html.Action("GridViewPartial_ProductoDetalle")
     </div>
+
     <div class="box-footer">
         <button type="submit" class="btn btn-primary">Guardar</button>
         <a class="btn btn-default" href="@Url.Action("Index", "Producto", new { Area ="General" }, null)">Cancelar</a>
@@ -115,5 +128,3 @@
         @Scripts.Render("~/bundles/jqueryval")
     }
 }
-
-

@@ -5,10 +5,12 @@ using System.Web;
 
 namespace WEBPJ.Info
 {
-    public class PrecioJusto_Info
+    public class Compra_Info
     {
-        public int IdPrecioJusto { get; set; }
-        public string CedulaProveedor { get; set; }
+        public decimal IdCompra { get; set; }
+        public string ProvCedulaRuc { get; set; }
+        public string ProvNombre { get; set; }
+        public string ProvCodigo { get; set; }
         public string IdUsuario { get; set; }
         public int IdProducto { get; set; }
         public double Calificacion { get; set; }
@@ -21,8 +23,8 @@ namespace WEBPJ.Info
 
 
         #region Campos que no existen en la tabla
-        public string Descripcion { get; set; }
-        public string Nombre { get; set; }
+        public string NomProducto { get; set; }
+        public string NomUsuario { get; set; }
         #endregion
     }
 }

@@ -1,7 +1,7 @@
 ﻿@model WEBPJ.Info.Filtros_Info
 @using WEBPJ.Info
 @{
-    ViewBag.Title = "Precio Justo";
+    ViewBag.Title = "Compra";
     if (string.IsNullOrEmpty(@WEBPJ.Helps.SessionFixed.IdUsuario))
     {
         Response.Redirect("~/Account/Login");
@@ -10,7 +10,7 @@
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 
-@using (Html.BeginForm("Index", "PrecioJusto", FormMethod.Post, new { @role = "form", @class = "form", @id = "myform" }))
+@using (Html.BeginForm("Index", "Compra", FormMethod.Post, new { @role = "form", @class = "form", @id = "myform" }))
 {
     @Html.HiddenFor(q => q.IdTransaccionSession);
     <div class="box ">
@@ -107,7 +107,7 @@
 
     <div class="box">
         <div class="box-body">
-            @Html.Action("GridViewPartial_PrecioJusto", new { Fecha_ini = Model.fecha_ini, Fecha_fin = Model.fecha_fin, IdUsuario = Model.IdUsuario, Estado = Model.Estado })
+            @Html.Action("GridViewPartial_Compra", new { Fecha_ini = Model.fecha_ini, Fecha_fin = Model.fecha_fin, IdUsuario = Model.IdUsuario, Estado = Model.Estado })
         </div>       
     </div>
     <div class="box-body">
@@ -131,7 +131,7 @@
         $.ajax({
             type: 'POST',
             data: JSON.stringify(datos),
-            url: '@Url.Action("GuardarLista", "PrecioJusto", new { Area = "General" })',
+            url: '@Url.Action("GuardarLista", "Compra", new { Area = "General" })',
             async: false,
             bDeferRender: true,
             bProcessing: true,
@@ -139,7 +139,7 @@
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
                 $("#myform").submit();
-                GridViewPartial_PrecioJusto.PerformCallback();
+                GridViewPartial_Compra.PerformCallback();
             },
             error: function (error) {
             }

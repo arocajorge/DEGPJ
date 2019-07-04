@@ -7,7 +7,9 @@
     }
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
 @using (Html.BeginForm("Nuevo", "Producto", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     if (ViewBag.mensaje != null)
@@ -19,50 +21,51 @@
         </div>
     }
     @Html.HiddenFor(q => q.IdTransaccionSession);
+
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="Descripcion">Codigo</label>
+                    <label for="Codigo">Código</label>
                     @Html.TextBoxFor(q => q.Codigo, new { @class = "form-control" })
                     @Html.ValidationMessageFor(q => q.Codigo, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-md-9">
                 <div class="form-group">
-                    <label for="Descripcion">Descripción*</label>
+                    <label for="Descripcion">Descripción</label>
                     @Html.TextBoxFor(q => q.Descripcion, new { @class = "form-control" })
                     @Html.ValidationMessageFor(q => q.Descripcion, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
-    </div>
+    </div>  
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="Descripcion">Calificacion A*</label>
+                    <label for="CalificacionA">Calificación A</label>
                     @Html.TextBoxFor(q => q.CalificacionA, new { @class = "form-control" })
                     @Html.ValidationMessageFor(q => q.CalificacionA, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="Descripcion">Calificacion B*</label>
+                    <label for="CalificacionB">Calificación B</label>
                     @Html.TextBoxFor(q => q.CalificacionB, new { @class = "form-control" })
                     @Html.ValidationMessageFor(q => q.CalificacionB, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="Descripcion">Calificacion C*</label>
+                    <label for="CalificacionC">Calificación C</label>
                     @Html.TextBoxFor(q => q.CalificacionC, new { @class = "form-control" })
                     @Html.ValidationMessageFor(q => q.CalificacionC, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="Descripcion">Calificacion D*</label>
+                    <label for="CalificacionD">Calificación D</label>
                     @Html.TextBoxFor(q => q.CalificacionD, new { @class = "form-control" })
                     @Html.ValidationMessageFor(q => q.CalificacionD, "", new { @class = "text-danger" })
                 </div>
@@ -73,28 +76,28 @@
         <div class="col-md-12">
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="Descripcion">Precio A*</label>
+                    <label for="PrecioA">Precio A</label>
                     @Html.TextBoxFor(q => q.PrecioA, new { @class = "form-control" })
                     @Html.ValidationMessageFor(q => q.PrecioA, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="Descripcion">Precio B*</label>
+                    <label for="PrecioB">Precio B</label>
                     @Html.TextBoxFor(q => q.PrecioB, new { @class = "form-control" })
                     @Html.ValidationMessageFor(q => q.PrecioB, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="Descripcion">Precio C*</label>
+                    <label for="PrecioC">Precio C</label>
                     @Html.TextBoxFor(q => q.PrecioC, new { @class = "form-control" })
                     @Html.ValidationMessageFor(q => q.PrecioC, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="Descripcion">Precio D*</label>
+                    <label for="PrecioD">Precio D</label>
                     @Html.TextBoxFor(q => q.PrecioD, new { @class = "form-control" })
                     @Html.ValidationMessageFor(q => q.PrecioD, "", new { @class = "text-danger" })
                 </div>
@@ -104,6 +107,7 @@
     <div class="modal-body">
         @Html.Action("GridViewPartial_ProductoDetalle")
     </div>
+
     <div class="box-footer">
         <button type="submit" class="btn btn-primary">Guardar</button>
         <a class="btn btn-default" href="@Url.Action("Index", "Producto", new { Area ="General" }, null)">Cancelar</a>
@@ -113,5 +117,3 @@
         @Scripts.Render("~/bundles/jqueryval")
     }
 }
-
-

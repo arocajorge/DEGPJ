@@ -46,32 +46,32 @@
         settings.Columns.Add(column =>
         {
             column.FieldName = "Descripcion";
-            column.Caption = "Descripcion";
-            column.Width = Unit.Percentage(70);
+            column.Caption = "Característica";
+            column.Width = Unit.Percentage(60);
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "Minimo";
-            column.Caption = "Minimo";
+            column.Caption = "Mínimo";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
             column.EditorProperties().SpinEdit(sp =>
             {
                 sp.MinValue = 0;
                 sp.MaxValue = 999999999;
             });
-            column.Width = Unit.Percentage(15);
+            column.Width = Unit.Percentage(12);
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "Maximo";
-            column.Caption = "Maximo";
+            column.Caption = "Máximo";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
             column.EditorProperties().SpinEdit(sp =>
             {
                 sp.MinValue = 0;
                 sp.MaxValue = 999999999;
             });
-            column.Width = Unit.Percentage(15);
+            column.Width = Unit.Percentage(12);
         });
 
         settings.ClientSideEvents.BeginCallback = "function(s,e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val();}";
