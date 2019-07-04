@@ -19,6 +19,8 @@ namespace WEBPJ
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             ModelBinders.Binders.DefaultBinder = new DevExpress.Web.Mvc.DevExpressEditorsBinder();
             SessionFixed.SetSessionValueProvider(new WebSessionValueProvider());
+            ModelBinders.Binders.Add(typeof(decimal), new DecimalModelBinder());
+            ModelBinders.Binders.Add(typeof(double), new DoubleModelBinder());
         }
     }
 }

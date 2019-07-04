@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace APIPJ.Models
+﻿namespace APIPJ.Models
 {
     public class ProductoModel
     {
@@ -19,7 +14,5 @@ namespace APIPJ.Models
         public double PrecioC { get; set; }
         public double PrecioD { get; set; }
         public bool Estado { get; set; }
-
-        public List<ProductoDetalleModel> ListaDetalle { get; set; }
     }
 }

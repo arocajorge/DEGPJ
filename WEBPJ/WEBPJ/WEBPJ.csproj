@@ -222,6 +222,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helps\DecimalModelBinder.cs" />
+    <Compile Include="Helps\DoubleModelBinder.cs" />
     <Compile Include="Helps\SessionFixed.cs" />
     <Compile Include="Info\Enumeradores.cs" />
     <Compile Include="Info\Filtros_Info.cs" />
