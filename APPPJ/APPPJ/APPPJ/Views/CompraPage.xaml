@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+ xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+ x:Class="APPPJ.Views.CompraPage"
+ BindingContext="{Binding Main, Source={StaticResource Locator}}"
+ Title="Compra">
+   <ContentPage.Content>
+        <StackLayout>
+            <ScrollView
+                BindingContext="{Binding Compra}">
+                <StackLayout
+                    Padding="20">
+                        <Label      
+                            TextColor="Black"
+                            FontAttributes="Bold"
+                            Text="Proveedor:">
+                        </Label>
+                        <Picker
+                            ItemsSource="{Binding ListaProveedor}"                            
+                            ItemDisplayBinding="{Binding NomProveedor}"
+                            SelectedIndex="{Binding ProveedorSelectedIndex, Mode=TwoWay}"
+                            Title="Seleccione el proveedor">
+                        </Picker>
+                        <Label      
+                            TextColor="Black"
+                            FontAttributes="Bold"
+                            Text="Producto">
+                        </Label>
+                        <Picker
+                            ItemsSource="{Binding ListaProducto}"
+                            ItemDisplayBinding="{Binding NomProducto}"
+                            SelectedIndex="{Binding ProductoSelectedIndex, Mode=TwoWay}"
+                            Title="Seleccione el producto">
+                        </Picker>
+                    <ActivityIndicator
+                    IsRunning="False"
+                    VerticalOptions="CenterAndExpand">
+                    </ActivityIndicator>
+                    <Button
+                        BackgroundColor="CornflowerBlue"
+                        TextColor="White"
+                        Command="{Binding GuardarCommand}"
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                        VerticalOptions="End"
+                        Text="Guardar">
+                    </Button>
+                    <Button
+                        BackgroundColor="Red"
+                        TextColor="White"
+                        IsVisible="{Binding IsVisible, Mode=TwoWay}"
+                        Command="{Binding EliminarCommand}"
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                        VerticalOptions="End"
+                        Text="Eliminar">
+                    </Button>
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

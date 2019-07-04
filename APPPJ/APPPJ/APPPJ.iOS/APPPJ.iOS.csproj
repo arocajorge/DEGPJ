@@ -156,5 +156,6 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Login.png" />
+    <BundleResource Include="Resources\ic_search.png" />
   </ItemGroup>
 </Project>
