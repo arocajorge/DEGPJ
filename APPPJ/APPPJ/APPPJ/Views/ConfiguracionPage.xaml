@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="APPPJ.Views.ConfiguracionPage"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             Title="Configuración">
+     <ContentPage.Content>
+        <ScrollView
+            Padding="20"
+            BindingContext="{Binding Configuracion}">
+            <StackLayout>
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="Large"                    
+                    Text="Url servidor externo">
+                </Label>
+                <Entry
+                    Text="{Binding UrlServidorExterno, Mode=TwoWay}"
+                    Placeholder="http://192.168.1.138:20000">
+                </Entry>
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="Large"                    
+                    Text="Url servidor interno">
+                </Label>
+                <Entry
+                    Text="{Binding UrlServidorInterno, Mode=TwoWay}"
+                    Placeholder="http://192.168.1.138:20000">
+                </Entry>
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="Large"                    
+                    Text="Ruta carpeta">
+                </Label>
+                <Entry
+                    Text="{Binding RutaCarpeta, Mode=TwoWay}"
+                    Placeholder="/api">
+                </Entry>     
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="Large"                    
+                    Text="Usuario">
+                </Label>
+                <Entry
+                    Text="{Binding Usuario, Mode=TwoWay}"
+                    Placeholder="admin">
+                </Entry>  
+                <ActivityIndicator
+                    VerticalOptions="CenterAndExpand"
+                    IsRunning="{Binding IsRunning, Mode=TwoWay}">
+                </ActivityIndicator>
+                <Button
+                    BackgroundColor="CornflowerBlue"
+                    Text="Sincronizar"
+                    TextColor="White"
+                    IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                    Command="{Binding SincronizarCommand}">
+                </Button>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

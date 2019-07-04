@@ -147,14 +147,19 @@
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="3.4.0.1008975" />
-  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\APPPJ\APPPJ.csproj">
-      <Project>{54006448-86E8-45C7-95C0-052880B91CBF}</Project>
+      <Project>{9A132E65-211B-47B9-820A-A6BB89CBD3B6}</Project>
       <Name>APPPJ</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Login.png" />
+    <BundleResource Include="Resources\ic_search.png" />
+    <BundleResource Include="Resources\ic_cloud_upload.png" />
+    <BundleResource Include="Resources\ic_exit_to_app.png" />
+    <BundleResource Include="Resources\ic_history.png" />
+    <BundleResource Include="Resources\ic_add_circle_outline.png" />
   </ItemGroup>
 </Project>
