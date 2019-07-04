@@ -108,6 +108,9 @@
                     return;
                 }
 
+                MainViewModel.GetInstance().Compra = new CompraViewModel();
+                Application.Current.MainPage = new MasterPage();
+
                 Settings.IdUsuario = ModelUsuario.IdUsuario;
                 IsRunning = false;
                 IsEnabled = true;

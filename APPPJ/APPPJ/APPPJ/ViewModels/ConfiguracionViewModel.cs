@@ -183,6 +183,27 @@
             data.InsertAll<ProductoModel>(list_producto);
             #endregion
 
+            #region Producto
+            var response_atributos = await api.GetList<ProductoDetalleModel>(Settings.UrlConexionActual, RutaCarpeta, "ProductoDetalle", "?IdUsuario=" + this.Usuario);
+            if (!response_atributos.IsSuccess)
+            {
+                this.IsEnabled = true;
+                this.IsRunning = false;
+                await Application.Current.MainPage.DisplayAlert(
+                    "Alerta",
+                    response_atributos.Message,
+                    "Aceptar");
+                return;
+            }
+
+            var list_atributos = (List<ProductoDetalleModel>)response_atributos.Result;
+
+            data.DeleteAll<ProductoDetalleModel>();
+            PKI = 1;
+            list_atributos.ForEach(q => q.PKSQLite = PKI++);
+            data.InsertAll<ProductoDetalleModel>(list_atributos);
+            #endregion
+
             #region Proveedor
             var response_proveedor = await api.GetList<ProveedorModel>(Settings.UrlConexionActual, RutaCarpeta, "Proveedor", "?IdUsuario=" + this.Usuario);
             if (!response_proveedor.IsSuccess)

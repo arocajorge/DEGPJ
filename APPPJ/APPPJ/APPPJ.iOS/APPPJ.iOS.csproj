@@ -157,5 +157,9 @@
   <ItemGroup>
     <BundleResource Include="Resources\Login.png" />
     <BundleResource Include="Resources\ic_search.png" />
+    <BundleResource Include="Resources\ic_cloud_upload.png" />
+    <BundleResource Include="Resources\ic_exit_to_app.png" />
+    <BundleResource Include="Resources\ic_history.png" />
+    <BundleResource Include="Resources\ic_add_circle_outline.png" />
   </ItemGroup>
 </Project>
