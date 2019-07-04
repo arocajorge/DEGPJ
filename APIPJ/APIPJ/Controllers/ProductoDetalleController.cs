@@ -1,27 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Web.Http;
 
 namespace APIPJ.Controllers
 {
     using APIPJ.Bases;
     using APIPJ.Models;
-    public class ProveedorController : ApiController
+    public class ProductoDetalleController : ApiController
     {
-        EntitiesNexpirion db = new EntitiesNexpirion();
-        public List<ProveedorModel> GET(string IdUsuario = "")
+        EntitiesGeneral db = new EntitiesGeneral();
+
+        public List<ProductoDetalleModel> GET(string IdUsuario = "")
         {
             try
             {
-                List<ProveedorModel> Lista = db.fcclient.Select(q => new ProveedorModel
+                List<ProductoDetalleModel> Lista = db.ProductoDetalle.Select(q => new ProductoDetalleModel
                 {
-                    Codigo = q.codigo,
-                    Tipo = q.tipo,
-                    Nombre = q.nombre,
-                    RUC = q.ruc
+                    IdProducto = q.IdProducto,
+                    Secuencia = q.Secuencia,
+                    Descripcion = q.Descripcion,
+                    Minimo = q.Minimo,
+                    Maximo = q.Maximo
                 }).ToList();
-                Lista.ForEach(q => { q.Codigo = q.Codigo.Trim(); q.RUC = q.RUC.Trim(); q.Nombre = q.Nombre.Trim(); });
+
                 return Lista;
             }
             catch (Exception ex)
@@ -32,13 +36,13 @@ namespace APIPJ.Controllers
                     error.LogError.Add(new LogError
                     {
                         ID = ID,
-                        Controlador = "Proveedor/GET",
+                        Controlador = "ProductoDetalle/GET",
                         Error = ex.Message,
                         Fecha = DateTime.Now,
                         IdUsuario = IdUsuario ?? ""
                     });
                 }
-                return new List<ProveedorModel>();
+                return new List<ProductoDetalleModel>();
             }
         }
     }
