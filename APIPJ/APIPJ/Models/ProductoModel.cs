@@ -19,5 +19,7 @@ namespace APIPJ.Models
         public double PrecioC { get; set; }
         public double PrecioD { get; set; }
         public bool Estado { get; set; }
+
+        public List<ProductoDetalleModel> ListaDetalle { get; set; }
     }
 }

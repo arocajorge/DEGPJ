@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace APIPJ.Controllers
@@ -19,8 +17,31 @@ namespace APIPJ.Controllers
             {
                 List<ProductoModel> Lista = db.Producto.Where(q => q.Estado == true).Select(q => new ProductoModel
                 {
-                    IdProducto = q.IdProducto
+                    IdProducto = q.IdProducto,
+                    Descripcion = q.Descripcion,
+                    Codigo = q.Codigo,
+                    CalificacionA = q.CalificacionA,
+                    CalificacionB = q.CalificacionB,
+                    CalificacionC = q.CalificacionC,
+                    CalificacionD = q.CalificacionD,
+                    PrecioA = q.PrecioA,
+                    PrecioB = q.PrecioB,
+                    PrecioC = q.PrecioC,
+                    PrecioD = q.PrecioD,
+                    Estado = q.Estado
                 }).ToList();
+
+                foreach (var item in Lista)
+                {
+                    item.ListaDetalle = db.ProductoDetalle.Where(q => q.IdProducto == item.IdProducto).Select(q => new ProductoDetalleModel
+                    {
+                        IdProducto = q.IdProducto,
+                        Secuencia = q.Secuencia,
+                        Descripcion = q.Descripcion,
+                        Maximo = q.Maximo,
+                        Minimo = q.Minimo
+                    }).ToList();
+                }
 
                 return Lista;
             }

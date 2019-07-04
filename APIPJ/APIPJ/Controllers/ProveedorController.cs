@@ -21,7 +21,7 @@ namespace APIPJ.Controllers
                     Nombre = q.nombre,
                     RUC = q.ruc
                 }).ToList();
-
+                Lista.ForEach(q => { q.Codigo = q.Codigo.Trim(); q.RUC = q.RUC.Trim(); q.Nombre = q.Nombre.Trim(); });
                 return Lista;
             }
             catch (Exception ex)
