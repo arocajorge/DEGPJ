@@ -13,6 +13,8 @@ namespace WEBPJ.Data
         {
             try
             {
+                fecha_ini = fecha_ini.Date;
+                fecha_fin = fecha_fin.Date;
                 List<Compra_Info> Lista;
 
                 using (EntitiesGeneral db = new EntitiesGeneral())
@@ -21,7 +23,7 @@ namespace WEBPJ.Data
                     {
                         if (IdUsuario == "" || IdUsuario == null)
                         {
-                            Lista = db.vwCompra.Select(q => new Compra_Info
+                            Lista = db.vwCompra.Where(q=> fecha_ini <= q.Fecha && q.Fecha <= fecha_fin).Select(q => new Compra_Info
                             {
                                 IdCompra = q.IdCompra,
                                 ProvCedulaRuc = q.ProvCedulaRuc,
@@ -42,7 +44,7 @@ namespace WEBPJ.Data
                         }
                         else
                         {
-                            Lista = db.vwCompra.Where(q=>q.IdUsuario == IdUsuario).Select(q => new Compra_Info
+                            Lista = db.vwCompra.Where(q=>q.IdUsuario == IdUsuario && fecha_ini <= q.Fecha && q.Fecha <= fecha_fin).Select(q => new Compra_Info
                             {
                                 IdCompra = q.IdCompra,
                                 ProvCedulaRuc = q.ProvCedulaRuc,
@@ -66,7 +68,7 @@ namespace WEBPJ.Data
                     {
                         if (IdUsuario == "" || IdUsuario == null)
                         {
-                            Lista = db.vwCompra.Where(q => q.Estado == Estado).Select(q => new Compra_Info
+                            Lista = db.vwCompra.Where(q => q.Estado == Estado && fecha_ini <= q.Fecha && q.Fecha <= fecha_fin).Select(q => new Compra_Info
                             {
                                 IdCompra = q.IdCompra,
                                 ProvCedulaRuc = q.ProvCedulaRuc,
@@ -87,7 +89,7 @@ namespace WEBPJ.Data
                         }
                         else
                         {
-                            Lista = db.vwCompra.Where(q => q.Estado == Estado && q.IdUsuario == IdUsuario).Select(q => new Compra_Info
+                            Lista = db.vwCompra.Where(q => q.Estado == Estado && q.IdUsuario == IdUsuario && fecha_ini <= q.Fecha && q.Fecha <= fecha_fin).Select(q => new Compra_Info
                             {
                                 IdCompra = q.IdCompra,
                                 ProvCedulaRuc = q.ProvCedulaRuc,
@@ -190,6 +192,37 @@ namespace WEBPJ.Data
             }
         }
 
+        public bool ModificarBD(Compra_Info info)
+        {
+            try
+            {
+                using (EntitiesGeneral db = new EntitiesGeneral())
+                {
+                    Compra entity = db.Compra.Where(q => q.IdCompra == info.IdCompra).FirstOrDefault();
+
+                    if (entity != null)
+                    {
+                        entity.IdProducto = info.IdProducto;
+                        entity.IdUsuario = info.IdUsuario;
+                        entity.Calificacion = info.Calificacion;
+                        entity.Fecha = info.Fecha;
+                        entity.Precio = info.Precio;
+                        entity.Cantidad = info.Cantidad;
+                        entity.Total = info.Total;
+                        entity.Estado = info.Estado;
+                        entity.Comentario = info.Comentario;
+                    }
+
+                    db.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception EX)
+            {
+
+                throw;
+            }
+        }
         public bool AnularBD(Compra_Info info)
         {
             try
@@ -203,7 +236,7 @@ namespace WEBPJ.Data
                         return false;
                     }
 
-                    entity.Estado = "I";
+                    entity.Estado = info.Estado;
 
                     db.SaveChanges();
                 }

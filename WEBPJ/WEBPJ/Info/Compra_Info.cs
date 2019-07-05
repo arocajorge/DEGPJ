@@ -7,6 +7,7 @@ namespace WEBPJ.Info
 {
     public class Compra_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public decimal IdCompra { get; set; }
         public string ProvCedulaRuc { get; set; }
         public string ProvNombre { get; set; }

@@ -110,21 +110,10 @@
             @Html.Action("GridViewPartial_Compra", new { Fecha_ini = Model.fecha_ini, Fecha_fin = Model.fecha_fin, IdUsuario = Model.IdUsuario, Estado = Model.Estado })
         </div>       
     </div>
-    <div class="box-body">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <button type="button" class="btn btn-success" id="btn_guardar" onclick="guardar();">Guardar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 }
 
 <script type="text/javascript">
-     function guardar() {
+     @*function guardar() {
         var datos = {
             IdTransaccionSession: $("#IdTransaccionSession").val(),
             }        
@@ -144,5 +133,5 @@
             error: function (error) {
             }
         });
-    }
+    }*@
 </script>
