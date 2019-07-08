@@ -4,9 +4,12 @@ namespace APIPJ.Controllers
 {
     using APIPJ.Bases;
     using APIPJ.Models;
-    public class PrecioJustoController : ApiController
+    using System.Collections.Generic;
+
+    public class CompraController : ApiController
     {
         EntitiesGeneral db = new EntitiesGeneral();
 
+        
     }
 }

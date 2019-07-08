@@ -14,7 +14,7 @@ namespace APIPJ.Controllers
         {
             try
             {
-                List<ProveedorModel> Lista = db.fcclient.Select(q => new ProveedorModel
+                List<ProveedorModel> Lista = db.fcclient.Where(q=> q.tipo == "PRV").Select(q => new ProveedorModel
                 {
                     Codigo = q.codigo,
                     Tipo = q.tipo,

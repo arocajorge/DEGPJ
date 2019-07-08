@@ -116,6 +116,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Bases\Compra.cs">
+      <DependentUpon>ModelGeneral.tt</DependentUpon>
+    </Compile>
     <Compile Include="Bases\fcclient.cs">
       <DependentUpon>ModelNexpirion.tt</DependentUpon>
     </Compile>
@@ -152,9 +155,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelNexpirion.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Bases\PrecioJusto.cs">
-      <DependentUpon>ModelGeneral.tt</DependentUpon>
-    </Compile>
     <Compile Include="Bases\Producto.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
@@ -164,11 +164,11 @@
     <Compile Include="Bases\Usuario.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\PrecioJustoController.cs" />
+    <Compile Include="Controllers\CompraController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\ProductoDetalleController.cs" />
     <Compile Include="Controllers\ProveedorController.cs" />
-    <Compile Include="Models\PrecioJustoModel.cs" />
+    <Compile Include="Models\CompraModel.cs" />
     <Compile Include="Models\ProductoDetalleModel.cs" />
     <Compile Include="Models\ProductoModel.cs" />
     <Compile Include="Models\ProveedorModel.cs" />
