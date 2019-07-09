@@ -19,7 +19,6 @@ namespace WEBPJ.Info
         public double Maximo { get; set; }
         [Required(ErrorMessage = ("el campo ponderacion es obligatorio"))]
         public double Ponderacion { get; set; }
-        [Required(ErrorMessage = ("el campo es obligatorio"))]
         public bool EsObligatorio { get; set; }
         [Required(ErrorMessage = ("el campo porcentaje minimo es obligatorio"))]
         public double PorcentajeMinimo { get; set; }

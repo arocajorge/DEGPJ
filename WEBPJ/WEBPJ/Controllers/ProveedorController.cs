@@ -140,29 +140,13 @@ namespace WEBPJ.Controllers
             if (!data_Proveedor.EliminarBD(model))
             {
                 ViewBag.mensaje = "No se ha podido anular el registro";
-
-                model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
-                model.ListaProveedorProductoDetalle = data_ProveedorProducto.GetList(Convert.ToString(model.Codigo));
-                Lista_ProveedorProductoDetalle.set_list(model.ListaProveedorProductoDetalle, model.IdTransaccionSession);
+                //model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+                //model.ListaProveedorProductoDetalle = data_ProveedorProducto.GetList(Convert.ToString(model.Codigo));
+                //Lista_ProveedorProductoDetalle.set_list(model.ListaProveedorProductoDetalle, model.IdTransaccionSession);
             };
 
             return RedirectToAction("Index");
         }
-
-        //[HttpPost]
-        //public ActionResult Eliminar(Proveedor_Info model)
-        //{
-        //    if (!data_Proveedor.AnularBD(model))
-        //    {
-        //        ViewBag.mensaje = "No se ha podido anular el registro";
-
-        //        model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
-        //        model.ListaProveedorProductoDetalle = data_ProveedorProducto.GetList(Convert.ToString(model.Codigo));
-        //        Lista_ProveedorProductoDetalle.set_list(model.ListaProveedorProductoDetalle, model.IdTransaccionSession);
-        //        return View(model);
-        //    };
-        //    return RedirectToAction("Index");
-        //}
         #endregion
 
         #region Metodos
