@@ -23,7 +23,12 @@ namespace WEBPJ.Data
                         Secuencia = q.Secuencia,
                         Descripcion = q.Descripcion,
                         Minimo = q.Minimo,
-                        Maximo = q.Maximo
+                        Maximo = q.Maximo,
+                        Ponderacion = q.Ponderacion,
+                        EsObligatorio = q.EsObligatorio,
+                        PorcentajeMinimo = q.PorcentajeMinimo,
+                        ValorOptimo = q.ValorOptimo,
+                        EscogerPrecioPor = q.EscogerPrecioPor
                     }).ToList();
 
                     return Lista;

@@ -43,12 +43,14 @@
             e.NewValues["Descripcion"] = "";
             e.NewValues["Minimo"] = "0";
             e.NewValues["Maximo"] = "0";
+            e.NewValues["Ponderacion"] = "0";
+            e.NewValues["PorcentajeMinimo"] = "0";
         };
         settings.Columns.Add(column =>
         {
             column.FieldName = "Descripcion";
             column.Caption = "Característica";
-            column.Width = Unit.Percentage(60);
+            column.Width = Unit.Percentage(20);
         });
         settings.Columns.Add(column =>
         {
@@ -60,7 +62,7 @@
                 sp.MinValue = 0;
                 sp.MaxValue = 999999999;
             });
-            column.Width = Unit.Percentage(12);
+            column.Width = Unit.Percentage(10);
         });
         settings.Columns.Add(column =>
         {
@@ -72,9 +74,70 @@
                 sp.MinValue = 0;
                 sp.MaxValue = 999999999;
             });
+            column.Width = Unit.Percentage(10);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Ponderacion";
+            column.Caption = "Ponderación";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.EditorProperties().SpinEdit(sp =>
+            {
+                sp.MinValue = 0;
+                sp.MaxValue = 999999999;
+            });
             column.Width = Unit.Percentage(12);
         });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "PorcentajeMinimo";
+            column.Caption = "Porcentaje Mínimo";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.EditorProperties().SpinEdit(sp =>
+            {
+                sp.MinValue = 0;
+                sp.MaxValue = 100;
+            });
+            column.Width = Unit.Percentage(10);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "ValorOptimo";
+            column.Caption = "Valor Optimo";
+            column.Width = Unit.Percentage(10);
+            column.EditorProperties().ComboBox(p =>
+            {
+                p.Columns.Add("Value", "Descripción").Width = Unit.Percentage(100);
+                p.TextField = "Value";
+                p.ValueField = "Key";
+                p.ValueType = typeof(string);
+                p.DataSource = ViewBag.lst_ValorOptimo;
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "EscogerPrecioPor";
+            column.Caption = "Prioridad para escoger precio";
+            column.Width = Unit.Percentage(10);
+            column.EditorProperties().ComboBox(p =>
+            {
+                p.Columns.Add("Value", "Descripción").Width = Unit.Percentage(100);
+                p.TextField = "Value";
+                p.ValueField = "Key";
+                p.ValueType = typeof(string);
+                p.DataSource = ViewBag.lst_EscogerPrecioPor;
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "EsObligatorio";
+            column.Caption = "Obligatorio";
+            column.Width = Unit.Percentage(8);
+            column.EditorProperties().CheckBox(sp =>
+            {
 
+            });
+        });
         settings.ClientSideEvents.BeginCallback = "function(s,e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val();}";
     });
 }

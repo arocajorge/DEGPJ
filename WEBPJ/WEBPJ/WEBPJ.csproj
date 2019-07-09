@@ -181,6 +181,9 @@
     <Compile Include="Base\Compra.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
+    <Compile Include="Base\fcclient.cs">
+      <DependentUpon>ModelNexpirion.tt</DependentUpon>
+    </Compile>
     <Compile Include="Base\LogError.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
@@ -199,10 +202,31 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelGeneral.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Base\ModelNexpirion.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelNexpirion.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Base\ModelNexpirion.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelNexpirion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Base\ModelNexpirion.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelNexpirion.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Base\Producto.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
     <Compile Include="Base\ProductoDetalle.cs">
+      <DependentUpon>ModelGeneral.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Base\Proveedor.cs">
+      <DependentUpon>ModelGeneral.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Base\ProveedorProducto.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
     <Compile Include="Base\Usuario.cs">
@@ -211,13 +235,19 @@
     <Compile Include="Base\vwCompra.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
+    <Compile Include="Base\vwProveedor.cs">
+      <DependentUpon>ModelNexpirion.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CompraController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
+    <Compile Include="Controllers\ProveedorController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Data\Compra_Data.cs" />
     <Compile Include="Data\ProductoDetalle_Data.cs" />
     <Compile Include="Data\Producto_Data.cs" />
+    <Compile Include="Data\ProveedorProducto_Data.cs" />
+    <Compile Include="Data\Proveedor_Data.cs" />
     <Compile Include="Data\Usuario_Data.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -230,6 +260,8 @@
     <Compile Include="Info\Compra_Info.cs" />
     <Compile Include="Info\ProductoDetalle_Info.cs" />
     <Compile Include="Info\Producto_Info.cs" />
+    <Compile Include="Info\ProveedorProducto_Info.cs" />
+    <Compile Include="Info\Proveedor_Info.cs" />
     <Compile Include="Info\Usuario_Info.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -6610,6 +6642,16 @@
       <DependentUpon>ModelGeneral.edmx</DependentUpon>
       <LastGenOutput>ModelGeneral.cs</LastGenOutput>
     </Content>
+    <Content Include="Base\ModelNexpirion.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelNexpirion.edmx</DependentUpon>
+      <LastGenOutput>ModelNexpirion.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Base\ModelNexpirion.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelNexpirion.edmx</DependentUpon>
+      <LastGenOutput>ModelNexpirion.cs</LastGenOutput>
+    </Content>
     <Content Include="bower_DevExpress\ace-builds\ChangeLog.txt" />
     <Content Include="bower_DevExpress\ace-builds\editor.html" />
     <Content Include="bower_DevExpress\ace-builds\kitchen-sink.html" />
@@ -7393,6 +7435,13 @@
     <Content Include="Base\ModelGeneral.edmx.diagram">
       <DependentUpon>ModelGeneral.edmx</DependentUpon>
     </Content>
+    <EntityDeploy Include="Base\ModelNexpirion.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelNexpirion.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Base\ModelNexpirion.edmx.diagram">
+      <DependentUpon>ModelNexpirion.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -7431,6 +7480,14 @@
     <Content Include="Views\Producto\Anular.cshtml" />
     <Content Include="Views\Compra\Index.cshtml" />
     <Content Include="Views\Compra\_GridViewPartial_Compra.cshtml" />
+    <Content Include="Views\Proveedor\_GridViewPartial_Proveedor.cshtml" />
+    <Content Include="Views\Proveedor\_GridViewPartial_ProveedorProductoDetalle.cshtml" />
+    <Content Include="Views\Proveedor\Nuevo.cshtml" />
+    <Content Include="Views\Proveedor\Modificar.cshtml" />
+    <Content Include="Views\Proveedor\Index.cshtml" />
+    <Content Include="Views\Proveedor\Anular.cshtml" />
+    <Content Include="Views\Proveedor\Index2.cshtml" />
+    <Content Include="Views\Proveedor\_GridViewPartial_ProveedorNexpirion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

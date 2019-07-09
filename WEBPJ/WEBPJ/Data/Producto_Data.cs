@@ -119,6 +119,7 @@ namespace WEBPJ.Data
                 throw;
             }
         }
+
         public bool GuardarBD(Producto_Info info)
         {
             try
@@ -153,7 +154,12 @@ namespace WEBPJ.Data
                                 Descripcion = item.Descripcion,
                                 Secuencia = Secuencia++,
                                 Minimo = item.Minimo,
-                                Maximo = item.Maximo
+                                Maximo = item.Maximo,
+                                Ponderacion = item.Ponderacion,
+                                EsObligatorio = item.EsObligatorio,
+                                PorcentajeMinimo = item.PorcentajeMinimo,
+                                ValorOptimo = item.ValorOptimo,
+                                EscogerPrecioPor = item.EscogerPrecioPor
                             });
 
                         }
@@ -208,7 +214,12 @@ namespace WEBPJ.Data
                                 Secuencia = Secuencia++,
                                 Descripcion = item.Descripcion,
                                 Minimo = item.Minimo,
-                                Maximo = item.Maximo
+                                Maximo = item.Maximo,
+                                Ponderacion = item.Ponderacion,
+                                EsObligatorio = item.EsObligatorio,
+                                PorcentajeMinimo = item.PorcentajeMinimo,
+                                ValorOptimo = item.ValorOptimo,
+                                EscogerPrecioPor = item.EscogerPrecioPor
                             });
                         }
                     }

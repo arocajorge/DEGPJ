@@ -13,10 +13,10 @@ namespace WEBPJ.Base
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class EntitiesGeneral : DbContext
+    public partial class EntitiesNexpirion : DbContext
     {
-        public EntitiesGeneral()
-            : base("name=EntitiesGeneral")
+        public EntitiesNexpirion()
+            : base("name=EntitiesNexpirion")
         {
         }
     
@@ -25,13 +25,8 @@ namespace WEBPJ.Base
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<LogError> LogError { get; set; }
-        public virtual DbSet<Producto> Producto { get; set; }
-        public virtual DbSet<Usuario> Usuario { get; set; }
-        public virtual DbSet<Compra> Compra { get; set; }
-        public virtual DbSet<vwCompra> vwCompra { get; set; }
-        public virtual DbSet<ProductoDetalle> ProductoDetalle { get; set; }
+        public virtual DbSet<fcclient> fcclient { get; set; }
+        public virtual DbSet<vwProveedor> vwProveedor { get; set; }
         public virtual DbSet<Proveedor> Proveedor { get; set; }
-        public virtual DbSet<ProveedorProducto> ProveedorProducto { get; set; }
     }
 }
