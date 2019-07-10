@@ -50,8 +50,9 @@
             if (e.RowType == GridViewRowType.Data && e.VisibleIndex % 2 == 0)
                 e.BrickStyle.BackColor = System.Drawing.Color.FromArgb(0xEE, 0xEE, 0xEE);
         };    
-        settings.Columns.Add("Codigo", "Código").Width = Unit.Percentage(10);
-        settings.Columns.Add("Tipo", "Tipo").Width = Unit.Percentage(20);
+        
+        settings.Columns.Add("Tipo", "Tipo").Width = Unit.Percentage(10);
+        settings.Columns.Add("Codigo", "Código").Width = Unit.Percentage(20);
         settings.Columns.Add("Nombre", "Nombre").Width = Unit.Percentage(40);
         settings.Columns.Add("Ruc", "Ruc").Width = Unit.Percentage(15);
 
@@ -63,9 +64,11 @@
             {
                 Html.DevExpress().HyperLink(hyperlink =>
                 {
+                    var Tipo = DataBinder.Eval(container.DataItem, "Tipo");
                     var Codigo = DataBinder.Eval(container.DataItem, "Codigo");
+
                     hyperlink.Properties.Text = "Importar";
-                    hyperlink.NavigateUrl = Url.Action("Nuevo", "Proveedor", new { Area = "General" , Codigo = Codigo.ToString().Trim() });
+                    hyperlink.NavigateUrl = Url.Action("Nuevo", "Proveedor", new { Area = "General" , Tipo = Tipo.ToString().Trim(), Codigo = Codigo.ToString().Trim() });
                 }).Render();
             });
         });

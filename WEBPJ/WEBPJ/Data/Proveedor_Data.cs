@@ -72,14 +72,14 @@ namespace WEBPJ.Data
             }
         }
 
-        public Proveedor_Info get_info(string Codigo)
+        public Proveedor_Info get_info(string Tipo, string Codigo)
         {
             try
             {
                 Proveedor_Info info = new Proveedor_Info();
                 using (EntitiesGeneral Context = new EntitiesGeneral())
                 {
-                    Proveedor Entity = Context.Proveedor.Where(q => q.Codigo == Codigo).FirstOrDefault();
+                    Proveedor Entity = Context.Proveedor.Where(q => q.Tipo == Tipo && q.Codigo == Codigo).FirstOrDefault();
 
                     if (Entity == null) return null;
                     info = new Proveedor_Info
@@ -99,14 +99,14 @@ namespace WEBPJ.Data
             }
         }
 
-        public Proveedor_Info get_info_Nexpirion(string Codigo)
+        public Proveedor_Info get_info_Nexpirion(string Tipo, string Codigo)
         {
             try
             {
                 Proveedor_Info info = new Proveedor_Info();
                 using (EntitiesNexpirion Context = new EntitiesNexpirion())
                 {
-                    fcclient Entity = Context.fcclient.Where(q => q.codigo.Trim() == Codigo).FirstOrDefault();
+                    fcclient Entity = Context.fcclient.Where(q => q.tipo == Tipo && q.codigo.Trim() == Codigo).FirstOrDefault();
 
                     if (Entity == null) return null;
                     info = new Proveedor_Info

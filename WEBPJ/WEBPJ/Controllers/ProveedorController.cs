@@ -50,7 +50,7 @@ namespace WEBPJ.Controllers
         #endregion
 
         #region Acciones
-        public ActionResult Nuevo(string Codigo = "")
+        public ActionResult Nuevo(string Tipo = "", string Codigo = "")
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -59,8 +59,7 @@ namespace WEBPJ.Controllers
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
 
-
-            Proveedor_Info model = data_Proveedor.get_info_Nexpirion(Codigo);
+            Proveedor_Info model = data_Proveedor.get_info_Nexpirion(Tipo, Codigo);
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             Lista_ProveedorProductoDetalle.set_list(new List<ProveedorProducto_Info>(), model.IdTransaccionSession);
 
@@ -89,7 +88,7 @@ namespace WEBPJ.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Modificar(string Codigo = "")
+        public ActionResult Modificar(string Tipo = "", string Codigo = "")
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -98,7 +97,7 @@ namespace WEBPJ.Controllers
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
 
-            Proveedor_Info model = data_Proveedor.get_info(Codigo);
+            Proveedor_Info model = data_Proveedor.get_info(Tipo, Codigo);
 
             if (model == null)
                 return RedirectToAction("Index");
@@ -127,7 +126,7 @@ namespace WEBPJ.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Eliminar(string Codigo = "")
+        public ActionResult Eliminar(string Tipo ="", string Codigo = "")
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -136,13 +135,10 @@ namespace WEBPJ.Controllers
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
 
-            Proveedor_Info model = data_Proveedor.get_info(Codigo);
+            Proveedor_Info model = data_Proveedor.get_info(Tipo, Codigo);
             if (!data_Proveedor.EliminarBD(model))
             {
-                ViewBag.mensaje = "No se ha podido anular el registro";
-                //model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
-                //model.ListaProveedorProductoDetalle = data_ProveedorProducto.GetList(Convert.ToString(model.Codigo));
-                //Lista_ProveedorProductoDetalle.set_list(model.ListaProveedorProductoDetalle, model.IdTransaccionSession);
+                ViewBag.mensaje = "No se ha podido eliminar el registro";
             };
 
             return RedirectToAction("Index");

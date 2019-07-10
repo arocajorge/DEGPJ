@@ -57,8 +57,8 @@
             c.SetDataItemTemplateContent(tc =>
             {
                 ViewContext.Writer.Write(
-                    Html.ActionLink("Modificar", "Modificar", new { Codigo = DataBinder.Eval(tc.DataItem, "Codigo") }) + "&nbsp;" +
-                    Html.ActionLink("Eliminar", "Eliminar", new { Codigo = DataBinder.Eval(tc.DataItem, "Codigo") },
+                    Html.ActionLink("Modificar", "Modificar", new { Tipo = DataBinder.Eval(tc.DataItem, "Tipo"), Codigo = DataBinder.Eval(tc.DataItem, "Codigo") }) + "&nbsp;" +
+                    Html.ActionLink("Eliminar", "Eliminar", new { Tipo = DataBinder.Eval(tc.DataItem, "Tipo"), Codigo = DataBinder.Eval(tc.DataItem, "Codigo") },
                         new { onclick = "return confirm('¿Está seguro de que desea eliminar el registro?')" })
                 );
             });
@@ -72,10 +72,9 @@
             c.Settings.AllowSort = DefaultBoolean.False;
             c.Width = Unit.Pixel(150);
         });
-
-
-        settings.Columns.Add("Codigo", "Código").Width = Unit.Percentage(10);
-        settings.Columns.Add("Tipo", "Tipo").Width = Unit.Percentage(20);
+        
+        settings.Columns.Add("Tipo", "Tipo").Width = Unit.Percentage(10);
+        settings.Columns.Add("Codigo", "Código").Width = Unit.Percentage(20);
         settings.Columns.Add("Nombre", "Nombre").Width = Unit.Percentage(40);
         settings.Columns.Add("Ruc", "Ruc").Width = Unit.Percentage(15);
 
