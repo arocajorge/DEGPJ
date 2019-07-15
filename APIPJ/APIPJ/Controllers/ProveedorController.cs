@@ -9,17 +9,17 @@ namespace APIPJ.Controllers
     using APIPJ.Models;
     public class ProveedorController : ApiController
     {
-        EntitiesNexpirion db = new EntitiesNexpirion();
+        EntitiesGeneral db = new EntitiesGeneral();
         public List<ProveedorModel> GET(string IdUsuario = "")
         {
             try
             {
-                List<ProveedorModel> Lista = db.fcclient.Where(q=> q.tipo == "PRV").Select(q => new ProveedorModel
+                List<ProveedorModel> Lista = db.Proveedor.Where(q=> q.Tipo == "PRV").Select(q => new ProveedorModel
                 {
-                    Codigo = q.codigo,
-                    Tipo = q.tipo,
-                    Nombre = q.nombre,
-                    RUC = q.ruc
+                    Codigo = q.Codigo,
+                    Tipo = q.Tipo,
+                    Nombre = q.Nombre,
+                    RUC = q.Ruc
                 }).ToList();
                 Lista.ForEach(q => { q.Codigo = q.Codigo.Trim(); q.RUC = q.RUC.Trim(); q.Nombre = q.Nombre.Trim(); });
                 return Lista;

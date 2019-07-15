@@ -27,8 +27,9 @@ namespace APIPJ.Bases
         public double Total { get; set; }
         public string Comentario { get; set; }
         public string Estado { get; set; }
+        public string ProvTipo { get; set; }
     
-        public virtual Producto Producto { get; set; }
         public virtual Usuario Usuario { get; set; }
+        public virtual Producto Producto { get; set; }
     }
 }

@@ -1,34 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace APIPJ.Controllers
 {
     using APIPJ.Bases;
     using APIPJ.Models;
-    public class ProductoDetalleController : ApiController
+    public class ProveedorProductoController : ApiController
     {
         EntitiesGeneral db = new EntitiesGeneral();
 
-        public List<ProductoDetalleModel> GET(string IdUsuario = "")
+        public List<ProveedorProductoModel> GET(string IdUsuario = "")
         {
             try
             {
-                List<ProductoDetalleModel> Lista = db.ProductoDetalle.Select(q => new ProductoDetalleModel
+                List<ProveedorProductoModel> Lista = db.ProveedorProducto.Include("Producto").Select(q => new ProveedorProductoModel
                 {
-                    IdProducto = q.IdProducto,
+                    Tipo = q.Tipo,
+                    Codigo = q.Codigo,
                     Secuencia = q.Secuencia,
-                    Descripcion = q.Descripcion,
-                    Minimo = q.Minimo,
-                    Maximo = q.Maximo,
-                    Ponderacion = q.Ponderacion,
-                    EsObligatorio = q.EsObligatorio,
-                    PorcentajeMinimo = q.PorcentajeMinimo,
-                    ValorOptimo = q.ValorOptimo,
-                    EscogerPrecioPor = q.EscogerPrecioPor
+                    IdProducto = q.IdProducto,
+                    Descripcion = q.Producto.Descripcion
                 }).ToList();
 
                 return Lista;
@@ -41,13 +34,13 @@ namespace APIPJ.Controllers
                     error.LogError.Add(new LogError
                     {
                         ID = ID,
-                        Controlador = "ProductoDetalle/GET",
+                        Controlador = "ProveedorProducto/GET",
                         Error = ex.Message,
                         Fecha = DateTime.Now,
                         IdUsuario = IdUsuario ?? ""
                     });
                 }
-                return new List<ProductoDetalleModel>();
+                return new List<ProveedorProductoModel>();
             }
         }
     }
