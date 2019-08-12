@@ -34,6 +34,7 @@ namespace WEBPJ.Base
         public double PrecioC { get; set; }
         public double PrecioD { get; set; }
         public bool Estado { get; set; }
+        public string EscogerPrecioPor { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Compra> Compra { get; set; }

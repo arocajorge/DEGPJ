@@ -23,7 +23,6 @@ namespace WEBPJ.Base
         public bool EsObligatorio { get; set; }
         public double PorcentajeMinimo { get; set; }
         public string ValorOptimo { get; set; }
-        public string EscogerPrecioPor { get; set; }
     
         public virtual Producto Producto { get; set; }
     }

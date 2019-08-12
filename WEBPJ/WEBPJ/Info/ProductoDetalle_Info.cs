@@ -24,8 +24,5 @@ namespace WEBPJ.Info
         public double PorcentajeMinimo { get; set; }
         [Required(ErrorMessage = ("el campo valor óptimo es obligatorio"))]
         public string ValorOptimo { get; set; }
-        [Required(ErrorMessage = ("el campo escoger precio por es obligatorio"))]
-        public string EscogerPrecioPor { get; set; }
-
     }
 }

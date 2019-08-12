@@ -32,7 +32,8 @@ namespace WEBPJ.Data
                             PrecioA = q.PrecioA,
                             PrecioB = q.PrecioB,
                             PrecioC = q.PrecioC,
-                            PrecioD = q.PrecioD
+                            PrecioD = q.PrecioD,
+                            EscogerPrecioPor = q.EscogerPrecioPor
                         }).ToList();
                     }
                     else
@@ -50,7 +51,8 @@ namespace WEBPJ.Data
                             PrecioA = q.PrecioA,
                             PrecioB = q.PrecioB,
                             PrecioC = q.PrecioC,
-                            PrecioD = q.PrecioD
+                            PrecioD = q.PrecioD,
+                            EscogerPrecioPor = q.EscogerPrecioPor
                         }).ToList();
                     }
                 }
@@ -86,7 +88,8 @@ namespace WEBPJ.Data
                         PrecioB = Entity.PrecioB,
                         PrecioC = Entity.PrecioC,
                         PrecioD = Entity.PrecioD,
-                        Estado = Entity.Estado
+                        Estado = Entity.Estado,
+                        EscogerPrecioPor = Entity.EscogerPrecioPor
                     };
                 }
 
@@ -139,7 +142,8 @@ namespace WEBPJ.Data
                         PrecioC = info.PrecioC,
                         PrecioD = info.PrecioD,
                         Estado = true,
-                        Codigo = info.Codigo
+                        Codigo = info.Codigo,
+                        EscogerPrecioPor = info.EscogerPrecioPor
                     });
 
                     //detalle
@@ -158,8 +162,7 @@ namespace WEBPJ.Data
                                 Ponderacion = item.Ponderacion,
                                 EsObligatorio = item.EsObligatorio,
                                 PorcentajeMinimo = item.PorcentajeMinimo,
-                                ValorOptimo = item.ValorOptimo,
-                                EscogerPrecioPor = item.EscogerPrecioPor
+                                ValorOptimo = item.ValorOptimo
                             });
 
                         }
@@ -198,6 +201,7 @@ namespace WEBPJ.Data
                     entity.PrecioB = info.PrecioB;
                     entity.PrecioC = info.PrecioC;
                     entity.PrecioD = info.PrecioD;
+                    entity.EscogerPrecioPor = info.EscogerPrecioPor;
 
                     var lst_producto_detalle = db.ProductoDetalle.Where(q => q.IdProducto == info.IdProducto).ToList();
                     db.ProductoDetalle.RemoveRange(lst_producto_detalle);
@@ -218,8 +222,7 @@ namespace WEBPJ.Data
                                 Ponderacion = item.Ponderacion,
                                 EsObligatorio = item.EsObligatorio,
                                 PorcentajeMinimo = item.PorcentajeMinimo,
-                                ValorOptimo = item.ValorOptimo,
-                                EscogerPrecioPor = item.EscogerPrecioPor
+                                ValorOptimo = item.ValorOptimo
                             });
                         }
                     }

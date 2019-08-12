@@ -51,7 +51,7 @@
         {
             column.FieldName = "Descripcion";
             column.Caption = "Característica";
-            column.Width = Unit.Percentage(20);
+            column.Width = Unit.Percentage(30);
         });
         settings.Columns.Add(column =>
         {
@@ -113,20 +113,6 @@
                 p.ValueField = "Key";
                 p.ValueType = typeof(string);
                 p.DataSource = ViewBag.lst_ValorOptimo;
-            });
-        });
-        settings.Columns.Add(column =>
-        {
-            column.FieldName = "EscogerPrecioPor";
-            column.Caption = "Prioridad para escoger precio";
-            column.Width = Unit.Percentage(10);
-            column.EditorProperties().ComboBox(p =>
-            {
-                p.Columns.Add("Value", "Descripción").Width = Unit.Percentage(100);
-                p.TextField = "Value";
-                p.ValueField = "Key";
-                p.ValueType = typeof(string);
-                p.DataSource = ViewBag.lst_EscogerPrecioPor;
             });
         });
         settings.Columns.Add(column =>
