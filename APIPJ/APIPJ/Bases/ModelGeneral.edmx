@@ -15,6 +15,7 @@
           <Property Name="ProvTipo" Type="varchar" MaxLength="3" Nullable="false" />
           <Property Name="ProvCodigo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="IdUsuario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Codigo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="IdProducto" Type="int" Nullable="false" />
           <Property Name="Calificacion" Type="float" Nullable="false" />
           <Property Name="Fecha" Type="datetime" Nullable="false" />
@@ -50,6 +51,7 @@
           <Property Name="PrecioC" Type="float" Nullable="false" />
           <Property Name="PrecioD" Type="float" Nullable="false" />
           <Property Name="Estado" Type="bit" Nullable="false" />
+          <Property Name="EscogerPrecioPor" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductoDetalle">
           <Key>
@@ -65,7 +67,6 @@
           <Property Name="EsObligatorio" Type="bit" Nullable="false" />
           <Property Name="PorcentajeMinimo" Type="float" Nullable="false" />
           <Property Name="ValorOptimo" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="EscogerPrecioPor" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Proveedor">
           <Key>
@@ -217,11 +218,6 @@
         <EntityContainer Name="EntitiesGeneral" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="LogError" EntityType="Self.LogError" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" />
-          <EntitySet Name="Compra" EntityType="ModelGeneral.Compra" />
-          <AssociationSet Name="FK_Compra_Usuario" Association="ModelGeneral.FK_Compra_Usuario">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="Compra" EntitySet="Compra" />
-          </AssociationSet>
           <EntitySet Name="Proveedor" EntityType="ModelGeneral.Proveedor" />
           <EntitySet Name="ProveedorProducto" EntityType="ModelGeneral.ProveedorProducto" />
           <AssociationSet Name="FK_ProveedorProducto_Proveedor" Association="ModelGeneral.FK_ProveedorProducto_Proveedor">
@@ -230,10 +226,6 @@
           </AssociationSet>
           <EntitySet Name="Producto" EntityType="ModelGeneral.Producto" />
           <EntitySet Name="ProductoDetalle" EntityType="ModelGeneral.ProductoDetalle" />
-          <AssociationSet Name="FK_Compra_Producto" Association="ModelGeneral.FK_Compra_Producto">
-            <End Role="Producto" EntitySet="Producto" />
-            <End Role="Compra" EntitySet="Compra" />
-          </AssociationSet>
           <AssociationSet Name="FK_ProductoDetalle_Producto" Association="ModelGeneral.FK_ProductoDetalle_Producto">
             <End Role="Producto" EntitySet="Producto" />
             <End Role="ProductoDetalle" EntitySet="ProductoDetalle" />
@@ -242,40 +234,16 @@
             <End Role="Producto" EntitySet="Producto" />
             <End Role="ProveedorProducto" EntitySet="ProveedorProducto" />
           </AssociationSet>
-        </EntityContainer>
-        <EntityType Name="Compra">
-          <Key>
-            <PropertyRef Name="IdCompra" />
-          </Key>
-          <Property Name="IdCompra" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="ProvCedulaRuc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ProvNombre" Type="String" Nullable="false" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="ProvCodigo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdProducto" Type="Int32" Nullable="false" />
-          <Property Name="Calificacion" Type="Double" Nullable="false" />
-          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Precio" Type="Double" Nullable="false" />
-          <Property Name="Cantidad" Type="Double" Nullable="false" />
-          <Property Name="Total" Type="Double" Nullable="false" />
-          <Property Name="Comentario" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Estado" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Usuario" Relationship="ModelGeneral.FK_Compra_Usuario" FromRole="Compra" ToRole="Usuario" />
-          <Property Name="ProvTipo" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Producto" Relationship="ModelGeneral.FK_Compra_Producto" FromRole="Compra" ToRole="Producto" />
-        </EntityType>
-        <Association Name="FK_Compra_Usuario">
-          <End Type="ModelGeneral.Usuario" Role="Usuario" Multiplicity="1" />
-          <End Type="ModelGeneral.Compra" Role="Compra" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="IdUsuario" />
-            </Principal>
-            <Dependent Role="Compra">
-              <PropertyRef Name="IdUsuario" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+          <EntitySet Name="Compra" EntityType="ModelGeneral.Compra" />
+          <AssociationSet Name="FK_Compra_Producto" Association="ModelGeneral.FK_Compra_Producto">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="Compra" EntitySet="Compra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Compra_Usuario" Association="ModelGeneral.FK_Compra_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Compra" EntitySet="Compra" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="Proveedor">
           <Key>
             <PropertyRef Name="Tipo" />
@@ -330,9 +298,10 @@
           <Property Name="PrecioC" Type="Double" Nullable="false" />
           <Property Name="PrecioD" Type="Double" Nullable="false" />
           <Property Name="Estado" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Compra" Relationship="ModelGeneral.FK_Compra_Producto" FromRole="Producto" ToRole="Compra" />
+          <Property Name="EscogerPrecioPor" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="ProductoDetalle" Relationship="ModelGeneral.FK_ProductoDetalle_Producto" FromRole="Producto" ToRole="ProductoDetalle" />
           <NavigationProperty Name="ProveedorProducto" Relationship="ModelGeneral.FK_ProveedorProducto_Producto" FromRole="Producto" ToRole="ProveedorProducto" />
+          <NavigationProperty Name="Compra" Relationship="ModelGeneral.FK_Compra_Producto" FromRole="Producto" ToRole="Compra" />
         </EntityType>
         <EntityType Name="ProductoDetalle">
           <Key>
@@ -348,21 +317,8 @@
           <Property Name="EsObligatorio" Type="Boolean" Nullable="false" />
           <Property Name="PorcentajeMinimo" Type="Double" Nullable="false" />
           <Property Name="ValorOptimo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EscogerPrecioPor" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Producto" Relationship="ModelGeneral.FK_ProductoDetalle_Producto" FromRole="ProductoDetalle" ToRole="Producto" />
         </EntityType>
-        <Association Name="FK_Compra_Producto">
-          <End Type="ModelGeneral.Producto" Role="Producto" Multiplicity="1" />
-          <End Type="ModelGeneral.Compra" Role="Compra" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Producto">
-              <PropertyRef Name="IdProducto" />
-            </Principal>
-            <Dependent Role="Compra">
-              <PropertyRef Name="IdProducto" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ProductoDetalle_Producto">
           <End Type="ModelGeneral.Producto" Role="Producto" Multiplicity="1" />
           <End Type="ModelGeneral.ProductoDetalle" Role="ProductoDetalle" Multiplicity="*" />
@@ -387,7 +343,53 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="Compra">
+          <Key>
+            <PropertyRef Name="IdCompra" />
+          </Key>
+          <Property Name="IdCompra" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="ProvCedulaRuc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProvNombre" Type="String" Nullable="false" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="ProvTipo" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="ProvCodigo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Codigo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdProducto" Type="Int32" Nullable="false" />
+          <Property Name="Calificacion" Type="Double" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Precio" Type="Double" Nullable="false" />
+          <Property Name="Cantidad" Type="Double" Nullable="false" />
+          <Property Name="Total" Type="Double" Nullable="false" />
+          <Property Name="Comentario" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Producto" Relationship="ModelGeneral.FK_Compra_Producto" FromRole="Compra" ToRole="Producto" />
+          <NavigationProperty Name="Usuario" Relationship="ModelGeneral.FK_Compra_Usuario" FromRole="Compra" ToRole="Usuario" />
+        </EntityType>
+        <Association Name="FK_Compra_Producto">
+          <End Type="ModelGeneral.Producto" Role="Producto" Multiplicity="1" />
+          <End Type="ModelGeneral.Compra" Role="Compra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="Compra">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Compra_Usuario">
+          <End Type="ModelGeneral.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="ModelGeneral.Compra" Role="Compra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Compra">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -415,26 +417,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Compra">
-            <EntityTypeMapping TypeName="ModelGeneral.Compra">
-              <MappingFragment StoreEntitySet="Compra">
-                <ScalarProperty Name="ProvTipo" ColumnName="ProvTipo" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="Comentario" ColumnName="Comentario" />
-                <ScalarProperty Name="Total" ColumnName="Total" />
-                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
-                <ScalarProperty Name="Precio" ColumnName="Precio" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="Calificacion" ColumnName="Calificacion" />
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="ProvCodigo" ColumnName="ProvCodigo" />
-                <ScalarProperty Name="ProvNombre" ColumnName="ProvNombre" />
-                <ScalarProperty Name="ProvCedulaRuc" ColumnName="ProvCedulaRuc" />
-                <ScalarProperty Name="IdCompra" ColumnName="IdCompra" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Proveedor">
             <EntityTypeMapping TypeName="ModelGeneral.Proveedor">
               <MappingFragment StoreEntitySet="Proveedor">
@@ -458,6 +440,7 @@
           <EntitySetMapping Name="Producto">
             <EntityTypeMapping TypeName="ModelGeneral.Producto">
               <MappingFragment StoreEntitySet="Producto">
+                <ScalarProperty Name="EscogerPrecioPor" ColumnName="EscogerPrecioPor" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="PrecioD" ColumnName="PrecioD" />
                 <ScalarProperty Name="PrecioC" ColumnName="PrecioC" />
@@ -476,7 +459,6 @@
           <EntitySetMapping Name="ProductoDetalle">
             <EntityTypeMapping TypeName="ModelGeneral.ProductoDetalle">
               <MappingFragment StoreEntitySet="ProductoDetalle">
-                <ScalarProperty Name="EscogerPrecioPor" ColumnName="EscogerPrecioPor" />
                 <ScalarProperty Name="ValorOptimo" ColumnName="ValorOptimo" />
                 <ScalarProperty Name="PorcentajeMinimo" ColumnName="PorcentajeMinimo" />
                 <ScalarProperty Name="EsObligatorio" ColumnName="EsObligatorio" />
@@ -486,6 +468,27 @@
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
                 <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Compra">
+            <EntityTypeMapping TypeName="ModelGeneral.Compra">
+              <MappingFragment StoreEntitySet="Compra">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Comentario" ColumnName="Comentario" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Calificacion" ColumnName="Calificacion" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="ProvCodigo" ColumnName="ProvCodigo" />
+                <ScalarProperty Name="ProvTipo" ColumnName="ProvTipo" />
+                <ScalarProperty Name="ProvNombre" ColumnName="ProvNombre" />
+                <ScalarProperty Name="ProvCedulaRuc" ColumnName="ProvCedulaRuc" />
+                <ScalarProperty Name="IdCompra" ColumnName="IdCompra" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

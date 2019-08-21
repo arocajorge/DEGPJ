@@ -27,8 +27,7 @@ namespace APIPJ.Controllers
                     Ponderacion = q.Ponderacion,
                     EsObligatorio = q.EsObligatorio,
                     PorcentajeMinimo = q.PorcentajeMinimo,
-                    ValorOptimo = q.ValorOptimo,
-                    EscogerPrecioPor = q.EscogerPrecioPor
+                    ValorOptimo = q.ValorOptimo
                 }).ToList();
 
                 return Lista;

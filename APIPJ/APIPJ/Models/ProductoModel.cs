@@ -14,5 +14,6 @@
         public double PrecioC { get; set; }
         public double PrecioD { get; set; }
         public bool Estado { get; set; }
+        public string EscogerPrecioPor { get; internal set; }
     }
 }

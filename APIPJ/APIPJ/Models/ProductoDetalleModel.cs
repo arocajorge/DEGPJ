@@ -11,6 +11,6 @@
         public bool EsObligatorio { get; set; }
         public double PorcentajeMinimo { get; set; }
         public string ValorOptimo { get; set; }
-        public string EscogerPrecioPor { get; set; }
+        
     }
 }
