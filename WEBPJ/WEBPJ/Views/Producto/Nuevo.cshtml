@@ -39,7 +39,7 @@
                 </div>
             </div>
         </div>
-    </div>  
+    </div>
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-3">
@@ -104,16 +104,27 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="EscogerPor">Motivo de traslado</label>
+                    @Html.DropDownListFor(q => q.EscogerPrecioPor, new SelectList(ViewBag.lst_EscogerPrecioPor, "Key", "Value"), new { @class = "form-control", @id = "EscogerPrecioPor" })
+                    @Html.ValidationMessageFor(q => q.EscogerPrecioPor, "", new { @class = "text-danger" })                    
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal-body">
         @Html.Action("GridViewPartial_ProductoDetalle")
     </div>
 
-    <div class="box-footer">
-        <button type="submit" class="btn btn-primary">Guardar</button>
-        <a class="btn btn-default" href="@Url.Action("Index", "Producto", new { Area ="General" }, null)">Cancelar</a>
-    </div>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a class="btn btn-default" href="@Url.Action("Index", "Producto", new { Area ="General" }, null)">Cancelar</a>
+            </div>
 
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }
+            @section Scripts {
+                @Scripts.Render("~/bundles/jqueryval")
+            }
 }

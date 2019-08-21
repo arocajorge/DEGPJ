@@ -30,7 +30,8 @@ namespace WEBPJ.Info
         [Required(ErrorMessage = ("el campo precio C es obligatorio"))]
         public double PrecioD { get; set; }
         public bool Estado { get; set; }
-
+        [Required(ErrorMessage = ("el campo escoger precio por es obligatorio"))]
+        public string EscogerPrecioPor { get; set; }
 
         #region Campos que no existen en la tabla
         public List<ProductoDetalle_Info> ListaProductoDetalle { get; set; }

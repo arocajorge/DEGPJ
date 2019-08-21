@@ -131,10 +131,14 @@ namespace WEBPJ.Controllers
             var model = Lista_Compra.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
 
             if(model!= null)
-                data_compra.ModificarBD(model.Where(q=>q.IdCompra == info_det.IdCompra).FirstOrDefault());
-            
+            {
+                if (ModelState.IsValid == true)
+                {
+                    data_compra.ModificarBD(model.Where(q => q.IdCompra == info_det.IdCompra).FirstOrDefault());
+                }
+            }
+                            
             cargar_combos_grid();
-
             return PartialView("_GridViewPartial_Compra", model);
         }
 

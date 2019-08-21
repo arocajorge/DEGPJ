@@ -50,6 +50,7 @@ namespace WEBPJ.Controllers
             };
 
             Lista_ProductoDetalle.set_list(new List<ProductoDetalle_Info>(), model.IdTransaccionSession);
+            cargar_combos();
             return View(model);
         }
         [HttpPost]
@@ -61,13 +62,14 @@ namespace WEBPJ.Controllers
             {
                 ViewBag.mensaje = mensaje;
                 SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
-
+                cargar_combos();
                 return View(model);
             }
 
             if (!data_producto.GuardarBD(model))
             {
                 SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
+                cargar_combos();
                 return View(model);
             }
 
@@ -91,6 +93,7 @@ namespace WEBPJ.Controllers
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             model.ListaProductoDetalle = data_producto_detalle.GetList(Convert.ToInt32(model.IdProducto));
             Lista_ProductoDetalle.set_list(model.ListaProductoDetalle, model.IdTransaccionSession);
+            cargar_combos();
             return View(model);
         }
 
@@ -102,11 +105,13 @@ namespace WEBPJ.Controllers
             if (!Validar(model, ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
+                cargar_combos();
                 return View(model);
             }
 
             if (!data_producto.ModificarBD(model))
             {
+                cargar_combos();
                 return View(model);
             }
             return RedirectToAction("Index");
@@ -127,6 +132,7 @@ namespace WEBPJ.Controllers
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             model.ListaProductoDetalle = data_producto_detalle.GetList(Convert.ToInt32(model.IdProducto));
             Lista_ProductoDetalle.set_list(model.ListaProductoDetalle, model.IdTransaccionSession);
+            cargar_combos();
             return View(model);
         }
 
@@ -140,6 +146,7 @@ namespace WEBPJ.Controllers
                 model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
                 model.ListaProductoDetalle = data_producto_detalle.GetList(Convert.ToInt32(model.IdProducto));
                 Lista_ProductoDetalle.set_list(model.ListaProductoDetalle, model.IdTransaccionSession);
+                cargar_combos();
                 return View(model);
             };
             return RedirectToAction("Index");
@@ -149,16 +156,19 @@ namespace WEBPJ.Controllers
         #region Metodos
         public void cargar_combos_detalle()
         {
+            Dictionary<string, string> lst_ValorOptimo = new Dictionary<string, string>();
+            lst_ValorOptimo.Add(@WEBPJ.Info.Enumeradores.eValorOptimo.MINIMO.ToString(), "VALOR MINIMO");
+            lst_ValorOptimo.Add(@WEBPJ.Info.Enumeradores.eValorOptimo.MAXIMO.ToString(), "VALOR MAXIMO");            
+            ViewBag.lst_ValorOptimo = lst_ValorOptimo;
+        }
+
+        public  void cargar_combos()
+        {
             Dictionary<string, string> lst_EscogerPrecioPor = new Dictionary<string, string>();
             lst_EscogerPrecioPor.Add(@WEBPJ.Info.Enumeradores.eEscogerPrecioPor.MASALTO.ToString(), "VALOR MAS ALTO");
             lst_EscogerPrecioPor.Add(@WEBPJ.Info.Enumeradores.eEscogerPrecioPor.MASBAJO.ToString(), "VALOR MAS BAJO");
             lst_EscogerPrecioPor.Add(@WEBPJ.Info.Enumeradores.eEscogerPrecioPor.CERCANO.ToString(), "VALOR CERCANO");
             ViewBag.lst_EscogerPrecioPor = lst_EscogerPrecioPor;
-
-            Dictionary<string, string> lst_ValorOptimo = new Dictionary<string, string>();
-            lst_ValorOptimo.Add(@WEBPJ.Info.Enumeradores.eValorOptimo.MINIMO.ToString(), "VALOR MINIMO");
-            lst_ValorOptimo.Add(@WEBPJ.Info.Enumeradores.eValorOptimo.MAXIMO.ToString(), "VALOR MAXIMO");            
-            ViewBag.lst_ValorOptimo = lst_ValorOptimo;
         }
         #endregion
 
