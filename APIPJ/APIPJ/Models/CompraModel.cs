@@ -1,9 +1,11 @@
 ﻿namespace APIPJ.Models
 {
-    public class PrecioJustoModel
+    public class CompraModel
     {
-        public int IdPrecioJusto { get; set; }
-        public string CedulaProveedor { get; set; }
+        public decimal IdCompra { get; set; }
+        public string ProvCedulaRuc { get; set; }
+        public string ProvNombre { get; set; }
+        public string ProvCodigo { get; set; }
         public string IdUsuario { get; set; }
         public int IdProducto { get; set; }
         public double Calificacion { get; set; }

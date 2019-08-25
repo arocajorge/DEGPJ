@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ModelNexpirion.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ModelNexpirion.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="fcclient">
           <Key>
             <PropertyRef Name="tipo" />
@@ -70,11 +70,43 @@
           <Property Name="bloqueado" Type="bit" Nullable="false" />
           <Property Name="contacto_correo" Type="varchar" MaxLength="254" Nullable="false" />
         </EntityType>
+        <EntityType Name="Proveedor">
+          <Key>
+            <PropertyRef Name="Tipo" />
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Tipo" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="Codigo" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Ruc" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'Nexpirion.dbo.vwProveedor' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwProveedor">
+          <Key>
+            <PropertyRef Name="tipo" />
+            <PropertyRef Name="codigo" />
+            <PropertyRef Name="nombre" />
+            <PropertyRef Name="ruc" />
+          </Key>
+          <Property Name="tipo" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="codigo" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="nombre" Type="char" MaxLength="65" Nullable="false" />
+          <Property Name="ruc" Type="char" MaxLength="20" Nullable="false" />
+        </EntityType>
         <EntityContainer Name="ModelNexpirionStoreContainer">
           <EntitySet Name="fcclient" EntityType="Self.fcclient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Proveedor" EntityType="Self.Proveedor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vwProveedor" EntityType="Self.vwProveedor" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwProveedor].[tipo] AS [tipo], 
+    [vwProveedor].[codigo] AS [codigo], 
+    [vwProveedor].[nombre] AS [nombre], 
+    [vwProveedor].[ruc] AS [ruc]
+    FROM [dbo].[vwProveedor] AS [vwProveedor]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ModelNexpirion" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -145,7 +177,31 @@
         </EntityType>
         <EntityContainer Name="EntitiesNexpirion" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="fcclient" EntityType="Self.fcclient" />
+          <EntitySet Name="vwProveedor" EntityType="ModelNexpirion.vwProveedor" />
+          <EntitySet Name="Proveedor" EntityType="ModelNexpirion.Proveedor" />
         </EntityContainer>
+        <EntityType Name="vwProveedor">
+          <Key>
+            <PropertyRef Name="tipo" />
+            <PropertyRef Name="codigo" />
+            <PropertyRef Name="nombre" />
+            <PropertyRef Name="ruc" />
+          </Key>
+          <Property Name="tipo" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="codigo" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="65" FixedLength="true" Unicode="false" />
+          <Property Name="ruc" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Proveedor">
+          <Key>
+            <PropertyRef Name="Tipo" />
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Tipo" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Codigo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Ruc" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -214,6 +270,26 @@
                 <ScalarProperty Name="cuenta_anticipo" ColumnName="cuenta_anticipo" />
                 <ScalarProperty Name="bloqueado" ColumnName="bloqueado" />
                 <ScalarProperty Name="contacto_correo" ColumnName="contacto_correo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwProveedor">
+            <EntityTypeMapping TypeName="ModelNexpirion.vwProveedor">
+              <MappingFragment StoreEntitySet="vwProveedor">
+                <ScalarProperty Name="ruc" ColumnName="ruc" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="codigo" ColumnName="codigo" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Proveedor">
+            <EntityTypeMapping TypeName="ModelNexpirion.Proveedor">
+              <MappingFragment StoreEntitySet="Proveedor">
+                <ScalarProperty Name="Ruc" ColumnName="Ruc" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

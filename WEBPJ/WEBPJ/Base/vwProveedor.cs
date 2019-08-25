@@ -12,18 +12,11 @@ namespace WEBPJ.Base
     using System;
     using System.Collections.Generic;
     
-    public partial class ProductoDetalle
+    public partial class vwProveedor
     {
-        public int IdProducto { get; set; }
-        public int Secuencia { get; set; }
-        public string Descripcion { get; set; }
-        public double Minimo { get; set; }
-        public double Maximo { get; set; }
-        public double Ponderacion { get; set; }
-        public bool EsObligatorio { get; set; }
-        public double PorcentajeMinimo { get; set; }
-        public string ValorOptimo { get; set; }
-    
-        public virtual Producto Producto { get; set; }
+        public string tipo { get; set; }
+        public string codigo { get; set; }
+        public string nombre { get; set; }
+        public string ruc { get; set; }
     }
 }

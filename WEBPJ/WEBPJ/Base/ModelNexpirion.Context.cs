@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace APIPJ.Bases
+namespace WEBPJ.Base
 {
     using System;
     using System.Data.Entity;
@@ -26,5 +26,7 @@ namespace APIPJ.Bases
         }
     
         public virtual DbSet<fcclient> fcclient { get; set; }
+        public virtual DbSet<vwProveedor> vwProveedor { get; set; }
+        public virtual DbSet<Proveedor> Proveedor { get; set; }
     }
 }

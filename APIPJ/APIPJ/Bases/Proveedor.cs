@@ -12,21 +12,20 @@ namespace APIPJ.Bases
     using System;
     using System.Collections.Generic;
     
-    public partial class Usuario
+    public partial class Proveedor
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Usuario()
+        public Proveedor()
         {
-            this.Compra = new HashSet<Compra>();
+            this.ProveedorProducto = new HashSet<ProveedorProducto>();
         }
     
-        public string IdUsuario { get; set; }
+        public string Tipo { get; set; }
+        public string Codigo { get; set; }
         public string Nombre { get; set; }
-        public string TipoUsuario { get; set; }
-        public string Clave { get; set; }
-        public bool Estado { get; set; }
+        public string Ruc { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Compra> Compra { get; set; }
+        public virtual ICollection<ProveedorProducto> ProveedorProducto { get; set; }
     }
 }

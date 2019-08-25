@@ -50,6 +50,7 @@ namespace WEBPJ.Controllers
             };
 
             Lista_ProductoDetalle.set_list(new List<ProductoDetalle_Info>(), model.IdTransaccionSession);
+            cargar_combos();
             return View(model);
         }
         [HttpPost]
@@ -61,12 +62,14 @@ namespace WEBPJ.Controllers
             {
                 ViewBag.mensaje = mensaje;
                 SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
+                cargar_combos();
                 return View(model);
             }
 
             if (!data_producto.GuardarBD(model))
             {
                 SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
+                cargar_combos();
                 return View(model);
             }
 
@@ -90,7 +93,7 @@ namespace WEBPJ.Controllers
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             model.ListaProductoDetalle = data_producto_detalle.GetList(Convert.ToInt32(model.IdProducto));
             Lista_ProductoDetalle.set_list(model.ListaProductoDetalle, model.IdTransaccionSession);
-
+            cargar_combos();
             return View(model);
         }
 
@@ -102,11 +105,13 @@ namespace WEBPJ.Controllers
             if (!Validar(model, ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
+                cargar_combos();
                 return View(model);
             }
 
             if (!data_producto.ModificarBD(model))
             {
+                cargar_combos();
                 return View(model);
             }
             return RedirectToAction("Index");
@@ -127,7 +132,7 @@ namespace WEBPJ.Controllers
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             model.ListaProductoDetalle = data_producto_detalle.GetList(Convert.ToInt32(model.IdProducto));
             Lista_ProductoDetalle.set_list(model.ListaProductoDetalle, model.IdTransaccionSession);
-
+            cargar_combos();
             return View(model);
         }
 
@@ -141,10 +146,29 @@ namespace WEBPJ.Controllers
                 model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
                 model.ListaProductoDetalle = data_producto_detalle.GetList(Convert.ToInt32(model.IdProducto));
                 Lista_ProductoDetalle.set_list(model.ListaProductoDetalle, model.IdTransaccionSession);
-
+                cargar_combos();
                 return View(model);
             };
             return RedirectToAction("Index");
+        }
+        #endregion
+
+        #region Metodos
+        public void cargar_combos_detalle()
+        {
+            Dictionary<string, string> lst_ValorOptimo = new Dictionary<string, string>();
+            lst_ValorOptimo.Add(@WEBPJ.Info.Enumeradores.eValorOptimo.MINIMO.ToString(), "VALOR MINIMO");
+            lst_ValorOptimo.Add(@WEBPJ.Info.Enumeradores.eValorOptimo.MAXIMO.ToString(), "VALOR MAXIMO");            
+            ViewBag.lst_ValorOptimo = lst_ValorOptimo;
+        }
+
+        public  void cargar_combos()
+        {
+            Dictionary<string, string> lst_EscogerPrecioPor = new Dictionary<string, string>();
+            lst_EscogerPrecioPor.Add(@WEBPJ.Info.Enumeradores.eEscogerPrecioPor.MASALTO.ToString(), "VALOR MAS ALTO");
+            lst_EscogerPrecioPor.Add(@WEBPJ.Info.Enumeradores.eEscogerPrecioPor.MASBAJO.ToString(), "VALOR MAS BAJO");
+            lst_EscogerPrecioPor.Add(@WEBPJ.Info.Enumeradores.eEscogerPrecioPor.CERCANO.ToString(), "VALOR CERCANO");
+            ViewBag.lst_EscogerPrecioPor = lst_EscogerPrecioPor;
         }
         #endregion
 
@@ -153,6 +177,7 @@ namespace WEBPJ.Controllers
         {
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
             var model = Lista_ProductoDetalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            cargar_combos_detalle();
             return PartialView("_GridViewPartial_ProductoDetalle", model);
         }
 
@@ -161,7 +186,7 @@ namespace WEBPJ.Controllers
         {
             Lista_ProductoDetalle.AddRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             var model = Lista_ProductoDetalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-
+            cargar_combos_detalle();
             return PartialView("_GridViewPartial_ProductoDetalle", model);
         }
 
@@ -170,7 +195,7 @@ namespace WEBPJ.Controllers
         {
             Lista_ProductoDetalle.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             var model = Lista_ProductoDetalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-
+            cargar_combos_detalle();
             return PartialView("_GridViewPartial_ProductoDetalle", model);
         }
 
@@ -179,7 +204,7 @@ namespace WEBPJ.Controllers
             Lista_ProductoDetalle.DeleteRow(Secuencia, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             Producto_Info model = new Producto_Info();
             model.ListaProductoDetalle = Lista_ProductoDetalle.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-
+            cargar_combos_detalle();
             return PartialView("_GridViewPartial_ProductoDetalle", model.ListaProductoDetalle);
         }
 
@@ -192,7 +217,13 @@ namespace WEBPJ.Controllers
                 mensaje = "Debe ingresar al menos un registro en el detalle";
                 return false;
             }
-            
+
+            if (i_validar.ListaProductoDetalle.Sum(q=> q.Ponderacion) != 100)
+            {
+                mensaje = "La ponderación debe sumar 100%";
+                return false;
+            }
+
             return true;
         }
         #endregion        
@@ -224,8 +255,6 @@ namespace WEBPJ.Controllers
             if (list.Where(q => q.Descripcion == info_det.Descripcion).Count() == 0)
             {
                 info_det.Secuencia = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
-                info_det.Maximo = info_det.Maximo;
-                info_det.Minimo = info_det.Minimo;
 
                 list.Add(info_det);
             }
@@ -237,12 +266,16 @@ namespace WEBPJ.Controllers
             edited_info.Maximo = info_det.Maximo;
             edited_info.Minimo = info_det.Minimo;
             edited_info.Descripcion = info_det.Descripcion;
+            edited_info.Ponderacion = info_det.Ponderacion;
+            edited_info.EsObligatorio = info_det.EsObligatorio;
+            edited_info.PorcentajeMinimo = info_det.PorcentajeMinimo;
+            edited_info.ValorOptimo = info_det.ValorOptimo;
         }
 
         public void DeleteRow(int Secuencia, decimal IdTransaccionSession)
         {
             List<ProductoDetalle_Info> list = get_list(IdTransaccionSession);
-            list.Remove(list.Where(m => m.Secuencia == Secuencia).First());
+            list.Remove(list.Where(m => m.Secuencia == Secuencia).FirstOrDefault());
         }
     }
 }

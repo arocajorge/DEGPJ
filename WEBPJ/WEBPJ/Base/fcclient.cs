@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace APIPJ.Bases
+namespace WEBPJ.Base
 {
     using System;
     using System.Collections.Generic;

@@ -31,7 +31,7 @@ namespace WEBPJ.Controllers
 
                 SessionFixed.IdTransaccionSession = 1 + "000000000";
                 SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
-                return RedirectToAction("Index", "Usuario", new { @Area = "General" });
+                return RedirectToAction("Index", "Producto", new { @Area = "General" });
             }
 
             ViewBag.mensaje = "Credenciales incorrectas";

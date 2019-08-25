@@ -28,7 +28,8 @@ namespace APIPJ.Controllers
                     PrecioB = q.PrecioB,
                     PrecioC = q.PrecioC,
                     PrecioD = q.PrecioD,
-                    Estado = q.Estado
+                    Estado = q.Estado,
+                    EscogerPrecioPor = q.EscogerPrecioPor
                 }).ToList();
                 
 

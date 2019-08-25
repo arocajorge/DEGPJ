@@ -7,26 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WEBPJ.Base
+namespace APIPJ.Bases
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class PrecioJusto
+    public partial class ProveedorProducto
     {
-        public int IdPrecioJusto { get; set; }
-        public string CedulaProveedor { get; set; }
-        public string IdUsuario { get; set; }
+        public string Tipo { get; set; }
+        public string Codigo { get; set; }
+        public int Secuencia { get; set; }
         public int IdProducto { get; set; }
-        public double Calificacion { get; set; }
-        public System.DateTime Fecha { get; set; }
-        public double Precio { get; set; }
-        public double Cantidad { get; set; }
-        public double Total { get; set; }
-        public string Comentario { get; set; }
-        public string Estado { get; set; }
     
+        public virtual Proveedor Proveedor { get; set; }
         public virtual Producto Producto { get; set; }
-        public virtual Usuario Usuario { get; set; }
     }
 }

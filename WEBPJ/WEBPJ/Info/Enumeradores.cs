@@ -12,5 +12,18 @@ namespace WEBPJ.Info
             ADMINISTRADOR,
             USUARIO
         }
+
+        public enum eEscogerPrecioPor
+        {
+            MASALTO,
+            MASBAJO,
+            CERCANO
+        }
+
+        public enum eValorOptimo
+        {
+            MINIMO,
+            MAXIMO
+        }
     }
 }

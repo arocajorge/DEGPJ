@@ -17,8 +17,9 @@ namespace WEBPJ.Base
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Producto()
         {
-            this.PrecioJusto = new HashSet<PrecioJusto>();
+            this.Compra = new HashSet<Compra>();
             this.ProductoDetalle = new HashSet<ProductoDetalle>();
+            this.ProveedorProducto = new HashSet<ProveedorProducto>();
         }
     
         public int IdProducto { get; set; }
@@ -33,10 +34,13 @@ namespace WEBPJ.Base
         public double PrecioC { get; set; }
         public double PrecioD { get; set; }
         public bool Estado { get; set; }
+        public string EscogerPrecioPor { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PrecioJusto> PrecioJusto { get; set; }
+        public virtual ICollection<Compra> Compra { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductoDetalle> ProductoDetalle { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProveedorProducto> ProveedorProducto { get; set; }
     }
 }

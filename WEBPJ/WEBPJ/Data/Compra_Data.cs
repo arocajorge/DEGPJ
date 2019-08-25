@@ -7,13 +7,15 @@ using WEBPJ.Info;
 
 namespace WEBPJ.Data
 {
-    public class PrecioJusto_Data
+    public class Compra_Data
     {
-        public List<PrecioJusto_Info> get_list(DateTime fecha_ini, DateTime fecha_fin, string IdUsuario, string Estado)
+        public List<Compra_Info> get_list(DateTime fecha_ini, DateTime fecha_fin, string IdUsuario, string Estado)
         {
             try
             {
-                List<PrecioJusto_Info> Lista;
+                fecha_ini = fecha_ini.Date;
+                fecha_fin = fecha_fin.Date;
+                List<Compra_Info> Lista;
 
                 using (EntitiesGeneral db = new EntitiesGeneral())
                 {
@@ -21,40 +23,44 @@ namespace WEBPJ.Data
                     {
                         if (IdUsuario == "" || IdUsuario == null)
                         {
-                            Lista = db.vwPrecioJusto.Select(q => new PrecioJusto_Info
+                            Lista = db.vwCompra.Where(q=> fecha_ini <= q.Fecha && q.Fecha <= fecha_fin).Select(q => new Compra_Info
                             {
-                                IdPrecioJusto = q.IdPrecioJusto,
-                                IdProducto = q.IdProducto,
-                                Descripcion = q.Descripcion,
-                                Nombre = q.Nombre,
+                                IdCompra = q.IdCompra,
+                                ProvCedulaRuc = q.ProvCedulaRuc,
+                                ProvNombre = q.ProvNombre,
+                                ProvCodigo = q.ProvCodigo,
                                 IdUsuario = q.IdUsuario,
-                                Estado = q.Estado,
-                                CedulaProveedor = q.CedulaProveedor,
+                                IdProducto = q.IdProducto,
                                 Calificacion = q.Calificacion,
                                 Fecha = q.Fecha,
                                 Precio = q.Precio,
                                 Cantidad = q.Cantidad,
                                 Total = q.Total,
-                                Comentario = q.Comentario
+                                Comentario = q.Comentario,
+                                Estado = q.Estado,
+                                NomProducto = q.NomProducto,
+                                NomUsuario = q.NomUsuario
                             }).ToList();
                         }
                         else
                         {
-                            Lista = db.vwPrecioJusto.Where(q=>q.IdUsuario == IdUsuario).Select(q => new PrecioJusto_Info
+                            Lista = db.vwCompra.Where(q=>q.IdUsuario == IdUsuario && fecha_ini <= q.Fecha && q.Fecha <= fecha_fin).Select(q => new Compra_Info
                             {
-                                IdPrecioJusto = q.IdPrecioJusto,
-                                IdProducto = q.IdProducto,
+                                IdCompra = q.IdCompra,
+                                ProvCedulaRuc = q.ProvCedulaRuc,
+                                ProvNombre = q.ProvNombre,
+                                ProvCodigo = q.ProvCodigo,
                                 IdUsuario = q.IdUsuario,
-                                Descripcion = q.Descripcion,
-                                Nombre = q.Nombre,
-                                Estado = q.Estado,
-                                CedulaProveedor = q.CedulaProveedor,
+                                IdProducto = q.IdProducto,
                                 Calificacion = q.Calificacion,
                                 Fecha = q.Fecha,
                                 Precio = q.Precio,
                                 Cantidad = q.Cantidad,
                                 Total = q.Total,
-                                Comentario = q.Comentario
+                                Comentario = q.Comentario,
+                                Estado = q.Estado,
+                                NomProducto = q.NomProducto,
+                                NomUsuario = q.NomUsuario
                             }).ToList();
                         }                       
                     }
@@ -62,40 +68,44 @@ namespace WEBPJ.Data
                     {
                         if (IdUsuario == "" || IdUsuario == null)
                         {
-                            Lista = db.vwPrecioJusto.Where(q => q.Estado == Estado).Select(q => new PrecioJusto_Info
+                            Lista = db.vwCompra.Where(q => q.Estado == Estado && fecha_ini <= q.Fecha && q.Fecha <= fecha_fin).Select(q => new Compra_Info
                             {
-                                IdPrecioJusto = q.IdPrecioJusto,
-                                IdProducto = q.IdProducto,
+                                IdCompra = q.IdCompra,
+                                ProvCedulaRuc = q.ProvCedulaRuc,
+                                ProvNombre = q.ProvNombre,
+                                ProvCodigo = q.ProvCodigo,
                                 IdUsuario = q.IdUsuario,
-                                Descripcion = q.Descripcion,
-                                Nombre = q.Nombre,
-                                Estado = q.Estado,
-                                CedulaProveedor = q.CedulaProveedor,
+                                IdProducto = q.IdProducto,
                                 Calificacion = q.Calificacion,
                                 Fecha = q.Fecha,
                                 Precio = q.Precio,
                                 Cantidad = q.Cantidad,
                                 Total = q.Total,
-                                Comentario = q.Comentario
+                                Comentario = q.Comentario,
+                                Estado = q.Estado,
+                                NomProducto = q.NomProducto,
+                                NomUsuario = q.NomUsuario
                             }).ToList();
                         }
                         else
                         {
-                            Lista = db.vwPrecioJusto.Where(q => q.Estado == Estado && q.IdUsuario == IdUsuario).Select(q => new PrecioJusto_Info
+                            Lista = db.vwCompra.Where(q => q.Estado == Estado && q.IdUsuario == IdUsuario && fecha_ini <= q.Fecha && q.Fecha <= fecha_fin).Select(q => new Compra_Info
                             {
-                                IdPrecioJusto = q.IdPrecioJusto,
-                                IdProducto = q.IdProducto,
+                                IdCompra = q.IdCompra,
+                                ProvCedulaRuc = q.ProvCedulaRuc,
+                                ProvNombre = q.ProvNombre,
+                                ProvCodigo = q.ProvCodigo,
                                 IdUsuario = q.IdUsuario,
-                                Descripcion = q.Descripcion,
-                                Nombre = q.Nombre,
-                                Estado = q.Estado,
-                                CedulaProveedor = q.CedulaProveedor,
+                                IdProducto = q.IdProducto,
                                 Calificacion = q.Calificacion,
                                 Fecha = q.Fecha,
                                 Precio = q.Precio,
                                 Cantidad = q.Cantidad,
                                 Total = q.Total,
-                                Comentario = q.Comentario
+                                Comentario = q.Comentario,
+                                Estado = q.Estado,
+                                NomProducto = q.NomProducto,
+                                NomUsuario = q.NomUsuario
                             }).ToList();
                         }
                        
@@ -110,20 +120,22 @@ namespace WEBPJ.Data
             }
         }
 
-        public PrecioJusto_Info get_info(int IdPrecioJusto)
+        public Compra_Info get_info(int IdCompra)
         {
             try
             {
-                PrecioJusto_Info info = new PrecioJusto_Info();
+                Compra_Info info = new Compra_Info();
                 using (EntitiesGeneral Context = new EntitiesGeneral())
                 {
-                    PrecioJusto Entity = Context.PrecioJusto.Where(q => q.IdPrecioJusto == IdPrecioJusto).FirstOrDefault();
+                    Compra Entity = Context.Compra.Where(q => q.IdCompra == IdCompra).FirstOrDefault();
 
                     if (Entity == null) return null;
-                    info = new PrecioJusto_Info
+                    info = new Compra_Info
                     {
-                        IdPrecioJusto = Entity.IdPrecioJusto,
-                        CedulaProveedor = Entity.CedulaProveedor,
+                        IdCompra = Entity.IdCompra,
+                        ProvCedulaRuc = Entity.ProvCedulaRuc,
+                        ProvNombre = Entity.ProvNombre,
+                        ProvCodigo = Entity.ProvCodigo,
                         IdUsuario = Entity.IdUsuario,
                         IdProducto = Entity.IdProducto,
                         Calificacion = Entity.Calificacion,
@@ -144,7 +156,7 @@ namespace WEBPJ.Data
             }
         }
         
-        public bool ModificarBD(List<PrecioJusto_Info> Lista)
+        public bool ModificarBD(List<Compra_Info> Lista)
         {
             try
             {
@@ -152,7 +164,7 @@ namespace WEBPJ.Data
                 {
                     foreach (var item in Lista)
                     {
-                        PrecioJusto entity = db.PrecioJusto.Where(q => q.IdPrecioJusto == item.IdPrecioJusto).FirstOrDefault();
+                        Compra entity = db.Compra.Where(q => q.IdCompra == item.IdCompra).FirstOrDefault();
 
                         if (entity != null)
                         {
@@ -180,20 +192,51 @@ namespace WEBPJ.Data
             }
         }
 
-        public bool AnularBD(PrecioJusto_Info info)
+        public bool ModificarBD(Compra_Info info)
         {
             try
             {
                 using (EntitiesGeneral db = new EntitiesGeneral())
                 {
-                    PrecioJusto entity = db.PrecioJusto.Where(q => q.IdPrecioJusto == info.IdPrecioJusto).FirstOrDefault();
+                    Compra entity = db.Compra.Where(q => q.IdCompra == info.IdCompra).FirstOrDefault();
+
+                    if (entity != null)
+                    {
+                        entity.IdProducto = info.IdProducto;
+                        entity.IdUsuario = info.IdUsuario;
+                        entity.Calificacion = info.Calificacion;
+                        entity.Fecha = info.Fecha;
+                        entity.Precio = info.Precio;
+                        entity.Cantidad = info.Cantidad;
+                        entity.Total = info.Total;
+                        entity.Estado = info.Estado;
+                        entity.Comentario = info.Comentario;
+                    }
+
+                    db.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception EX)
+            {
+
+                throw;
+            }
+        }
+        public bool AnularBD(Compra_Info info)
+        {
+            try
+            {
+                using (EntitiesGeneral db = new EntitiesGeneral())
+                {
+                    Compra entity = db.Compra.Where(q => q.IdCompra == info.IdCompra).FirstOrDefault();
 
                     if (entity == null)
                     {
                         return false;
                     }
 
-                    entity.Estado = "I";
+                    entity.Estado = info.Estado;
 
                     db.SaveChanges();
                 }

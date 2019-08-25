@@ -7,21 +7,23 @@ namespace APIPJ.Controllers
 {
     using APIPJ.Bases;
     using APIPJ.Models;
-    public class ProveedorController : ApiController
+    public class ProveedorProductoController : ApiController
     {
         EntitiesGeneral db = new EntitiesGeneral();
-        public List<ProveedorModel> GET(string IdUsuario = "")
+
+        public List<ProveedorProductoModel> GET(string IdUsuario = "")
         {
             try
             {
-                List<ProveedorModel> Lista = db.Proveedor.Where(q=> q.Tipo == "PRV").Select(q => new ProveedorModel
+                List<ProveedorProductoModel> Lista = db.ProveedorProducto.Include("Producto").Select(q => new ProveedorProductoModel
                 {
-                    Codigo = q.Codigo,
                     Tipo = q.Tipo,
-                    Nombre = q.Nombre,
-                    RUC = q.Ruc
+                    Codigo = q.Codigo,
+                    Secuencia = q.Secuencia,
+                    IdProducto = q.IdProducto,
+                    Descripcion = q.Producto.Descripcion
                 }).ToList();
-                Lista.ForEach(q => { q.Codigo = q.Codigo.Trim(); q.RUC = q.RUC.Trim(); q.Nombre = q.Nombre.Trim(); });
+
                 return Lista;
             }
             catch (Exception ex)
@@ -32,13 +34,13 @@ namespace APIPJ.Controllers
                     error.LogError.Add(new LogError
                     {
                         ID = ID,
-                        Controlador = "Proveedor/GET",
+                        Controlador = "ProveedorProducto/GET",
                         Error = ex.Message,
                         Fecha = DateTime.Now,
                         IdUsuario = IdUsuario ?? ""
                     });
                 }
-                return new List<ProveedorModel>();
+                return new List<ProveedorProductoModel>();
             }
         }
     }

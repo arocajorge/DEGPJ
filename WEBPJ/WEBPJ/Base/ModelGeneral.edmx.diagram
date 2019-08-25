@@ -6,14 +6,18 @@
     <edmx:Diagrams>
       <Diagram DiagramId="287e2009bcaf42fbac9d53f63b94a831" Name="Diagram1">
         <EntityTypeShape EntityType="ModelGeneral.LogError" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ModelGeneral.PrecioJusto" Width="1.5" PointX="9" PointY="3.125" />
-        <EntityTypeShape EntityType="ModelGeneral.Producto" Width="1.5" PointX="3.75" PointY="3" />
-        <EntityTypeShape EntityType="ModelGeneral.ProductoDetalle" Width="1.5" PointX="6" PointY="3.75" />
         <EntityTypeShape EntityType="ModelGeneral.Usuario" Width="1.5" PointX="6.75" PointY="0.75" />
-        <EntityTypeShape EntityType="ModelGeneral.vwPrecioJusto" Width="1.5" PointX="0.75" PointY="4.25" />
-        <AssociationConnector Association="ModelGeneral.FK_PrecioJusto_Producto" />
-        <AssociationConnector Association="ModelGeneral.FK_PrecioJusto_Usuario" />
+        <EntityTypeShape EntityType="ModelGeneral.vwCompra" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="ModelGeneral.Proveedor" Width="1.5" PointX="6.75" PointY="9" />
+        <EntityTypeShape EntityType="ModelGeneral.ProveedorProducto" Width="1.5" PointX="9" PointY="6.875" />
+        <AssociationConnector Association="ModelGeneral.FK_ProveedorProducto_Proveedor" />
+        <EntityTypeShape EntityType="ModelGeneral.Compra" Width="1.5" PointX="9" PointY="1.25" />
+        <EntityTypeShape EntityType="ModelGeneral.Producto" Width="1.5" PointX="6.75" PointY="3.875" />
+        <EntityTypeShape EntityType="ModelGeneral.ProductoDetalle" Width="1.5" PointX="9" PointY="10.5" />
+        <AssociationConnector Association="ModelGeneral.FK_Compra_Producto" />
+        <AssociationConnector Association="ModelGeneral.FK_Compra_Usuario" />
         <AssociationConnector Association="ModelGeneral.FK_ProductoDetalle_Producto" />
+        <AssociationConnector Association="ModelGeneral.FK_ProveedorProducto_Producto" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

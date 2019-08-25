@@ -1,0 +1,74 @@
+﻿@model WEBPJ.Info.Proveedor_Info
+@{
+    ViewBag.Title = "Modificar proveedor";
+    if (string.IsNullOrEmpty(@WEBPJ.Helps.SessionFixed.IdUsuario))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Anular", "Proveedor", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+    @Html.HiddenFor(q => q.IdTransaccionSession);
+    @Html.HiddenFor(q => q.Codigo);
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Codigo">Código</label>
+                    @Html.TextBoxFor(q => q.Codigo, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.Codigo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="form-group">
+                    <label for="Descripcion">Tipo</label>
+                    @Html.TextBoxFor(q => q.Tipo, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.Tipo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-9">
+                <div class="form-group">
+                    <label for="CalificacionA">Nombre</label>
+                    @Html.TextBoxFor(q => q.Nombre, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.Nombre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="CalificacionB">RUC</label>
+                    @Html.TextBoxFor(q => q.Ruc, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.Ruc, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body">
+        @Html.Action("GridViewPartial_ProveedorProductoDetalle")
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "Proveedor", new { Area ="General" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

@@ -23,7 +23,11 @@ namespace APIPJ.Controllers
                     Secuencia = q.Secuencia,
                     Descripcion = q.Descripcion,
                     Minimo = q.Minimo,
-                    Maximo = q.Maximo
+                    Maximo = q.Maximo,
+                    Ponderacion = q.Ponderacion,
+                    EsObligatorio = q.EsObligatorio,
+                    PorcentajeMinimo = q.PorcentajeMinimo,
+                    ValorOptimo = q.ValorOptimo
                 }).ToList();
 
                 return Lista;
