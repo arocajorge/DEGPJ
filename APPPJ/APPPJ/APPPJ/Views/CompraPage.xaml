@@ -10,39 +10,127 @@
                 BindingContext="{Binding Compra}">
                 <StackLayout
                     Padding="20">
-                        <Label      
-                            TextColor="Black"
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        
+                        <Label
+                            Grid.Column="0"
+                            Grid.Row="0"
                             FontAttributes="Bold"
                             Text="Proveedor:">
                         </Label>
-                        <Picker
-                            ItemsSource="{Binding ListaProveedor}"                            
-                            ItemDisplayBinding="{Binding NomProveedor}"
-                            SelectedIndex="{Binding ProveedorSelectedIndex, Mode=TwoWay}"
-                            Title="Seleccione el proveedor">
-                        </Picker>
-                        <Label      
+                        <Button
+                            Grid.Column="1"
+                            Grid.Row="0"       
+                            Grid.RowSpan="2"
+                            Command="{Binding BuscarProveedorCommand}"
+                            HorizontalOptions="End"
+                            Image="ic_search">
+                        </Button>
+                        <Label
+                            Grid.Column="0"
+                            Grid.Row="1"
+                            FontAttributes="None"
                             TextColor="Black"
-                            FontAttributes="Bold"
-                            Text="Producto">
+                            Text="{Binding NomProveedor, Mode=TwoWay}">
                         </Label>
-                        <Picker
-                            ItemsSource="{Binding ListaProducto}"
-                            ItemDisplayBinding="{Binding NomProducto}"
-                            SelectedIndex="{Binding ProductoSelectedIndex, Mode=TwoWay}"
-                            Title="Seleccione el producto">
-                        </Picker>
+                        
+                        <Label
+                            Grid.Column="0"
+                            Grid.Row="2"
+                            FontAttributes="Bold"
+                            Text="Producto:">
+                        </Label>
+                        <Button
+                            Grid.Column="1"
+                            Grid.Row="2"       
+                            Grid.RowSpan="2"
+                            Command="{Binding BuscarProductoCommand}"
+                            HorizontalOptions="End"
+                            IsVisible="{Binding IsVisibleBuscar,Mode=TwoWay}"
+                            Image="ic_search">
+                        </Button>
+                        <Label
+                            Grid.Column="0"
+                            Grid.Row="3"
+                            FontAttributes="None"
+                            TextColor="Black"
+                            Text="{Binding NomProducto, Mode=TwoWay}">
+                        </Label>
+                         </Grid>
+                        <Label
+                            Text="Cantidad:"
+                            TextColor="Black"
+                            VerticalTextAlignment="Center"
+                            HorizontalOptions="StartAndExpand">
+                        </Label>
+                        <Editor
+                            VerticalOptions="FillAndExpand"
+                            Text="{Binding Cantidad, Mode=TwoWay}"
+                            Keyboard="Numeric">
+                        </Editor>
+                        <Label
+                            FontAttributes="Bold"
+                            Text="Propiedades:">
+                        </Label>
+                    <ListView
+                            SeparatorVisibility="None"
+                            ItemsSource="{Binding ListaDetalle}"                        
+                            HasUnevenRows="True"
+                            HeightRequest="{Binding Height}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout
+                                        Orientation="Horizontal">
+                                        <Grid>
+                                        <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="200"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                         <Label
+                                            Grid.Column="0"
+                                            Text="{Binding Descripcion}"
+                                            TextColor="Black"
+                                                FontSize="Small"
+                                            VerticalTextAlignment="Center"
+                                            HorizontalOptions="StartAndExpand">
+                                        </Label>
+                                        <Entry
+                                            Grid.Column="1"
+                                                WidthRequest="200"
+                                            Placeholder="Ingrese la calificación"
+                                            HorizontalTextAlignment="Start"
+                                            Text="{Binding Calificacion, Mode=TwoWay}"
+                                            Keyboard="Numeric"
+                                            HorizontalOptions="EndAndExpand">
+                                        </Entry>
+                                       </Grid>
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                     <ActivityIndicator
-                    IsRunning="False"
+                    IsRunning="{Binding IsRunning}"
                     VerticalOptions="CenterAndExpand">
                     </ActivityIndicator>
                     <Button
-                        BackgroundColor="CornflowerBlue"
+                        BackgroundColor="Teal"
                         TextColor="White"
-                        Command="{Binding GuardarCommand}"
+                        Command="{Binding CalificarCommand}"
                         IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
                         VerticalOptions="End"
-                        Text="Guardar">
+                        Text="Calificar">
                     </Button>
                     <Button
                         BackgroundColor="Red"

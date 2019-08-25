@@ -13,7 +13,6 @@
         private string _contrasenia;
         private bool _IsEnabled;
         private bool _IsRunning;
-        private DataAccess data;
         #endregion
 
         #region Propiedades
@@ -40,9 +39,8 @@
         #endregion
 
         #region Constructor
-        public LoginViewModel()
-        {
-            data = new DataAccess();
+        public LoginViewModel() { 
+
             IsEnabled = true;
         }
         #endregion
@@ -96,7 +94,7 @@
                     return;
                 }
 
-                var ModelUsuario = data.GetUsuario(usuario, contrasenia);
+                var ModelUsuario = App.Data.GetUsuario(usuario, contrasenia);
                 if (ModelUsuario == null)
                 {
                     IsRunning = false;

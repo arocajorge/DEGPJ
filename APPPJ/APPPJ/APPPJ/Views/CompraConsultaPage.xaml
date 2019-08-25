@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+        xmlns="http://xamarin.com/schemas/2014/forms" 
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+        x:Class="APPPJ.Views.CompraConsultaPage"
+        BindingContext="{Binding Main, Source={StaticResource Locator}}"
+        Title="Historial de compras">
+     <ContentPage.Content>        
+    <StackLayout
+            BindingContext="{Binding CompraConsulta}"
+            Padding="5">
+            <ListView 
+                BackgroundColor="White"
+                HasUnevenRows="True"
+                IsRefreshing="{Binding IsRefreshing,Mode=TwoWay}"
+                ItemsSource="{Binding ListaCompras}"
+                SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame                                
+                                HasShadow="True"
+                                CornerRadius="20"
+                                Margin="5">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout
+                                    Grid.Column="0"
+                                    VerticalOptions="Center">
+                                        <StackLayout
+                                        Orientation="Horizontal">
+                                            <Label
+                                                HorizontalOptions="Start"
+                                                Text="{Binding Fecha, StringFormat='{0:dd/MM/yyyy}'}"
+                                                FontAttributes="None"
+                                                TextColor="Black">
+                                            </Label>
+                                            <Label
+                                                FontAttributes="Bold"
+                                                Text="{Binding Codigo}"
+                                                HorizontalOptions="EndAndExpand"
+                                                HorizontalTextAlignment="End"
+                                                TextColor="Black">
+                                            </Label>
+                                        </StackLayout>
+                                        <Label
+                                        FontAttributes="None"
+                                        FontSize="Small"
+                                        Text="{Binding ProvNombre}"
+                                        TextColor="Black">
+                                        </Label>
+                                        <Label
+                                        FontAttributes="None"
+                                        FontSize="Medium"
+                                        Text="{Binding prDescripcion}"
+                                        TextColor="Black">
+                                        </Label>
+                                        <StackLayout
+                                            Orientation="Horizontal">
+                                            <Label
+                                                HorizontalOptions="Start"
+                                                FontAttributes="Bold"                                            
+                                                Text= "{Binding Cantidad, StringFormat='{0:N2}'}"
+                                                TextColor="Black">
+                                            </Label>   
+                                            <Label
+                                                HorizontalOptions="CenterAndExpand"
+                                                FontAttributes="None"                                            
+                                                Text= "{Binding Precio, StringFormat='{0:C2}'}"
+                                                TextColor="Black">
+                                            </Label>    
+                                              <Label
+                                                HorizontalOptions="End"
+                                                FontAttributes="Bold"                                            
+                                                Text= "{Binding Total, StringFormat='{0:C2}'}"
+                                                TextColor="Black">
+                                            </Label>    
+                                        
+                                        </StackLayout>
+                                            <Label
+                                        FontAttributes="Bold"
+                                        FontSize="Medium"
+                                        Text="{Binding Comentario}"
+                                        TextColor="Teal">
+                                        </Label>
+                                    </StackLayout>
+                                    <Image
+                                        Grid.Column="1"
+                                        HorizontalOptions="End"
+                                        Source="ic_keyboard_arrow_right">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding SelectCommand}"></TapGestureRecognizer>        
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </Grid>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

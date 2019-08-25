@@ -52,7 +52,7 @@
                     VerticalOptions="CenterAndExpand">
                 </ActivityIndicator>
                 <Button
-                    BackgroundColor="CornflowerBlue"
+                    BackgroundColor="Teal"
                     TextColor="White"
                     Command="{Binding LoginCommand}"
                     IsEnabled="{Binding IsEnabled, Mode=TwoWay}"

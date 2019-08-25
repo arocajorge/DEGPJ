@@ -10,6 +10,10 @@ namespace APPPJ.ViewModels
         public ConfiguracionViewModel Configuracion { get; set; }
         public SincronizacionViewModel Sincronizacion { get; set; }
         public CompraViewModel Compra { get; set; }
+        public ComboViewModel Combo { get; set; }
+        public CompraConfirmacionPopUpViewModel CompraConfirmacionPopUp { get; set; }
+        public CompraConsultaViewModel CompraConsulta { get; set; }
+        public CompraModificarViewModel CompraModificar { get; set; }
         #region Metodos
 
         private void loadMenu()

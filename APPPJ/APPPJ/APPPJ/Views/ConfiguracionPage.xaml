@@ -50,7 +50,7 @@
                     IsRunning="{Binding IsRunning, Mode=TwoWay}">
                 </ActivityIndicator>
                 <Button
-                    BackgroundColor="CornflowerBlue"
+                    BackgroundColor="Teal"
                     Text="Sincronizar"
                     TextColor="White"
                     IsEnabled="{Binding IsEnabled, Mode=TwoWay}"

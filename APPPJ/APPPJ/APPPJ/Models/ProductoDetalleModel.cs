@@ -23,6 +23,21 @@
         [JsonProperty("Maximo")]
         public double Maximo { get; set; }
 
+        [JsonProperty("Ponderacion")]
+        public double Ponderacion { get; set; }
+
+        [JsonProperty("EsObligatorio")]
+        public bool EsObligatorio { get; set; }
+
+        [JsonProperty("PorcentajeMinimo")]
+        public double PorcentajeMinimo { get; set; }
+
+        [JsonProperty("ValorOptimo")]
+        public string ValorOptimo { get; set; }
+
+        public double Calificacion { get; set; }
+        public double PonderacionFinal { get; set; }
+
         public override int GetHashCode()
         {
             return PKSQLite;

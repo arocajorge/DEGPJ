@@ -18,7 +18,6 @@
         private bool _IsRunning;
         private bool _IsEnabled;
         private ApiService api;
-        private DataAccess data;
         private string _usuario;
         #endregion
 
@@ -59,7 +58,6 @@
         public ConfiguracionViewModel()
         {
             api = new ApiService();
-            data = new DataAccess();
             this.IsEnabled = true;
             this.Usuario = "admin";
             this.UrlServidorExterno = string.IsNullOrEmpty(Settings.UrlConexionExterna) ? "http://192.168.1.138:20000" : Settings.UrlConexionExterna;
@@ -156,10 +154,10 @@
 
             var list_usuario = (List<UsuarioModel>)response_usuario.Result;
            
-            data.DeleteAll<UsuarioModel>();
+            App.Data.DeleteAll<UsuarioModel>();
             PKI = 1;
             list_usuario.ForEach(q => q.PKSQLite = PKI++);
-            data.InsertAll<UsuarioModel>(list_usuario);
+            App.Data.InsertAll<UsuarioModel>(list_usuario);
             #endregion
 
             #region Producto
@@ -177,10 +175,10 @@
 
             var list_producto = (List<ProductoModel>)response_producto.Result;
 
-            data.DeleteAll<ProductoModel>();
+            App.Data.DeleteAll<ProductoModel>();
             PKI = 1;
             list_producto.ForEach(q => q.PKSQLite = PKI++);
-            data.InsertAll<ProductoModel>(list_producto);
+            App.Data.InsertAll<ProductoModel>(list_producto);
             #endregion
 
             #region Producto
@@ -198,10 +196,10 @@
 
             var list_atributos = (List<ProductoDetalleModel>)response_atributos.Result;
 
-            data.DeleteAll<ProductoDetalleModel>();
+            App.Data.DeleteAll<ProductoDetalleModel>();
             PKI = 1;
             list_atributos.ForEach(q => q.PKSQLite = PKI++);
-            data.InsertAll<ProductoDetalleModel>(list_atributos);
+            App.Data.InsertAll<ProductoDetalleModel>(list_atributos);
             #endregion
 
             #region Proveedor
@@ -219,10 +217,48 @@
 
             var list_proveedor = (List<ProveedorModel>)response_proveedor.Result;
 
-            data.DeleteAll<ProveedorModel>();
+            App.Data.DeleteAll<ProveedorModel>();
             PKI = 1;
             list_proveedor.ForEach(q => q.PKSQLite = PKI++);
-            data.InsertAll<ProveedorModel>(list_proveedor);
+            App.Data.InsertAll<ProveedorModel>(list_proveedor);
+            #endregion
+
+            #region ProductoPorProveedor
+            var response_proveedorProducto = await api.GetList<ProveedorProductoModel>(Settings.UrlConexionActual, RutaCarpeta, "ProveedorProducto", "?IdUsuario=" + this.Usuario);
+            if (!response_proveedorProducto.IsSuccess)
+            {
+                this.IsEnabled = true;
+                this.IsRunning = false;
+                await Application.Current.MainPage.DisplayAlert(
+                    "Alerta",
+                    response_proveedorProducto.Message,
+                    "Aceptar");
+                return;
+            }
+
+            var list_proveedorProducto = (List<ProveedorProductoModel>)response_proveedorProducto.Result;
+
+            App.Data.DeleteAll<ProveedorProductoModel>();
+            PKI = 1;
+            list_proveedorProducto.ForEach(q => q.PKSQLite = PKI++);
+            App.Data.InsertAll<ProveedorProductoModel>(list_proveedorProducto);
+            #endregion
+
+            #region Ultima compra
+            var response_compra = await api.GetObject<CompraModel>(Settings.UrlConexionActual, RutaCarpeta, "Compra", "IdUsuario=" + this.Usuario);
+            if (!response_compra.IsSuccess)
+            {
+                this.IsEnabled = true;
+                this.IsRunning = false;
+                await Application.Current.MainPage.DisplayAlert(
+                    "Alerta",
+                    response_compra.Message,
+                    "Aceptar");
+                return;
+            }
+
+            var Compra = (CompraModel)response_compra.Result;
+            Settings.IdCompra = Compra == null ? "0" : Compra.IdCompra.ToString();
             #endregion
 
             #region Limpio los settings

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pages:PopupPage 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    x:Class="APPPJ.Views.CompraConfirmacionPopUpPage"
+    BindingContext="{Binding Main, Source={StaticResource Locator}}"
+    Title="Confirmar compra">
+   <ScrollView
+        BindingContext="{Binding CompraConfirmacionPopUp}">
+        <StackLayout
+            Padding="20"
+            WidthRequest="300"
+            BackgroundColor="White"
+            HorizontalOptions="Center"
+            VerticalOptions="Center">
+            <StackLayout
+                Orientation="Horizontal">
+                <Image
+                HeightRequest="30"
+                Source="ic_cancel"
+                HorizontalOptions="EndAndExpand">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding CerrarCommand}"/>
+                    </Image.GestureRecognizers>
+                </Image>
+            </StackLayout>
+            <Label
+                TextColor="Black"
+                FontSize="Large"
+                FontAttributes="Bold"
+                Text="Cantidad:">
+            </Label>
+            <Label
+                TextColor="Teal"
+                FontSize="Large"
+                HorizontalTextAlignment="End"
+                Text="{Binding Cantidad}"></Label>
+            <Label
+                TextColor="Black"
+                FontSize="Large"
+                FontAttributes="Bold"
+                Text="Precio:"></Label>
+            <Label
+                TextColor="Teal"
+                FontSize="Large"
+                HorizontalTextAlignment="End"
+                Text="{Binding Precio,StringFormat='{0:C2}'}"
+                ></Label>
+            <Label
+                TextColor="Black"
+                FontSize="Large"
+                FontAttributes="Bold"
+                Text="Total:"></Label>
+            <Label 
+                TextColor="Teal"
+                FontSize="Large"
+                HorizontalTextAlignment="End"
+                Text="{Binding Total,StringFormat='{0:C2}'}"></Label>
+             <ActivityIndicator
+                    IsRunning="{Binding IsRunning}"
+                    VerticalOptions="CenterAndExpand">
+                    </ActivityIndicator>
+                    <Button
+                        BackgroundColor="Teal"
+                        TextColor="White"
+                        WidthRequest="200"
+                        Command="{Binding GuardarCommand}"
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                        VerticalOptions="End"
+                        Text="Guardar">
+                    </Button>
+        </StackLayout>
+    </ScrollView>
+</pages:PopupPage>

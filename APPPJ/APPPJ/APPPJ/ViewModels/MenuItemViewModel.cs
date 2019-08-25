@@ -38,10 +38,12 @@ namespace APPPJ.ViewModels
                     Application.Current.MainPage = new NavigationPage(new LoginPage());
                     break;
                 case "CompraPage":
-                  
+                    MainViewModel.GetInstance().Compra = new CompraViewModel();
+                    Application.Current.MainPage = new MasterPage();
                     break;
                 case "ComprasPage":
-                 
+                    MainViewModel.GetInstance().CompraConsulta = new CompraConsultaViewModel();
+                    App.Navigator.PushAsync(new CompraConsultaPage());
                     break;
                 case "SincronizacionPage":
                     MainViewModel.GetInstance().Sincronizacion = new SincronizacionViewModel();
