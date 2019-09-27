@@ -16,6 +16,8 @@ namespace WEBPJ.Controllers
         Producto_Data data_producto = new Producto_Data();
         ProductoDetalle_Data data_producto_detalle = new ProductoDetalle_Data();
         ProductoDetalle_List Lista_ProductoDetalle = new ProductoDetalle_List();
+        Proveedor_Data data_proveedor = new Proveedor_Data();
+        ProveedorProducto_Data data_proveedor_producto = new ProveedorProducto_Data();
         string mensaje = string.Empty;
         #endregion        
 
@@ -226,7 +228,16 @@ namespace WEBPJ.Controllers
 
             return true;
         }
-        #endregion        
+        #endregion
+
+        #region Json
+        public JsonResult cargar_productos_x_proveedor(string IdProveedor = "")
+        {
+            List<Producto_Info> lst_productos = data_proveedor_producto.GetList_Combo(IdProveedor);
+
+            return Json(lst_productos, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
     }
 
     public class ProductoDetalle_List

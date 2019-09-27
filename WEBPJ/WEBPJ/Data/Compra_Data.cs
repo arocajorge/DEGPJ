@@ -155,7 +155,60 @@ namespace WEBPJ.Data
                 throw;
             }
         }
-        
+
+        private decimal get_id()
+        {
+            try
+            {
+                decimal Id = 1;
+                using (EntitiesGeneral Context = new EntitiesGeneral())
+                {
+                    var lst = from q in Context.Compra
+                              select q;
+                    if (lst.Count() > 0)
+                        Id = lst.Max(q => q.IdCompra) + 1;
+                }
+                return Id;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool ModificarBD(Compra_Info info)
+        {
+            try
+            {
+                using (EntitiesGeneral db = new EntitiesGeneral())
+                {
+                    Compra entity = db.Compra.Where(q => q.IdCompra == info.IdCompra).FirstOrDefault();
+
+                    if (entity != null)
+                    {
+                        entity.IdProducto = info.IdProducto;
+                        entity.IdUsuario = info.IdUsuario;
+                        entity.Calificacion = info.Calificacion;
+                        entity.Fecha = info.Fecha;
+                        entity.Precio = info.Precio;
+                        entity.Cantidad = info.Cantidad;
+                        entity.Total = info.Total;
+                        entity.Estado = info.Estado;
+                        entity.Comentario = info.Comentario;
+                    }
+
+                    db.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception EX)
+            {
+
+                throw;
+            }
+        }
+
         public bool ModificarBD(List<Compra_Info> Lista)
         {
             try
@@ -192,26 +245,30 @@ namespace WEBPJ.Data
             }
         }
 
-        public bool ModificarBD(Compra_Info info)
+        public bool GuardarBD(Compra_Info info)
         {
             try
             {
                 using (EntitiesGeneral db = new EntitiesGeneral())
                 {
-                    Compra entity = db.Compra.Where(q => q.IdCompra == info.IdCompra).FirstOrDefault();
-
-                    if (entity != null)
+                    Compra Entity = new Compra
                     {
-                        entity.IdProducto = info.IdProducto;
-                        entity.IdUsuario = info.IdUsuario;
-                        entity.Calificacion = info.Calificacion;
-                        entity.Fecha = info.Fecha;
-                        entity.Precio = info.Precio;
-                        entity.Cantidad = info.Cantidad;
-                        entity.Total = info.Total;
-                        entity.Estado = info.Estado;
-                        entity.Comentario = info.Comentario;
-                    }
+                        IdCompra = get_id(),
+                        ProvCedulaRuc = info.ProvCedulaRuc,
+                        ProvNombre = info.ProvNombre,
+                        ProvCodigo = info.ProvCodigo,
+                        ProvTipo = info.ProvTipo,
+                        IdUsuario = info.IdUsuario,
+                        Codigo = info.Codigo,
+                        IdProducto = info.IdProducto,
+                        Calificacion = info.Calificacion,
+                        Precio = info.Precio,
+                        Fecha = info.Fecha,
+                        Cantidad = info.Cantidad,
+                        Total = info.Total,
+                        Comentario = info.Comentario,
+                        Estado = "PENDIENTE"
+                    };
 
                     db.SaveChanges();
                 }

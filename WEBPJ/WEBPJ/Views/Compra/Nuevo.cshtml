@@ -1,0 +1,177 @@
+﻿@model WEBPJ.Info.Compra_Info
+@{
+    ViewBag.Title = "Nueva compra";
+    if (string.IsNullOrEmpty(@WEBPJ.Helps.SessionFixed.IdUsuario))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Nuevo", "Compra", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+    @Html.HiddenFor(q => q.IdTransaccionSession);
+
+    <div class="modal fade" id="ModalCompra" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Calificación</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6 form-group">
+                                <label for="txtCantidad">Cantidad</label>
+                                <input type="text" id="CantidadProducto" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdProveedor">Proveedor*</label>
+                    @Html.Partial("_CmbProveedor", Model.ProvCodigo)
+                    @Html.ValidationMessageFor(q => q.ProvCodigo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="Descripcion">Producto</label>
+                    @Html.DropDownListFor(q => q.IdProducto, new SelectList(ViewBag.lst_productos, "IdProducto", "Descripcion"), new { @class = "form-control", @id = "IdProducto" })
+                    @Html.ValidationMessageFor(q => q.IdProducto, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Cantidad">Cantidad</label>
+                    @Html.TextBoxFor(q => q.Cantidad, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Cantidad, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body">
+        @Html.Action("GridViewPartial_CompraProductoDetalle")
+    </div>
+    <div class="box-footer">
+        @*<button type="submit" class="btn btn-primary">Guardar</button>*@
+        <button type="button" class="btn btn-primary" onclick="Calificar();">Calificar</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "Compra", new { Area ="General" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+
+<script type="text/javascript">
+$(function () {
+    $("#IdProducto").change(function () {
+        CargarProductoDetalle();
+    });
+});
+
+function cargar_productos() {
+    if (ProvCodigo.GetValue() != "") {
+        var datos = {
+            IdProveedor: ProvCodigo.GetValue()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("cargar_productos_x_proveedor", "Producto", new { Area = "General"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $.each(data, function (i, row) {
+                    $("#IdProducto").append("<option value=" + row.IdProducto + ">" + row.Descripcion + "</option>");
+                });
+
+                CargarProductoDetalle();
+            },
+            error: function (error) {
+            }
+        });
+    }
+}
+
+function Calificar() {
+    var datos = {
+        IdTransaccionSession: $("#IdTransaccionSession").val(),
+        IdProducto: $("#IdProducto").val(),
+        Cantidad: $("#Cantidad").val()
+    }
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(datos),
+        url: '@Url.Action("CalificarProducto", "Compra",new { Area = "General"})',
+        async: false,
+        bDeferRender: true,
+        bProcessing: true,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            $("#CantidadProducto").val(data.CantidadProducto);
+            console.log(data);
+            $("#ModalCompra").modal("show");
+        },
+        error: function (error) {
+        }
+    });
+}
+
+function CargarProductoDetalle() {
+    var datos = {
+        IdTransaccionSession: $("#IdTransaccionSession").val(),
+        IdProducto: $("#IdProducto").val()
+    }
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(datos),
+        url: '@Url.Action("CargarProductoDetalle", "Compra",new { Area = "General"})',
+        async: false,
+        bDeferRender: true,
+        bProcessing: true,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            
+            GridViewPartial_CompraProductoDetalle.PerformCallback();
+        },
+        error: function (error) {
+        }
+    });
+
+}
+</script>

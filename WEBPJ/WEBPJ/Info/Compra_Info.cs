@@ -8,6 +8,7 @@ namespace WEBPJ.Info
 {
     public class Compra_Info
     {
+        public decimal IdTransaccionSession { get; set; }
         public decimal IdCompra { get; set; }
         public string ProvCedulaRuc { get; set; }
         public string ProvNombre { get; set; }
@@ -36,6 +37,7 @@ namespace WEBPJ.Info
         #region Campos que no existen en la tabla
         public string NomProducto { get; set; }
         public string NomUsuario { get; set; }
+        public List<ProductoDetalle_Info> lst_ProductoDet { get; set; }
         #endregion
     }
 }

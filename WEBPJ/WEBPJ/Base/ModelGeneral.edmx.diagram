@@ -18,6 +18,9 @@
         <AssociationConnector Association="ModelGeneral.FK_Compra_Usuario" />
         <AssociationConnector Association="ModelGeneral.FK_ProductoDetalle_Producto" />
         <AssociationConnector Association="ModelGeneral.FK_ProveedorProducto_Producto" />
+        <EntityTypeShape EntityType="ModelGeneral.vwProveedorProducto" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="ModelGeneral.CompraDetalle" Width="1.5" PointX="11.25" PointY="1.875" />
+        <AssociationConnector Association="ModelGeneral.FK_CompraDetalle_Compra" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

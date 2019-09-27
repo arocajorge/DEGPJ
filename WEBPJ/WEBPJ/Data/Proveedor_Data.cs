@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevExpress.Web;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -271,5 +272,48 @@ namespace WEBPJ.Data
                 throw;
             }
         }
+
+        public List<Proveedor_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            var skip = args.BeginIndex;
+            var take = args.EndIndex - args.BeginIndex + 1;
+            List<Proveedor_Info> Lista = new List<Proveedor_Info>();
+            Lista = get_list(skip, take, args.Filter);
+            return Lista;
+        }
+
+        public List<Proveedor_Info> get_list(int skip, int take, string filter)
+        {
+            try
+            {
+                List<Proveedor_Info> Lista = new List<Proveedor_Info>();
+                EntitiesGeneral Context = new EntitiesGeneral();
+                {
+                    var lst = Context.Proveedor.Where(q => q.Tipo == "PRV" && (q.Nombre.ToString() + " " + q.Ruc + " " + q.Codigo).Contains(filter)).OrderBy(q => q.Codigo).Skip(skip).Take(take);
+                    foreach (var q in lst)
+                    {
+                        Lista.Add(new Proveedor_Info
+                        {
+                            Codigo = q.Codigo,
+                            Nombre = q.Nombre,
+                            Ruc = q.Ruc
+                        });
+                    }
+                    return Lista;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public Proveedor_Info get_info_bajo_demanda(ListEditItemRequestedByValueEventArgs args, string Tipo)
+        {
+            //La variable args del devexpress ya trae el ID seleccionado en la propiedad Value, se pasa el IdEmpresa porque es un filtro que no tiene
+            return get_info(Tipo, args.Value == null ? "" : args.Value.ToString());
+        }
+
     }
 }

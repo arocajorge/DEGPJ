@@ -181,6 +181,9 @@
     <Compile Include="Base\Compra.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
+    <Compile Include="Base\CompraDetalle.cs">
+      <DependentUpon>ModelGeneral.tt</DependentUpon>
+    </Compile>
     <Compile Include="Base\fcclient.cs">
       <DependentUpon>ModelNexpirion.tt</DependentUpon>
     </Compile>
@@ -237,6 +240,9 @@
     </Compile>
     <Compile Include="Base\vwProveedor.cs">
       <DependentUpon>ModelNexpirion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Base\vwProveedorProducto.cs">
+      <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CompraController.cs" />
@@ -7488,6 +7494,10 @@
     <Content Include="Views\Proveedor\Anular.cshtml" />
     <Content Include="Views\Proveedor\Index2.cshtml" />
     <Content Include="Views\Proveedor\_GridViewPartial_ProveedorNexpirion.cshtml" />
+    <Content Include="Views\Shared\_LayoutConsulta.cshtml" />
+    <Content Include="Views\Compra\Nuevo.cshtml" />
+    <Content Include="Views\Compra\_CmbProveedor.cshtml" />
+    <Content Include="Views\Compra\_GridViewPartial_CompraProductoDetalle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
