@@ -129,7 +129,6 @@ namespace WEBPJ.Controllers
             model.ProvTipo = info_proveedor.Tipo;
             model.IdUsuario = SessionFixed.IdUsuario;
             model.Codigo = info_producto.Codigo;
-            model.Comentario = "";
             model.Estado = "PENDIENTE";
 
             if (!validar(model, ref mensaje))

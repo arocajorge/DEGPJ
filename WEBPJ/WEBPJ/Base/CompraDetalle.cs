@@ -24,7 +24,5 @@ namespace WEBPJ.Base
         public double PorcentajeMinimo { get; set; }
         public string ValorOptimo { get; set; }
         public double Valor { get; set; }
-    
-        public virtual Compra Compra { get; set; }
     }
 }

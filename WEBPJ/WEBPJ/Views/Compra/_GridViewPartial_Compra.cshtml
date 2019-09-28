@@ -19,8 +19,8 @@
         settings.CommandColumn.Visible = true;
         settings.CommandColumn.ShowNewButtonInHeader = false;
         settings.CommandColumn.ShowNewButton = false;
-        settings.CommandColumn.ShowEditButton = true;
-        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = false;
+        settings.CommandColumn.ShowDeleteButton = false;
 
         settings.SettingsContextMenu.Enabled = true;
         settings.SettingsContextMenu.RowMenuItemVisibility.NewRow = false;
@@ -62,7 +62,7 @@
         };
         settings.Columns.Add(c =>
         {
-            c.Caption = "#";
+            //c.Caption = "#";
             c.SetHeaderTemplateContent(tc =>
             {
                 ViewContext.Writer.Write(

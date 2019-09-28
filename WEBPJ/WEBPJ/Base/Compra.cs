@@ -14,12 +14,6 @@ namespace WEBPJ.Base
     
     public partial class Compra
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Compra()
-        {
-            this.CompraDetalle = new HashSet<CompraDetalle>();
-        }
-    
         public decimal IdCompra { get; set; }
         public string ProvCedulaRuc { get; set; }
         public string ProvNombre { get; set; }
@@ -38,7 +32,5 @@ namespace WEBPJ.Base
     
         public virtual Producto Producto { get; set; }
         public virtual Usuario Usuario { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CompraDetalle> CompraDetalle { get; set; }
     }
 }

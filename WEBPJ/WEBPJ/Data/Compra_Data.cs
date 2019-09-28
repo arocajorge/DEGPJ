@@ -266,7 +266,7 @@ namespace WEBPJ.Data
                         Fecha = DateTime.Now.Date,
                         Cantidad = info.Cantidad,
                         Total = info.Total,
-                        Comentario = info.Comentario,
+                        Comentario = "COMPRA "+info.IdCompra,
                         Estado = "PENDIENTE"
                     });
 

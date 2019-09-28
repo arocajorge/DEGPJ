@@ -11,16 +11,15 @@
         <EntityTypeShape EntityType="ModelGeneral.Proveedor" Width="1.5" PointX="6.75" PointY="9" />
         <EntityTypeShape EntityType="ModelGeneral.ProveedorProducto" Width="1.5" PointX="9" PointY="6.875" />
         <AssociationConnector Association="ModelGeneral.FK_ProveedorProducto_Proveedor" />
-        <EntityTypeShape EntityType="ModelGeneral.Compra" Width="1.5" PointX="9" PointY="1.25" />
         <EntityTypeShape EntityType="ModelGeneral.Producto" Width="1.5" PointX="6.75" PointY="3.875" />
         <EntityTypeShape EntityType="ModelGeneral.ProductoDetalle" Width="1.5" PointX="9" PointY="10.5" />
-        <AssociationConnector Association="ModelGeneral.FK_Compra_Producto" />
-        <AssociationConnector Association="ModelGeneral.FK_Compra_Usuario" />
         <AssociationConnector Association="ModelGeneral.FK_ProductoDetalle_Producto" />
         <AssociationConnector Association="ModelGeneral.FK_ProveedorProducto_Producto" />
         <EntityTypeShape EntityType="ModelGeneral.vwProveedorProducto" Width="1.5" PointX="3.375" PointY="0.75" />
-        <EntityTypeShape EntityType="ModelGeneral.CompraDetalle" Width="1.5" PointX="11.25" PointY="1.875" />
-        <AssociationConnector Association="ModelGeneral.FK_CompraDetalle_Compra" />
+        <EntityTypeShape EntityType="ModelGeneral.Compra" Width="1.5" PointX="9" PointY="1.25" />
+        <EntityTypeShape EntityType="ModelGeneral.CompraDetalle" Width="1.5" PointX="3.375" PointY="3.75" />
+        <AssociationConnector Association="ModelGeneral.FK_Compra_Producto" />
+        <AssociationConnector Association="ModelGeneral.FK_Compra_Usuario" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

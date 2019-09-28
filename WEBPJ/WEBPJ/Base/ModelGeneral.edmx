@@ -191,18 +191,6 @@ advertencia 6002: La tabla o vista 'DB_PRECIOJUSTO.dbo.vwProveedorProducto' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CompraDetalle_Compra">
-          <End Role="Compra" Type="Self.Compra" Multiplicity="1" />
-          <End Role="CompraDetalle" Type="Self.CompraDetalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Compra">
-              <PropertyRef Name="IdCompra" />
-            </Principal>
-            <Dependent Role="CompraDetalle">
-              <PropertyRef Name="IdCompra" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ProductoDetalle_Producto">
           <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
           <End Role="ProductoDetalle" Type="Self.ProductoDetalle" Multiplicity="*" />
@@ -286,10 +274,6 @@ advertencia 6002: La tabla o vista 'DB_PRECIOJUSTO.dbo.vwProveedorProducto' no t
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Compra" EntitySet="Compra" />
           </AssociationSet>
-          <AssociationSet Name="FK_CompraDetalle_Compra" Association="Self.FK_CompraDetalle_Compra">
-            <End Role="Compra" EntitySet="Compra" />
-            <End Role="CompraDetalle" EntitySet="CompraDetalle" />
-          </AssociationSet>
           <AssociationSet Name="FK_ProductoDetalle_Producto" Association="Self.FK_ProductoDetalle_Producto">
             <End Role="Producto" EntitySet="Producto" />
             <End Role="ProductoDetalle" EntitySet="ProductoDetalle" />
@@ -327,17 +311,8 @@ advertencia 6002: La tabla o vista 'DB_PRECIOJUSTO.dbo.vwProveedorProducto' no t
             <End Role="Proveedor" EntitySet="Proveedor" />
             <End Role="ProveedorProducto" EntitySet="ProveedorProducto" />
           </AssociationSet>
-          <EntitySet Name="Compra" EntityType="ModelGeneral.Compra" />
           <EntitySet Name="Producto" EntityType="ModelGeneral.Producto" />
           <EntitySet Name="ProductoDetalle" EntityType="ModelGeneral.ProductoDetalle" />
-          <AssociationSet Name="FK_Compra_Producto" Association="ModelGeneral.FK_Compra_Producto">
-            <End Role="Producto" EntitySet="Producto" />
-            <End Role="Compra" EntitySet="Compra" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Compra_Usuario" Association="ModelGeneral.FK_Compra_Usuario">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="Compra" EntitySet="Compra" />
-          </AssociationSet>
           <AssociationSet Name="FK_ProductoDetalle_Producto" Association="ModelGeneral.FK_ProductoDetalle_Producto">
             <End Role="Producto" EntitySet="Producto" />
             <End Role="ProductoDetalle" EntitySet="ProductoDetalle" />
@@ -347,10 +322,15 @@ advertencia 6002: La tabla o vista 'DB_PRECIOJUSTO.dbo.vwProveedorProducto' no t
             <End Role="ProveedorProducto" EntitySet="ProveedorProducto" />
           </AssociationSet>
           <EntitySet Name="vwProveedorProducto" EntityType="ModelGeneral.vwProveedorProducto" />
+          <EntitySet Name="Compra" EntityType="ModelGeneral.Compra" />
           <EntitySet Name="CompraDetalle" EntityType="ModelGeneral.CompraDetalle" />
-          <AssociationSet Name="FK_CompraDetalle_Compra" Association="ModelGeneral.FK_CompraDetalle_Compra">
+          <AssociationSet Name="FK_Compra_Producto" Association="ModelGeneral.FK_Compra_Producto">
+            <End Role="Producto" EntitySet="Producto" />
             <End Role="Compra" EntitySet="Compra" />
-            <End Role="CompraDetalle" EntitySet="CompraDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Compra_Usuario" Association="ModelGeneral.FK_Compra_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Compra" EntitySet="Compra" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Usuario">
@@ -436,29 +416,6 @@ advertencia 6002: La tabla o vista 'DB_PRECIOJUSTO.dbo.vwProveedorProducto' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Compra">
-          <Key>
-            <PropertyRef Name="IdCompra" />
-          </Key>
-          <Property Name="IdCompra" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="ProvCedulaRuc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ProvNombre" Type="String" Nullable="false" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="ProvTipo" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="ProvCodigo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Codigo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdProducto" Type="Int32" Nullable="false" />
-          <Property Name="Calificacion" Type="Double" Nullable="false" />
-          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Precio" Type="Double" Nullable="false" />
-          <Property Name="Cantidad" Type="Double" Nullable="false" />
-          <Property Name="Total" Type="Double" Nullable="false" />
-          <Property Name="Comentario" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Estado" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Producto" Relationship="ModelGeneral.FK_Compra_Producto" FromRole="Compra" ToRole="Producto" />
-          <NavigationProperty Name="Usuario" Relationship="ModelGeneral.FK_Compra_Usuario" FromRole="Compra" ToRole="Usuario" />
-          <NavigationProperty Name="CompraDetalle" Relationship="ModelGeneral.FK_CompraDetalle_Compra" FromRole="Compra" ToRole="CompraDetalle" />
-        </EntityType>
         <EntityType Name="Producto">
           <Key>
             <PropertyRef Name="IdProducto" />
@@ -476,9 +433,9 @@ advertencia 6002: La tabla o vista 'DB_PRECIOJUSTO.dbo.vwProveedorProducto' no t
           <Property Name="PrecioD" Type="Double" Nullable="false" />
           <Property Name="Estado" Type="Boolean" Nullable="false" />
           <Property Name="EscogerPrecioPor" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Compra" Relationship="ModelGeneral.FK_Compra_Producto" FromRole="Producto" ToRole="Compra" />
           <NavigationProperty Name="ProductoDetalle" Relationship="ModelGeneral.FK_ProductoDetalle_Producto" FromRole="Producto" ToRole="ProductoDetalle" />
           <NavigationProperty Name="ProveedorProducto" Relationship="ModelGeneral.FK_ProveedorProducto_Producto" FromRole="Producto" ToRole="ProveedorProducto" />
+          <NavigationProperty Name="Compra" Relationship="ModelGeneral.FK_Compra_Producto" FromRole="Producto" ToRole="Compra" />
         </EntityType>
         <EntityType Name="ProductoDetalle">
           <Key>
@@ -496,30 +453,6 @@ advertencia 6002: La tabla o vista 'DB_PRECIOJUSTO.dbo.vwProveedorProducto' no t
           <Property Name="ValorOptimo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Producto" Relationship="ModelGeneral.FK_ProductoDetalle_Producto" FromRole="ProductoDetalle" ToRole="Producto" />
         </EntityType>
-        <Association Name="FK_Compra_Producto">
-          <End Type="ModelGeneral.Producto" Role="Producto" Multiplicity="1" />
-          <End Type="ModelGeneral.Compra" Role="Compra" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Producto">
-              <PropertyRef Name="IdProducto" />
-            </Principal>
-            <Dependent Role="Compra">
-              <PropertyRef Name="IdProducto" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Compra_Usuario">
-          <End Type="ModelGeneral.Usuario" Role="Usuario" Multiplicity="1" />
-          <End Type="ModelGeneral.Compra" Role="Compra" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="IdUsuario" />
-            </Principal>
-            <Dependent Role="Compra">
-              <PropertyRef Name="IdUsuario" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ProductoDetalle_Producto">
           <End Type="ModelGeneral.Producto" Role="Producto" Multiplicity="1" />
           <End Type="ModelGeneral.ProductoDetalle" Role="ProductoDetalle" Multiplicity="*" />
@@ -558,6 +491,28 @@ advertencia 6002: La tabla o vista 'DB_PRECIOJUSTO.dbo.vwProveedorProducto' no t
           <Property Name="IdProducto" Type="Int32" Nullable="false" />
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="Compra">
+          <Key>
+            <PropertyRef Name="IdCompra" />
+          </Key>
+          <Property Name="IdCompra" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="ProvCedulaRuc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProvNombre" Type="String" Nullable="false" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="ProvTipo" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="ProvCodigo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Codigo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdProducto" Type="Int32" Nullable="false" />
+          <Property Name="Calificacion" Type="Double" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Precio" Type="Double" Nullable="false" />
+          <Property Name="Cantidad" Type="Double" Nullable="false" />
+          <Property Name="Total" Type="Double" Nullable="false" />
+          <Property Name="Comentario" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Producto" Relationship="ModelGeneral.FK_Compra_Producto" FromRole="Compra" ToRole="Producto" />
+          <NavigationProperty Name="Usuario" Relationship="ModelGeneral.FK_Compra_Usuario" FromRole="Compra" ToRole="Usuario" />
+        </EntityType>
         <EntityType Name="CompraDetalle">
           <Key>
             <PropertyRef Name="IdCompra" />
@@ -573,17 +528,28 @@ advertencia 6002: La tabla o vista 'DB_PRECIOJUSTO.dbo.vwProveedorProducto' no t
           <Property Name="PorcentajeMinimo" Type="Double" Nullable="false" />
           <Property Name="ValorOptimo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Valor" Type="Double" Nullable="false" />
-          <NavigationProperty Name="Compra" Relationship="ModelGeneral.FK_CompraDetalle_Compra" FromRole="CompraDetalle" ToRole="Compra" />
         </EntityType>
-        <Association Name="FK_CompraDetalle_Compra">
-          <End Type="ModelGeneral.Compra" Role="Compra" Multiplicity="1" />
-          <End Type="ModelGeneral.CompraDetalle" Role="CompraDetalle" Multiplicity="*" />
+        <Association Name="FK_Compra_Producto">
+          <End Type="ModelGeneral.Producto" Role="Producto" Multiplicity="1" />
+          <End Type="ModelGeneral.Compra" Role="Compra" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Compra">
-              <PropertyRef Name="IdCompra" />
+            <Principal Role="Producto">
+              <PropertyRef Name="IdProducto" />
             </Principal>
-            <Dependent Role="CompraDetalle">
-              <PropertyRef Name="IdCompra" />
+            <Dependent Role="Compra">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Compra_Usuario">
+          <End Type="ModelGeneral.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="ModelGeneral.Compra" Role="Compra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Compra">
+              <PropertyRef Name="IdUsuario" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -656,27 +622,6 @@ advertencia 6002: La tabla o vista 'DB_PRECIOJUSTO.dbo.vwProveedorProducto' no t
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Compra">
-            <EntityTypeMapping TypeName="ModelGeneral.Compra">
-              <MappingFragment StoreEntitySet="Compra">
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="Comentario" ColumnName="Comentario" />
-                <ScalarProperty Name="Total" ColumnName="Total" />
-                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
-                <ScalarProperty Name="Precio" ColumnName="Precio" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="Calificacion" ColumnName="Calificacion" />
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="ProvCodigo" ColumnName="ProvCodigo" />
-                <ScalarProperty Name="ProvTipo" ColumnName="ProvTipo" />
-                <ScalarProperty Name="ProvNombre" ColumnName="ProvNombre" />
-                <ScalarProperty Name="ProvCedulaRuc" ColumnName="ProvCedulaRuc" />
-                <ScalarProperty Name="IdCompra" ColumnName="IdCompra" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Producto">
             <EntityTypeMapping TypeName="ModelGeneral.Producto">
               <MappingFragment StoreEntitySet="Producto">
@@ -719,6 +664,27 @@ advertencia 6002: La tabla o vista 'DB_PRECIOJUSTO.dbo.vwProveedorProducto' no t
                 <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Compra">
+            <EntityTypeMapping TypeName="ModelGeneral.Compra">
+              <MappingFragment StoreEntitySet="Compra">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Comentario" ColumnName="Comentario" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Calificacion" ColumnName="Calificacion" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="ProvCodigo" ColumnName="ProvCodigo" />
+                <ScalarProperty Name="ProvTipo" ColumnName="ProvTipo" />
+                <ScalarProperty Name="ProvNombre" ColumnName="ProvNombre" />
+                <ScalarProperty Name="ProvCedulaRuc" ColumnName="ProvCedulaRuc" />
+                <ScalarProperty Name="IdCompra" ColumnName="IdCompra" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
