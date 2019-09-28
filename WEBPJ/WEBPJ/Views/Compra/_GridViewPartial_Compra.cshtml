@@ -17,13 +17,13 @@
         settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.Control;
 
         settings.CommandColumn.Visible = true;
-        settings.CommandColumn.ShowNewButtonInHeader = true;
+        settings.CommandColumn.ShowNewButtonInHeader = false;
         settings.CommandColumn.ShowNewButton = false;
         settings.CommandColumn.ShowEditButton = true;
         settings.CommandColumn.ShowDeleteButton = true;
 
         settings.SettingsContextMenu.Enabled = true;
-        settings.SettingsContextMenu.RowMenuItemVisibility.NewRow = true;
+        settings.SettingsContextMenu.RowMenuItemVisibility.NewRow = false;
         settings.SettingsBehavior.EnableCustomizationWindow = true;
 
         settings.SettingsPager.Visible = true;
@@ -83,7 +83,8 @@
         settings.Columns.Add(column =>
         {
             column.FieldName = "IdCompra";
-            column.Caption = "Código";
+            column.Caption = "ID";
+            column.Visible = true;
             column.Width = Unit.Percentage(5);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });

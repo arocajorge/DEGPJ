@@ -131,10 +131,6 @@ namespace WEBPJ.Controllers
             model.Codigo = info_producto.Codigo;
             model.Comentario = "";
             model.Estado = "PENDIENTE";
-            model.Fecha = DateTime.Now;
-            //model.Precio = model.Precio;
-            //model.Total = model.Total;
-            //model.Calificacion = model.Calificacion;
 
             if (!validar(model, ref mensaje))
             {

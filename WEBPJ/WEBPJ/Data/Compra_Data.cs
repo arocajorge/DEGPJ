@@ -32,7 +32,7 @@ namespace WEBPJ.Data
                                 IdUsuario = q.IdUsuario,
                                 IdProducto = q.IdProducto,
                                 Calificacion = q.Calificacion,
-                                Fecha = q.Fecha,
+                                Fecha = DateTime.Now,
                                 Precio = q.Precio,
                                 Cantidad = q.Cantidad,
                                 Total = q.Total,
@@ -251,7 +251,7 @@ namespace WEBPJ.Data
             {
                 using (EntitiesGeneral db = new EntitiesGeneral())
                 {
-                    Compra Entity = new Compra
+                    db.Compra.Add(new Compra
                     {
                         IdCompra = info.IdCompra = get_id(),
                         ProvCedulaRuc = info.ProvCedulaRuc,
@@ -263,12 +263,12 @@ namespace WEBPJ.Data
                         IdProducto = info.IdProducto,
                         Calificacion = info.Calificacion,
                         Precio = info.Precio,
-                        Fecha = info.Fecha,
+                        Fecha = DateTime.Now.Date,
                         Cantidad = info.Cantidad,
                         Total = info.Total,
                         Comentario = info.Comentario,
                         Estado = "PENDIENTE"
-                    };
+                    });
 
                     if (info.lst_CompraDetProducto.Count > 0)
                     {
