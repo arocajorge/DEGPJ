@@ -249,6 +249,7 @@
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\ProveedorController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
+    <Compile Include="Data\CompraDetalle_Data.cs" />
     <Compile Include="Data\Compra_Data.cs" />
     <Compile Include="Data\ProductoDetalle_Data.cs" />
     <Compile Include="Data\Producto_Data.cs" />
@@ -261,6 +262,7 @@
     <Compile Include="Helps\DecimalModelBinder.cs" />
     <Compile Include="Helps\DoubleModelBinder.cs" />
     <Compile Include="Helps\SessionFixed.cs" />
+    <Compile Include="Info\CompraDetalle_Info.cs" />
     <Compile Include="Info\Enumeradores.cs" />
     <Compile Include="Info\Filtros_Info.cs" />
     <Compile Include="Info\Compra_Info.cs" />

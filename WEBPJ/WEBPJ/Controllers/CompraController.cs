@@ -16,12 +16,13 @@ namespace WEBPJ.Controllers
         #region Variables
         Compra_Data data_compra = new Compra_Data();
         Producto_Data data_producto = new Producto_Data();
+        ProductoDetalle_Data data_producto_det = new ProductoDetalle_Data();
         Usuario_Data data_usuario = new Usuario_Data();
         Proveedor_Data data_proveedor = new Proveedor_Data();
         ProveedorProducto_Data data_proveedor_producto = new ProveedorProducto_Data();
         List<Compra_Info> lst_Compra = new List<Compra_Info>();
         Compra_List Lista_Compra = new Compra_List();
-        ProductoDet_List Lista_ProductoDet = new ProductoDet_List();
+        CompraDetalle_List Lista_CompraDet = new CompraDetalle_List();
         ProductoDetalle_Data data_producto_detalle = new ProductoDetalle_Data();
         string mensaje = string.Empty;
         #endregion
@@ -110,19 +111,20 @@ namespace WEBPJ.Controllers
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
             };
 
-            model.lst_ProductoDet = new List<ProductoDetalle_Info>();
-            Lista_ProductoDet.set_list(model.lst_ProductoDet, model.IdTransaccionSession);
+            model.lst_CompraDetProducto = new List<CompraDetalle_Info>();
+            Lista_CompraDet.set_list(model.lst_CompraDetProducto, model.IdTransaccionSession);
             cargar_combos(model);
             return View(model);
         }
         [HttpPost]
         public ActionResult Nuevo(Compra_Info model)
         {
-            model.lst_ProductoDet = Lista_ProductoDet.get_list(model.IdTransaccionSession);
-            var info_proveedor = data_proveedor.get_info("PRV", model.Codigo);
+            model.lst_CompraDetProducto = Lista_CompraDet.get_list(model.IdTransaccionSession);
+            var info_proveedor = data_proveedor.get_info("PRV", model.ProvCodigo);
             var info_producto = data_producto.get_info(model.IdProducto);
 
             model.ProvCedulaRuc = info_proveedor.Ruc;
+            model.ProvCodigo = info_proveedor.Codigo;
             model.ProvNombre = info_proveedor.Nombre;
             model.ProvTipo = info_proveedor.Tipo;
             model.IdUsuario = SessionFixed.IdUsuario;
@@ -130,9 +132,9 @@ namespace WEBPJ.Controllers
             model.Comentario = "";
             model.Estado = "PENDIENTE";
             model.Fecha = DateTime.Now;
-            model.Calificacion = 0;
-            model.Precio = 0;
-            model.Total = 0;
+            //model.Precio = model.Precio;
+            //model.Total = model.Total;
+            //model.Calificacion = model.Calificacion;
 
             if (!validar(model, ref mensaje))
             {
@@ -271,17 +273,119 @@ namespace WEBPJ.Controllers
         #region Json
         public JsonResult CargarProductoDetalle(decimal IdTransaccionSession = 0, int IdProducto = 0)
         {
-            List<ProductoDetalle_Info> lst_producto_detalle = data_producto_detalle.GetList(IdProducto);
-            Lista_ProductoDet.set_list(lst_producto_detalle, IdTransaccionSession);
+            List<CompraDetalle_Info> lst_producto_detalle = data_producto_detalle.GetList_CompraDetalle(IdProducto);
+            Lista_CompraDet.set_list(lst_producto_detalle, IdTransaccionSession);
 
             return Json(lst_producto_detalle, JsonRequestBehavior.AllowGet);
         }
         
-        public JsonResult CalificarProducto(decimal IdTransaccionSession = 0, int IdProducto = 0, double Cantidad = 0)
+        public JsonResult CalificarProducto(decimal IdTransaccionSession = 0, string IdProveedor = "", int IdProducto = 0, double Cantidad = 0)
         {
-            var resultado = "";
+            var ListaDetalle = Lista_CompraDet.get_list(IdTransaccionSession);
+            var Producto = data_producto.get_info(IdProducto);
+            var Proveedor = data_proveedor.get_info("PRV", IdProveedor);
+            var msg = "";
 
-            return Json(resultado, JsonRequestBehavior.AllowGet);
+            foreach (var q in ListaDetalle)
+            {
+                q.PonderacionFinal = 0;
+                if (q.Minimo <= q.Valor && q.Valor <= q.Maximo)
+                {
+                    if (Math.Round(q.PorcentajeMinimo, 2) == 100)
+                    {
+                        q.PonderacionFinal = q.Ponderacion;
+                    }
+                    else
+                    {
+                        double RangoCalificacion = q.Maximo - q.Minimo;
+                        double RangoSegunPreferencia = q.ValorOptimo == "MAXIMO" ? q.Valor - q.Minimo : q.Maximo - q.Valor;
+                        double RangoPorcentual = (RangoSegunPreferencia / RangoCalificacion) * 100;
+                        double PonderacionPorAsignar = 100 - q.PorcentajeMinimo;
+                        double PonderacionRangoPorcentual = PonderacionPorAsignar * (RangoPorcentual / 100);
+                        double PorcentajePonderacion = PonderacionRangoPorcentual + q.PorcentajeMinimo;
+                        q.PonderacionFinal = q.Ponderacion * (PorcentajePonderacion / 100);
+                    }
+                }
+            }
+
+            double Ponderacion = ListaDetalle.Sum(q => q.PonderacionFinal);
+            double Min = 0;
+            double Max = 0;
+            double PonderacionMin = 0;
+            double PonderacionMax = 0;
+
+            if (Ponderacion > Producto.CalificacionD)
+            {
+                if (Ponderacion > Producto.CalificacionC)
+                {
+                    if (Ponderacion > Producto.CalificacionB)
+                    {
+                        if (Ponderacion > Producto.CalificacionA)
+                        {
+                            Min = Producto.PrecioA;
+                            Max = Producto.PrecioA;
+                            PonderacionMin = Producto.CalificacionA;
+                            PonderacionMax = Producto.CalificacionA;
+                        }
+                        else
+                        {
+                            Min = Producto.PrecioB;
+                            Max = Producto.PrecioA;
+                            PonderacionMin = Producto.CalificacionB;
+                            PonderacionMax = Producto.CalificacionA;
+                        }
+                    }
+                    else
+                    {
+                        Min = Producto.PrecioC;
+                        Max = Producto.PrecioB;
+                        PonderacionMin = Producto.CalificacionC;
+                        PonderacionMax = Producto.CalificacionB;
+                    }
+                }
+                else
+                {
+                    Min = Producto.PrecioD;
+                    Max = Producto.PrecioC;
+                    PonderacionMin = Producto.CalificacionD;
+                    PonderacionMax = Producto.CalificacionC;
+                }
+            }
+            else
+            {
+                Min = 0;
+                Max = 0;
+            }
+
+            if (Min == 0)
+            {
+                msg = "La calificación del producto no es aceptable, no se puede proceder con la compra";
+            }
+
+            double Precio = 0;
+            switch (Producto.EscogerPrecioPor)
+            {
+                case "MASALTO":
+                    Precio = Max;
+                    break;
+                case "MASBAJO":
+                    Precio = Min;
+                    break;
+                case "CERCANO":
+                    var RangoMin = Ponderacion - PonderacionMax;
+                    var RangoMax = PonderacionMax - Ponderacion;
+                    if (RangoMin < RangoMax)
+                        Precio = Min;
+                    else
+                        Precio = Max;
+                    break;
+            }
+
+            var CantidadCompra = Cantidad;
+            var TotalCompra = Cantidad*Precio;
+
+            Lista_CompraDet.set_list(ListaDetalle, IdTransaccionSession);
+            return Json(new { CantidadCompra = CantidadCompra, PrecioCompra = Precio, TotalCompra = TotalCompra, ProveedorCompra = Proveedor.Nombre, CalificacionCompra = Ponderacion, Mensaje= msg }, JsonRequestBehavior.AllowGet);
         }
         #endregion
 
@@ -289,20 +393,28 @@ namespace WEBPJ.Controllers
         public ActionResult GridViewPartial_CompraProductoDetalle()
         {
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
-            var model = Lista_ProductoDet.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-
+            var model = Lista_CompraDet.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            cargar_combos_detalle();
             return PartialView("_GridViewPartial_CompraProductoDetalle", model);
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult EditingUpdate_ProductoDetalle([ModelBinder(typeof(DevExpressEditorsBinder))] ProductoDetalle_Info info_det)
+        public ActionResult EditingUpdate_ProductoDetalle([ModelBinder(typeof(DevExpressEditorsBinder))] CompraDetalle_Info info_det)
         {
             if (ModelState.IsValid)
-                Lista_ProductoDet.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+                Lista_CompraDet.UpdateRow(info_det, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
 
-            var model = Lista_ProductoDet.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
-
+            var model = Lista_CompraDet.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            cargar_combos_detalle();
             return PartialView("_GridViewPartial_CompraProductoDetalle", model);
+        }
+
+        public void cargar_combos_detalle()
+        {
+            Dictionary<string, string> lst_ValorOptimo = new Dictionary<string, string>();
+            lst_ValorOptimo.Add(@WEBPJ.Info.Enumeradores.eValorOptimo.MINIMO.ToString(), "VALOR MINIMO");
+            lst_ValorOptimo.Add(@WEBPJ.Info.Enumeradores.eValorOptimo.MAXIMO.ToString(), "VALOR MAXIMO");
+            ViewBag.lst_ValorOptimo = lst_ValorOptimo;
         }
         #endregion
     }
@@ -357,30 +469,30 @@ namespace WEBPJ.Controllers
         }
     }
 
-    public class ProductoDet_List
+    public class CompraDetalle_List
     {
-        string Variable = "ProductoDetalle_Info_List";
-        public List<ProductoDetalle_Info> get_list(decimal IdTransaccionSession)
+        string Variable = "CompraDetalle_Info_List";
+        public List<CompraDetalle_Info> get_list(decimal IdTransaccionSession)
         {
 
             if (HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] == null)
             {
-                List<ProductoDetalle_Info> list = new List<ProductoDetalle_Info>();
+                List<CompraDetalle_Info> list = new List<CompraDetalle_Info>();
 
                 HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
             }
-            return (List<ProductoDetalle_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
+            return (List<CompraDetalle_Info>)HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()];
         }
 
-        public void set_list(List<ProductoDetalle_Info> list, decimal IdTransaccionSession)
+        public void set_list(List<CompraDetalle_Info> list, decimal IdTransaccionSession)
         {
             HttpContext.Current.Session[Variable + IdTransaccionSession.ToString()] = list;
         }
 
-        public void UpdateRow(ProductoDetalle_Info info_det, decimal IdTransaccionSession)
+        public void UpdateRow(CompraDetalle_Info info_det, decimal IdTransaccionSession)
         {
-            ProductoDetalle_Info edited_info = get_list(IdTransaccionSession).Where(m => m.Secuencia == info_det.Secuencia).FirstOrDefault();
-            edited_info.CalificacionCompra = info_det.CalificacionCompra;
+            CompraDetalle_Info edited_info = get_list(IdTransaccionSession).Where(m => m.Secuencia == info_det.Secuencia).FirstOrDefault();
+            edited_info.Valor = info_det.Valor;
         }
     }
 }

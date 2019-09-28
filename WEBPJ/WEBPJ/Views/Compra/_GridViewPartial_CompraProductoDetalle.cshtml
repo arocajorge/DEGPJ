@@ -41,26 +41,100 @@
         settings.InitNewRow = (s, e) =>
         {
             e.NewValues["Descripcion"] = "";
+            e.NewValues["Minimo"] = "0";
+            e.NewValues["Maximo"] = "0";
+            e.NewValues["Ponderacion"] = "0";
+            e.NewValues["PorcentajeMinimo"] = "0";
         };
         settings.Columns.Add(column =>
         {
             column.FieldName = "Descripcion";
             column.Caption = "Característica";
             column.Width = Unit.Percentage(80);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
         });
+        //settings.Columns.Add(column =>
+        //{
+        //    column.FieldName = "Minimo";
+        //    column.Caption = "Mínimo";
+        //    column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+        //    column.EditorProperties().SpinEdit(sp =>
+        //    {
+        //        sp.MinValue = 0;
+        //        sp.MaxValue = 999999999;
+        //    });
+        //    column.Width = Unit.Percentage(10);
+        //    column.EditFormSettings.Visible = DefaultBoolean.False;
+        //});
+        //settings.Columns.Add(column =>
+        //{
+        //    column.FieldName = "Maximo";
+        //    column.Caption = "Máximo";
+        //    column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+        //    column.EditorProperties().SpinEdit(sp =>
+        //    {
+        //        sp.MinValue = 0;
+        //        sp.MaxValue = 999999999;
+        //    });
+        //    column.Width = Unit.Percentage(10);
+        //    column.EditFormSettings.Visible = DefaultBoolean.False;
+        //});
+        //settings.Columns.Add(column =>
+        //{
+        //    column.FieldName = "Ponderacion";
+        //    column.Caption = "Ponderación";
+        //    column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+        //    column.EditorProperties().SpinEdit(sp =>
+        //    {
+        //        sp.MinValue = 0;
+        //        sp.MaxValue = 999999999;
+        //    });
+        //    column.Width = Unit.Percentage(10);
+        //    column.EditFormSettings.Visible = DefaultBoolean.False;
+        //});
+        //settings.Columns.Add(column =>
+        //{
+        //    column.FieldName = "PorcentajeMinimo";
+        //    column.Caption = "Porcentaje Mínimo";
+        //    column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+        //    column.EditorProperties().SpinEdit(sp =>
+        //    {
+        //        sp.MinValue = 0;
+        //        sp.MaxValue = 100;
+        //    });
+        //    column.Width = Unit.Percentage(10);
+        //    column.EditFormSettings.Visible = DefaultBoolean.False;
+        //});
+        //settings.Columns.Add(column =>
+        //{
+        //    column.FieldName = "ValorOptimo";
+        //    column.Caption = "Valor Optimo";
+        //    column.Width = Unit.Percentage(10);
+        //    column.EditorProperties().ComboBox(p =>
+        //    {
+        //        p.Columns.Add("Value", "Descripción").Width = Unit.Percentage(100);
+        //        p.TextField = "Value";
+        //        p.ValueField = "Key";
+        //        p.ValueType = typeof(string);
+        //        p.DataSource = ViewBag.lst_ValorOptimo;
+        //    });
+        //    column.EditFormSettings.Visible = DefaultBoolean.False;
+        //});
         settings.Columns.Add(column =>
         {
-            column.FieldName = "CalificacionCompra";
-            column.Caption = "Calificación";
+            column.FieldName = "Valor";
+            column.Caption = "Valor";
             column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-            column.EditorProperties().SpinEdit(sp =>
+            column.EditorProperties().SpinEdit(q =>
             {
-                sp.MinValue = 0;
-                sp.MaxValue = 999999999;
+                q.AllowMouseWheel = false;
+                q.MinValue = 0;
+                q.Width = Unit.Percentage(100);
             });
             column.Width = Unit.Percentage(10);
+            column.EditFormSettings.Visible = DefaultBoolean.True;
         });
-        
+
         settings.ClientSideEvents.BeginCallback = "function(s,e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val();}";
     });
 }

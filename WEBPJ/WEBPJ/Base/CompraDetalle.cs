@@ -16,7 +16,6 @@ namespace WEBPJ.Base
     {
         public decimal IdCompra { get; set; }
         public int Secuencia { get; set; }
-        public int IdProducto { get; set; }
         public string Descripcion { get; set; }
         public double Minimo { get; set; }
         public double Maximo { get; set; }

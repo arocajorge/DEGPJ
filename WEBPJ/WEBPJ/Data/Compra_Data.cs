@@ -253,7 +253,7 @@ namespace WEBPJ.Data
                 {
                     Compra Entity = new Compra
                     {
-                        IdCompra = get_id(),
+                        IdCompra = info.IdCompra = get_id(),
                         ProvCedulaRuc = info.ProvCedulaRuc,
                         ProvNombre = info.ProvNombre,
                         ProvCodigo = info.ProvCodigo,
@@ -270,6 +270,27 @@ namespace WEBPJ.Data
                         Estado = "PENDIENTE"
                     };
 
+                    if (info.lst_CompraDetProducto.Count > 0)
+                    {
+                        int Secuencia = 1;
+                        foreach (var item in info.lst_CompraDetProducto)
+                        {
+                            db.CompraDetalle.Add(new CompraDetalle
+                            {
+                                IdCompra = info.IdCompra,
+                                Descripcion = item.Descripcion,
+                                Secuencia = Secuencia++,
+                                Minimo = item.Minimo,
+                                Maximo = item.Maximo,
+                                Ponderacion = item.Ponderacion,
+                                EsObligatorio = item.EsObligatorio,
+                                PorcentajeMinimo = item.PorcentajeMinimo,
+                                ValorOptimo = item.ValorOptimo,
+                                Valor = item.Valor
+                            });
+                        }
+                    }
+                    
                     db.SaveChanges();
                 }
                 return true;

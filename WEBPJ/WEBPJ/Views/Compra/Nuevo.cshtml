@@ -34,13 +34,42 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="col-md-6 form-group">
-                                <label for="txtCantidad">Cantidad</label>
-                                <input type="text" id="CantidadProducto" class="form-control" />
+                                <label for="txtCantidad">Cantidad:</label>
+                                <input type="text" id="CantidadCompra" class="form-control" readonly/>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-
+                        <div class="col-md-12">
+                            <div class="col-md-6 form-group">
+                                <label for="txtCantidad">Precio:</label>
+                                <input type="text" id="PrecioCompra" class="form-control" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6 form-group">
+                                <label for="txtCantidad">Total:</label>
+                                <input type="text" id="TotalCompra" class="form-control" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6 form-group">
+                                <label for="txtCantidad">Proveedor:</label>
+                                <input type="text" id="ProveedorCompra" class="form-control" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6 form-group">
+                                <label for="txtCantidad">Calificacion</label>
+                                <input type="text" id="CalificacionCompra" class="form-control" readonly/>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -71,11 +100,34 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="Cantidad">Cantidad</label>
-                    @Html.TextBoxFor(q => q.Cantidad, new { @class = "form-control" })
+                    @Html.TextBoxFor(q => q.Cantidad, new { @class = "form-control", @id= "Cantidad" })
                     @Html.ValidationMessageFor(q => q.Cantidad, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div id="ValoresCompra">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="Cantidad">Precio:</label>
+                        @Html.TextBoxFor(q => q.Precio, new { @class = "form-control", @readonly = "readonly", @id = "Precio" })
+                        @Html.ValidationMessageFor(q => q.Precio, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="Cantidad">Total:</label>
+                        @Html.TextBoxFor(q => q.Total, new { @class = "form-control", @readonly = "readonly", @id = "Total" })
+                        @Html.ValidationMessageFor(q => q.Total, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="Cantidad">Calificación:</label>
+                        @Html.TextBoxFor(q => q.Calificacion, new { @class = "form-control", @readonly = "readonly", @id = "Calificacion" })
+                        @Html.ValidationMessageFor(q => q.Calificacion, "", new { @class = "text-danger" })
+                    </div>
                 </div>
             </div>
         </div>
@@ -84,7 +136,6 @@
         @Html.Action("GridViewPartial_CompraProductoDetalle")
     </div>
     <div class="box-footer">
-        @*<button type="submit" class="btn btn-primary">Guardar</button>*@
         <button type="button" class="btn btn-primary" onclick="Calificar();">Calificar</button>
         <a class="btn btn-default" href="@Url.Action("Index", "Compra", new { Area ="General" }, null)">Cancelar</a>
     </div>
@@ -95,7 +146,9 @@
 }
 
 <script type="text/javascript">
-$(function () {
+    $(function () {
+    $("#ValoresCompra").hide();
+
     $("#IdProducto").change(function () {
         CargarProductoDetalle();
     });
@@ -129,6 +182,7 @@ function cargar_productos() {
 function Calificar() {
     var datos = {
         IdTransaccionSession: $("#IdTransaccionSession").val(),
+        IdProveedor: ProvCodigo.GetValue(),
         IdProducto: $("#IdProducto").val(),
         Cantidad: $("#Cantidad").val()
     }
@@ -142,8 +196,20 @@ function Calificar() {
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function (data) {
-            $("#CantidadProducto").val(data.CantidadProducto);
-            console.log(data);
+            if (data.Mensaje!="") {
+                alert(data.Mensaje);
+            }
+
+            $("#CantidadCompra").val(data.CantidadCompra);
+            $("#PrecioCompra").val(data.PrecioCompra);
+            $("#TotalCompra").val(data.TotalCompra);
+            $("#ProveedorCompra").val(data.ProveedorCompra);
+            $("#CalificacionCompra").val(data.CalificacionCompra);
+
+            $("#Precio").val(data.PrecioCompra);
+            $("#Total").val(data.TotalCompra);
+            $("#Calificacion").val(data.CalificacionCompra);
+            GridViewPartial_CompraProductoDetalle.PerformCallback();
             $("#ModalCompra").modal("show");
         },
         error: function (error) {
@@ -166,7 +232,6 @@ function CargarProductoDetalle() {
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function (data) {
-            
             GridViewPartial_CompraProductoDetalle.PerformCallback();
         },
         error: function (error) {

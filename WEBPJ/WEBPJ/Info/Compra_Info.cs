@@ -37,7 +37,7 @@ namespace WEBPJ.Info
         #region Campos que no existen en la tabla
         public string NomProducto { get; set; }
         public string NomUsuario { get; set; }
-        public List<ProductoDetalle_Info> lst_ProductoDet { get; set; }
+        public List<CompraDetalle_Info> lst_CompraDetProducto { get; set; }
         #endregion
     }
 }
