@@ -1,6 +1,6 @@
 ﻿@model WEBPJ.Info.Compra_Info
 @{
-    ViewBag.Title = "Nueva compra";
+    ViewBag.Title = "Modificar compra";
     if (string.IsNullOrEmpty(@WEBPJ.Helps.SessionFixed.IdUsuario))
     {
         Response.Redirect("~/Account/Login");
@@ -10,7 +10,7 @@
 
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 
-@using (Html.BeginForm("Nuevo", "Compra", FormMethod.Post, new { @class = "form", @role = "form" }))
+@using (Html.BeginForm("Modificar", "Compra", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     if (ViewBag.mensaje != null)
     {
@@ -20,10 +20,12 @@
             </h4>
         </div>
     }
+    @Html.HiddenFor(q => q.IdCompra);
+    @Html.HiddenFor(q => q.IdProducto, new { @id = "IdProducto" });
     @Html.HiddenFor(q => q.Precio, new { @id = "Precio" });
     @Html.HiddenFor(q => q.Total, new { @id = "Total" });
     @Html.HiddenFor(q => q.Calificacion, new { @id = "Calificacion" });
-    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" });
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id= "IdTransaccionSession" });
 
     <div class="modal fade" id="ModalCompra" role="dialog">
         <div class="modal-dialog">
@@ -95,7 +97,7 @@
             <div class="col-md-5">
                 <div class="form-group">
                     <label for="Descripcion">Producto</label>
-                    @Html.DropDownListFor(q => q.IdProducto, new SelectList(ViewBag.lst_productos, "IdProducto", "Descripcion"), new { @class = "form-control", @id = "IdProducto" })
+                    @Html.DropDownListFor(q => q.IdProducto, new SelectList(ViewBag.lst_productos, "IdProducto", "Descripcion"), new { @class = "form-control", @id = "IdProducto", @disabled= "disabled" })
                     @Html.ValidationMessageFor(q => q.IdProducto, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -120,6 +122,13 @@
     </div>
     <div class="row">
         <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Cantidad">Cantidad</label>
+                    @Html.TextBoxFor(q => q.Cantidad, new { @class = "form-control", @id= "Cantidad" })
+                    @Html.ValidationMessageFor(q => q.Cantidad, "", new { @class = "text-danger" })
+                </div>
+            </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="Cantidad">Usuario</label>
@@ -127,18 +136,11 @@
                     @Html.ValidationMessageFor(q => q.IdUsuario, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label for="Cantidad">Estado</label>
                     @Html.DropDownListFor(q => q.Estado, new SelectList(ViewBag.lst_Estado, "Key", "Value"), new { @class = "form-control", @id = "Estado" })
                     @Html.ValidationMessageFor(q => q.Estado, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="Cantidad">Cantidad</label>
-                    @Html.TextBoxFor(q => q.Cantidad, new { @class = "form-control", @id= "Cantidad" })
-                    @Html.ValidationMessageFor(q => q.Cantidad, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
@@ -158,7 +160,7 @@
         @Html.Action("GridViewPartial_CompraProductoDetalle")
     </div>
     <div class="box-footer">
-        <button type="button" class="btn btn-primary" onclick="Calificar();">Calificar</button>
+        <button type="button" class="btn btn-primary"  id="BtnCalificar" onclick="Calificar();">Calificar</button>
         <a class="btn btn-default" href="@Url.Action("Index", "Compra", new { Area ="General" }, null)">Cancelar</a>
     </div>
 
@@ -169,15 +171,11 @@
 
 <script type="text/javascript">
     $(function () {
-    cargar_productos();
+        $("#BtnCalificar").show();
 
-    $("#ProvCodigo").change(function () {
-        cargar_productos();
-    });
-
-    $("#IdProducto").change(function () {
-        CargarProductoDetalle();
-    });
+        $("#ProvCodigo").change(function () {
+            cargar_productos();
+        });
 });
 
 function cargar_productos() {
@@ -198,7 +196,7 @@ function cargar_productos() {
                     $("#IdProducto").append("<option value=" + row.IdProducto + ">" + row.Descripcion + "</option>");
                 });
 
-                CargarProductoDetalle();
+                CargarProductoDetalle_Modificar();
             },
             error: function (error) {
             }
@@ -225,6 +223,7 @@ function Calificar() {
         success: function (data) {
             if (data.Mensaje!="") {
                 alert(data.Mensaje);
+
                 $("#ModalCompra").modal("hide");
             }
             else {
@@ -241,27 +240,38 @@ function Calificar() {
             $("#Total").val(data.TotalCompra);
             $("#Calificacion").val(data.CalificacionCompra);
             GridViewPartial_CompraProductoDetalle.PerformCallback();
+            
         },
         error: function (error) {
         }
     });
 }
 
-function CargarProductoDetalle() {
+function CargarProductoDetalle_Modificar() {
     var datos = {
         IdTransaccionSession: $("#IdTransaccionSession").val(),
+        IdCompra: $("#IdCompra").val(),
+        IdProveedor: $("#ProvCodigo").val(),
         IdProducto: $("#IdProducto").val()
     }
     $.ajax({
         type: 'POST',
         data: JSON.stringify(datos),
-        url: '@Url.Action("CargarProductoDetalle", "Compra",new { Area = "General"})',
+        url: '@Url.Action("CargarProductoDetalle_Modificar", "Compra",new { Area = "General"})',
         async: false,
         bDeferRender: true,
         bProcessing: true,
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function (data) {
+            if (data.msg!= "") {
+                alert(data.msg);
+                $("#BtnCalificar").hide();
+            }
+            else {
+                $("#BtnCalificar").show();
+            }
+
             GridViewPartial_CompraProductoDetalle.PerformCallback();
         },
         error: function (error) {

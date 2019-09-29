@@ -7,34 +7,10 @@
         settings.KeyFieldName = "IdCompra";
         settings.Width = Unit.Percentage(100);
 
-        settings.Width = Unit.Percentage(100);
-        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
-        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Compra", Action = "EditingUpdate", Area = "General" };
-        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Compra", Action = "EditingAnular", Area = "General" };
-
         //Configuración para que la grilla no muestre texto completo
         settings.SettingsBehavior.AllowEllipsisInText = true;
-        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.Control;
-
-        settings.CommandColumn.Visible = true;
-        settings.CommandColumn.ShowNewButtonInHeader = false;
-        settings.CommandColumn.ShowNewButton = false;
-        settings.CommandColumn.ShowEditButton = false;
-        settings.CommandColumn.ShowDeleteButton = false;
-
-        settings.SettingsContextMenu.Enabled = true;
-        settings.SettingsContextMenu.RowMenuItemVisibility.NewRow = false;
-        settings.SettingsBehavior.EnableCustomizationWindow = true;
-
-        settings.SettingsPager.Visible = true;
-        settings.Settings.ShowGroupPanel = false;
-        settings.SettingsBehavior.AllowSelectByRowClick = true;
-
-        //Configuración filtro por columna
-        settings.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
-        settings.Settings.ShowFilterRow = true;
-        settings.Settings.ShowHeaderFilterButton = true;
-        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+        //CConfiguracion responsive
 
         //Configuracion responsive
         settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
@@ -51,6 +27,29 @@
         settings.SettingsPager.PageSize = 10;
         settings.SettingsPager.Mode = GridViewPagerMode.ShowPager;
         settings.SettingsPager.AlwaysShowPager = true;
+        //Configuración filtro por columna
+        settings.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowHeaderFilterButton = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        //Configuracion exportacion
+        settings.SettingsExport.EnableClientSideExportAPI = true;
+        settings.SettingsExport.ExcelExportMode = DevExpress.Export.ExportType.WYSIWYG;
+        settings.Toolbars.Add(t =>
+        {
+            t.EnableAdaptivity = true;
+            t.Items.Add(GridViewToolbarCommand.ExportToPdf).Text = "Exportar a PDF";
+            t.Items.Add(GridViewToolbarCommand.ExportToXls).Text = "Exportar a XLS";
+            t.Items.Add(GridViewToolbarCommand.ExportToXlsx).Text = "Exportar a XLSX";
+            t.Items.Add(GridViewToolbarCommand.ExportToDocx).Text = "Exportar a DOCX";
+            t.Items.Add(GridViewToolbarCommand.ExportToRtf).Text = "Exportar a RTF";
+            t.Items.Add(GridViewToolbarCommand.ExportToCsv).Text = "Exportar a CSV";
+        });
+        settings.SettingsExport.RenderBrick = (sender, e) =>
+        {
+            if (e.RowType == GridViewRowType.Data && e.VisibleIndex % 2 == 0)
+                e.BrickStyle.BackColor = System.Drawing.Color.FromArgb(0xEE, 0xEE, 0xEE);
+        };
 
         //Evento para pintar de rojo las filas anuladas
         settings.HtmlRowPrepared = (s, e) =>
@@ -62,7 +61,18 @@
         };
         settings.Columns.Add(c =>
         {
-            //c.Caption = "#";
+            c.Caption = "#";
+            c.SetDataItemTemplateContent(tc =>
+            {
+                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) != "X")
+                {
+                    ViewContext.Writer.Write(
+                Html.ActionLink("Modificar", "Modificar", new { IdCompra = DataBinder.Eval(tc.DataItem, "IdCompra") }) + "&nbsp;" +
+                        Html.ActionLink("Anular", "Anular", new { IdCompra = DataBinder.Eval(tc.DataItem, "IdCompra") },
+                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
+                    );
+                }
+            });
             c.SetHeaderTemplateContent(tc =>
             {
                 ViewContext.Writer.Write(
@@ -73,130 +83,40 @@
             c.Settings.AllowSort = DefaultBoolean.False;
             c.Width = Unit.Pixel(150);
         });
-        //Funcion para inicializar fila al presionar nuevo
-        settings.InitNewRow = (s, e) =>
-        {
-            e.NewValues["IdUsuario"] = "";
-            e.NewValues["IdProducto"] = "";
-            e.NewValues["Estado"] = "";
-        };
-        settings.Columns.Add(column =>
-        {
-            column.FieldName = "IdCompra";
-            column.Caption = "ID";
-            column.Visible = true;
-            column.Width = Unit.Percentage(5);
-            column.EditFormSettings.Visible = DefaultBoolean.False;
-        });
-        settings.Columns.Add(column =>
-        {
-            column.FieldName = "IdUsuario";
-            column.Caption = "Usuario";
-            column.Width = Unit.Percentage(10);
-            column.EditorProperties().ComboBox(p =>
-            {
-                p.Columns.Add("IdUsuario", "Código").Width = Unit.Percentage(30);
-                p.Columns.Add("Nombre", "Usuario").Width = Unit.Percentage(70);
-                p.ValueField = "IdUsuario";
-                p.ValueType = typeof(string);
-                p.DataSource = ViewBag.lst_Usuarios;
-            });
-            column.EditFormSettings.Visible = DefaultBoolean.True;
-        });
-        settings.Columns.Add(column =>
-        {
-            column.FieldName = "ProvNombre";
-            column.Caption = "Proveedor";
-            column.Width = Unit.Percentage(15);
-            column.EditFormSettings.Visible = DefaultBoolean.False;
-        });
-        settings.Columns.Add(column =>
-        {
-            column.FieldName = "IdProducto";
-            column.Caption = "Producto";
-            column.Width = Unit.Percentage(14);
-            column.EditorProperties().ComboBox(p =>
-            {
-                p.Columns.Add("IdProducto", "Código").Width = Unit.Percentage(30);
-                p.Columns.Add("Descripcion", "Descripcion").Width = Unit.Percentage(70);
-                p.ValueField = "IdProducto";
-                p.ValueType = typeof(int);
-                p.DataSource = ViewBag.lst_Productos;
-            });
-            column.EditFormSettings.Visible = DefaultBoolean.True;
-        });
+        settings.Columns.Add("IdCompra", "ID").Width = Unit.Percentage(10);
+        settings.Columns.Add("IdUsuario", "IdUsuario").Width = Unit.Percentage(10);
+        settings.Columns.Add("ProvNombre", "Proveedor").Width = Unit.Percentage(10);
+        settings.Columns.Add("NomProducto", "Producto").Width = Unit.Percentage(10);     
         settings.Columns.Add(column =>
         {
             column.FieldName = "Fecha";
             column.Caption = "Fecha";
             column.Width = Unit.Percentage(8);
             column.PropertiesEdit.DisplayFormatString = "d";
-            column.EditorProperties().DateEdit(sp =>
-            {
-                column.PropertiesEdit.DisplayFormatString = "d";
-                sp.Width = Unit.Percentage(100);
-            });
-            column.EditFormSettings.Visible = DefaultBoolean.True;
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "Calificacion";
             column.Caption = "Calificacion";
             column.Width = Unit.Percentage(6);
-            column.EditorProperties().SpinEdit(sp =>
-            {
-                sp.MinValue = 0;
-                sp.MaxValue = 999999999;
-                sp.Width = Unit.Percentage(100);
-                column.PropertiesEdit.DisplayFormatString = "n2";
-
-            });
-            column.EditFormSettings.Visible = DefaultBoolean.True;
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "Cantidad";
             column.Caption = "Cantidad";
             column.Width = Unit.Percentage(6);
-            column.EditorProperties().SpinEdit(sp =>
-            {
-                sp.MinValue = 0;
-                sp.MaxValue = 999999999;
-                sp.Width = Unit.Percentage(100);
-                column.PropertiesEdit.DisplayFormatString = "n2";
-
-            });
-            column.EditFormSettings.Visible = DefaultBoolean.True;
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "Precio";
             column.Caption = "Precio";
             column.Width = Unit.Percentage(6);
-            column.EditorProperties().SpinEdit(sp =>
-            {
-                sp.MinValue = 0;
-                sp.MaxValue = 999999999;
-                sp.Width = Unit.Percentage(100);
-                column.PropertiesEdit.DisplayFormatString = "n2";
-
-            });
-            column.EditFormSettings.Visible = DefaultBoolean.True;
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "Total";
             column.Caption = "Total";
             column.Width = Unit.Percentage(6);
-            column.EditorProperties().SpinEdit(sp =>
-            {
-                sp.MinValue = 0;
-                sp.MaxValue = 999999999;
-                sp.Width = Unit.Percentage(100);
-                column.PropertiesEdit.DisplayFormatString = "n2";
-
-            });
-            column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
         {
@@ -205,22 +125,7 @@
             column.Width = Unit.Percentage(6);
             column.EditFormSettings.Visible = DefaultBoolean.True;
         });
-        settings.Columns.Add(column =>
-        {
-            column.FieldName = "Estado";
-            column.Caption = "Estado";
-            column.Width = Unit.Percentage(8);
-            column.EditorProperties().ComboBox(p =>
-            {
-                p.Columns.Add("Key", "Código").Width = Unit.Percentage(30);
-                p.Columns.Add("Value", "Estado").Width = Unit.Percentage(70);
-                p.ValueField = "Key";
-                p.ValueType = typeof(string);
-                p.DataSource = ViewBag.lst_Estado;
-            });
-            column.EditFormSettings.Visible = DefaultBoolean.True;
-        });
-
+        settings.Columns.Add("EstadoCompra", "Estado").Width = Unit.Percentage(10);
     });
 }
 @grid.Bind(Model).GetHtml()

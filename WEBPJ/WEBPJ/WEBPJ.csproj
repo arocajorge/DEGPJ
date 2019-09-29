@@ -7500,6 +7500,8 @@
     <Content Include="Views\Compra\Nuevo.cshtml" />
     <Content Include="Views\Compra\_CmbProveedor.cshtml" />
     <Content Include="Views\Compra\_GridViewPartial_CompraProductoDetalle.cshtml" />
+    <Content Include="Views\Compra\Modificar.cshtml" />
+    <Content Include="Views\Compra\Anular.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

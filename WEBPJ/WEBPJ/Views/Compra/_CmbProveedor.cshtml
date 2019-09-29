@@ -25,7 +25,7 @@
 
     })
     .BindList(new WEBPJ.Controllers.CompraController().get_list_bajo_demanda, new WEBPJ.Controllers.CompraController().get_info_bajo_demanda)
-    .Bind(Model.GetType() == typeof(WEBPJ.Info.Compra_Info) ? "" : (Model == 0 ? "" : Model));
+    .Bind(Model.GetType() == typeof(WEBPJ.Info.Compra_Info) ? "" : (Model == "" ? "" : Model));
 
 }
 @comboBox.GetHtml()

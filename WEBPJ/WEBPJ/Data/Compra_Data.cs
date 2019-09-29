@@ -111,6 +111,7 @@ namespace WEBPJ.Data
                        
                     }
                 }
+                Lista.ForEach(q=> q.EstadoCompra = ( q.Estado=="A"? "PROCESADO": (q.Estado == "P" ? "PENDIENTE": (q.Estado == "i" ? "NO PROCESADO": "ANULADO"))));
                 return Lista;
             }
             catch (Exception)
@@ -177,38 +178,6 @@ namespace WEBPJ.Data
             }
         }
 
-        public bool ModificarBD(Compra_Info info)
-        {
-            try
-            {
-                using (EntitiesGeneral db = new EntitiesGeneral())
-                {
-                    Compra entity = db.Compra.Where(q => q.IdCompra == info.IdCompra).FirstOrDefault();
-
-                    if (entity != null)
-                    {
-                        entity.IdProducto = info.IdProducto;
-                        entity.IdUsuario = info.IdUsuario;
-                        entity.Calificacion = info.Calificacion;
-                        entity.Fecha = info.Fecha;
-                        entity.Precio = info.Precio;
-                        entity.Cantidad = info.Cantidad;
-                        entity.Total = info.Total;
-                        entity.Estado = info.Estado;
-                        entity.Comentario = info.Comentario;
-                    }
-
-                    db.SaveChanges();
-                }
-                return true;
-            }
-            catch (Exception EX)
-            {
-
-                throw;
-            }
-        }
-
         public bool ModificarBD(List<Compra_Info> Lista)
         {
             try
@@ -263,11 +232,11 @@ namespace WEBPJ.Data
                         IdProducto = info.IdProducto,
                         Calificacion = info.Calificacion,
                         Precio = info.Precio,
-                        Fecha = DateTime.Now.Date,
+                        Fecha = info.Fecha,
                         Cantidad = info.Cantidad,
                         Total = info.Total,
-                        Comentario = "COMPRA "+info.IdCompra,
-                        Estado = "PENDIENTE"
+                        Comentario = info.Comentario,
+                        Estado = info.Estado
                     });
 
                     if (info.lst_CompraDetProducto.Count > 0)
@@ -291,6 +260,66 @@ namespace WEBPJ.Data
                         }
                     }
                     
+                    db.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception EX)
+            {
+
+                throw;
+            }
+        }
+
+        public bool ModificarBD(Compra_Info info)
+        {
+            try
+            {
+                using (EntitiesGeneral db = new EntitiesGeneral())
+                {
+                    Compra entity = db.Compra.Where(q => q.IdCompra == info.IdCompra).FirstOrDefault();
+
+                    if (entity != null)
+                    {
+                        entity.IdUsuario = info.IdUsuario;
+                        entity.ProvCodigo = info.ProvCodigo;
+                        entity.ProvCedulaRuc = info.ProvCedulaRuc;
+                        entity.ProvNombre = info.ProvNombre;
+                        entity.ProvTipo = info.ProvTipo;
+                        entity.Fecha = info.Fecha;
+                        entity.Calificacion = info.Calificacion;
+                        entity.Precio = info.Precio;
+                        entity.Cantidad = info.Cantidad;
+                        entity.Total = info.Total;
+                        entity.Estado = info.Estado;
+                        entity.Comentario = info.Comentario;
+                    }
+
+                    var lst_compra_detalle = db.CompraDetalle.Where(q => q.IdCompra == info.IdCompra).ToList();
+                    db.CompraDetalle.RemoveRange(lst_compra_detalle);
+
+                    if (info.lst_CompraDetProducto != null)
+                    {
+                        int Secuencia = 1;
+
+                        foreach (var item in info.lst_CompraDetProducto)
+                        {
+                            db.CompraDetalle.Add(new CompraDetalle
+                            {
+                                IdCompra = info.IdCompra,
+                                Descripcion = item.Descripcion,
+                                Secuencia = Secuencia++,
+                                Minimo = item.Minimo,
+                                Maximo = item.Maximo,
+                                Ponderacion = item.Ponderacion,
+                                EsObligatorio = item.EsObligatorio,
+                                PorcentajeMinimo = item.PorcentajeMinimo,
+                                ValorOptimo = item.ValorOptimo,
+                                Valor = item.Valor
+                            });
+                        }
+                    }
+
                     db.SaveChanges();
                 }
                 return true;

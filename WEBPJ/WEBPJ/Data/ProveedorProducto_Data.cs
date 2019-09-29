@@ -56,5 +56,38 @@ namespace WEBPJ.Data
                 throw;
             }
         }
+
+        public bool GetInfo_ProveedorProducto(string Codigo, int IdProducto)
+        {
+            try
+            {
+                ProveedorProducto_Info info = new ProveedorProducto_Info();
+
+                using (EntitiesGeneral db = new EntitiesGeneral())
+                {
+                    ProveedorProducto Entity = db.ProveedorProducto.Where(q => q.Codigo == Codigo && q.IdProducto == IdProducto).FirstOrDefault();
+
+                    if (Entity == null)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        info = new ProveedorProducto_Info
+                        {
+                            Tipo = Entity.Tipo,
+                            Codigo = Entity.Codigo,
+                            IdProducto = Entity.IdProducto,
+                            Secuencia = Entity.Secuencia
+                        };
+                        return true;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

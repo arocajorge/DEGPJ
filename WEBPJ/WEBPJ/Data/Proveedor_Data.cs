@@ -10,7 +10,7 @@ namespace WEBPJ.Data
 {
     public class Proveedor_Data
     {
-        public List<Proveedor_Info> get_list(bool MostrarAnulados)
+        public List<Proveedor_Info> get_list()
         {
             try
             {
@@ -18,26 +18,13 @@ namespace WEBPJ.Data
 
                 using (EntitiesGeneral db = new EntitiesGeneral())
                 {
-                    if (MostrarAnulados == false)
+                    Lista = db.Proveedor.Select(q => new Proveedor_Info
                     {
-                        Lista = db.Proveedor.Select(q => new Proveedor_Info
-                        {
-                            Tipo = q.Tipo,
-                            Codigo = q.Codigo,
-                            Nombre = q.Nombre,
-                            Ruc = q.Ruc
-                        }).ToList();
-                    }
-                    else
-                    {
-                        Lista = db.Proveedor.Select(q => new Proveedor_Info
-                        {
-                            Tipo = q.Tipo,
-                            Codigo = q.Codigo,
-                            Nombre = q.Nombre,
-                            Ruc = q.Ruc
-                        }).ToList();
-                    }
+                        Tipo = q.Tipo,
+                        Codigo = q.Codigo,
+                        Nombre = q.Nombre,
+                        Ruc = q.Ruc
+                    }).ToList();
                 }
                 return Lista;
             }
