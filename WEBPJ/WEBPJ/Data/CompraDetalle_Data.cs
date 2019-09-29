@@ -21,7 +21,7 @@ namespace WEBPJ.Data
                     {
                         IdCompra = q.IdCompra,
                         Secuencia = q.Secuencia,
-                        Descripcion = q.Descripcion,
+                        Descripcion = q.Descripcion + " (" + (q.Minimo + " - " + q.Maximo + ")"),
                         Minimo = q.Minimo,
                         Maximo = q.Maximo,
                         Ponderacion = q.Ponderacion,

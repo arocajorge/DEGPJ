@@ -63,13 +63,6 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="Cantidad">Cantidad</label>
-                    @Html.TextBoxFor(q => q.Cantidad, new { @class = "form-control", @id= "Cantidad" })
-                    @Html.ValidationMessageFor(q => q.Cantidad, "", new { @class = "text-danger" })
-                </div>
-            </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="Cantidad">Usuario</label>
@@ -77,11 +70,18 @@
                     @Html.ValidationMessageFor(q => q.IdUsuario, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="Cantidad">Estado</label>
                     @Html.DropDownListFor(q => q.Estado, new SelectList(ViewBag.lst_Estado, "Key", "Value"), new { @class = "form-control", @id = "Estado" })
                     @Html.ValidationMessageFor(q => q.Estado, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Cantidad">Cantidad</label>
+                    @Html.TextBoxFor(q => q.Cantidad, new { @class = "form-control", @id = "Cantidad" })
+                    @Html.ValidationMessageFor(q => q.Cantidad, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>

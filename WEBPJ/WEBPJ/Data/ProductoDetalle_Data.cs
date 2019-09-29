@@ -50,7 +50,7 @@ namespace WEBPJ.Data
                     Lista = db.ProductoDetalle.Where(q => q.IdProducto == IdProducto).Select(q => new CompraDetalle_Info
                     {
                         Secuencia = q.Secuencia,
-                        Descripcion = q.Descripcion,
+                        Descripcion = q.Descripcion + " ("+(q.Minimo + " - "+q.Maximo+")"),
                         Minimo = q.Minimo,
                         Maximo = q.Maximo,
                         Ponderacion = q.Ponderacion,
