@@ -83,7 +83,7 @@ namespace WEBPJ.Data
                         CalificacionA = Entity.CalificacionA,
                         CalificacionB = Entity.CalificacionB,
                         CalificacionC = Entity.CalificacionC,
-                        CalificacionD = Entity.CalificacionA,
+                        CalificacionD = Entity.CalificacionD,
                         PrecioA = Entity.PrecioA,
                         PrecioB = Entity.PrecioB,
                         PrecioC = Entity.PrecioC,
