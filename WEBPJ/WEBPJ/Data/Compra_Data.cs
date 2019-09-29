@@ -232,7 +232,7 @@ namespace WEBPJ.Data
                         IdProducto = info.IdProducto,
                         Calificacion = info.Calificacion,
                         Precio = info.Precio,
-                        Fecha = info.Fecha,
+                        Fecha = info.Fecha.Date,
                         Cantidad = info.Cantidad,
                         Total = info.Total,
                         Comentario = info.Comentario,
@@ -281,12 +281,11 @@ namespace WEBPJ.Data
 
                     if (entity != null)
                     {
-                        entity.IdUsuario = info.IdUsuario;
                         entity.ProvCodigo = info.ProvCodigo;
                         entity.ProvCedulaRuc = info.ProvCedulaRuc;
                         entity.ProvNombre = info.ProvNombre;
                         entity.ProvTipo = info.ProvTipo;
-                        entity.Fecha = info.Fecha;
+                        entity.Fecha = info.Fecha.Date;
                         entity.Calificacion = info.Calificacion;
                         entity.Precio = info.Precio;
                         entity.Cantidad = info.Cantidad;

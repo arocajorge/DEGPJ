@@ -486,11 +486,14 @@ namespace WEBPJ.Controllers
                     break;
             }
 
-            var CantidadCompra = Cantidad;
-            var TotalCompra = Cantidad*Precio;
+            var CantidadCompra = Cantidad.ToString("n2");
+            var Calculo = Cantidad * Precio;
+            var TotalCompra = Calculo.ToString("n2");
+            var CalificacionCompra = Ponderacion.ToString("n2");
+            var PrecioCompra = Precio.ToString("n2");
 
             Lista_CompraDet.set_list(ListaDetalle, IdTransaccionSession);
-            return Json(new { CantidadCompra = CantidadCompra, PrecioCompra = Precio, TotalCompra = TotalCompra, ProveedorCompra = Proveedor.Nombre, CalificacionCompra = Ponderacion, Mensaje= msg }, JsonRequestBehavior.AllowGet);
+            return Json(new { CantidadCompra = CantidadCompra, PrecioCompra = PrecioCompra, TotalCompra = TotalCompra, ProveedorCompra = Proveedor.Nombre, CalificacionCompra = CalificacionCompra, Mensaje= msg }, JsonRequestBehavior.AllowGet);
         }
         #endregion
 

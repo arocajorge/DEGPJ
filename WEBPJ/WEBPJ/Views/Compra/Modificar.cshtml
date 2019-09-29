@@ -22,6 +22,7 @@
     }
     @Html.HiddenFor(q => q.IdCompra);
     @Html.HiddenFor(q => q.IdProducto, new { @id = "IdProducto" });
+    @Html.HiddenFor(q => q.IdUsuario, new { @id = "IdUsuario" });
     @Html.HiddenFor(q => q.Precio, new { @id = "Precio" });
     @Html.HiddenFor(q => q.Total, new { @id = "Total" });
     @Html.HiddenFor(q => q.Calificacion, new { @id = "Calificacion" });
@@ -125,7 +126,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="Cantidad">Usuario</label>
-                    @Html.DropDownListFor(q => q.IdUsuario, new SelectList(ViewBag.lst_Usuarios, "IdUsuario", "Nombre"), new { @class = "form-control", @id = "IdUsuario" })
+                    @Html.DropDownListFor(q => q.IdUsuario, new SelectList(ViewBag.lst_Usuarios, "IdUsuario", "Nombre"), new { @class = "form-control", @id = "IdUsuario", @disabled = "disabled" })
                     @Html.ValidationMessageFor(q => q.IdUsuario, "", new { @class = "text-danger" })
                 </div>
             </div>
