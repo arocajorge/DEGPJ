@@ -111,7 +111,7 @@ namespace WEBPJ.Data
                        
                     }
                 }
-                Lista.ForEach(q=> q.EstadoCompra = ( q.Estado=="A"? "PROCESADO": (q.Estado == "P" ? "PENDIENTE": (q.Estado == "i" ? "NO PROCESADO": "ANULADO"))));
+                Lista.ForEach(q=> q.EstadoCompra = ( q.Estado=="A"? "PROCESADO": (q.Estado == "P" ? "PENDIENTE": (q.Estado == "I" ? "NO PROCESADO": "ANULADO"))));
                 return Lista;
             }
             catch (Exception)
