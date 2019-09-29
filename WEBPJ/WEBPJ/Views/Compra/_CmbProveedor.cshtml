@@ -1,0 +1,31 @@
+﻿
+@using System.Web.UI.WebControls;
+@{
+    var comboBox = Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "ProvCodigo";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.DropDownWidth = Unit.Percentage(100);
+        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+        settings.CallbackRouteValues = new { Controller = "Compra", Action = "CmbProveedor", Area = "General" };
+        settings.Properties.CallbackPageSize = 15;
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.TextField = "Nombre";
+        settings.Properties.TextFormatString = "[{0}] {1} {2}";
+        settings.Properties.ValueField = "Codigo";
+        settings.Properties.ValueType = typeof(string);
+        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+        settings.Properties.NullText = "== Seleccione ==";
+        settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){cargar_productos() }";
+
+        settings.Properties.Columns.Add("Codigo", "ID", 10);
+        settings.Properties.Columns.Add("Ruc", "RUC", 20);
+        settings.Properties.Columns.Add("Nombre", "Proveedor", 70);
+        settings.Properties.FilterMinLength = 3;
+
+    })
+    .BindList(new WEBPJ.Controllers.CompraController().get_list_bajo_demanda, new WEBPJ.Controllers.CompraController().get_info_bajo_demanda)
+    .Bind(Model.GetType() == typeof(WEBPJ.Info.Compra_Info) ? "" : (Model == "" ? "" : Model));
+
+}
+@comboBox.GetHtml()

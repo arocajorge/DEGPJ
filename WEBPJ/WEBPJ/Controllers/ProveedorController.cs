@@ -36,7 +36,7 @@ namespace WEBPJ.Controllers
         [ValidateInput(false)]
         public ActionResult GridViewPartial_Proveedor()
         {
-            List<Proveedor_Info> model = data_Proveedor.get_list(true);
+            List<Proveedor_Info> model = data_Proveedor.get_list();
 
             return PartialView("_GridViewPartial_Proveedor", model);
         }

@@ -18,6 +18,7 @@
         const string urlConexionInterna = "urlConexionInterna";
         const string urlConexionExterna = "urlConexionExterna";
         const string urlConexionActual = "urlConexionActual";
+        const string idCompra = "idCompra";
         const string rutaCarpeta = "rutaCarpeta";
         const string idUsuario = "idUsuario";
         private static readonly string stringDefault = string.Empty;
@@ -78,6 +79,17 @@
             set
             {
                 AppSettings.AddOrUpdateValue(idUsuario, value);
+            }
+        }
+        public static string IdCompra
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault(idCompra, stringDefault);
+            }
+            set
+            {
+                AppSettings.AddOrUpdateValue(idCompra, value);
             }
         }
     }

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="APPPJ.Views.CompraModificarPage"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+            Title="Compra">
+    <ContentPage.Content>
+       <StackLayout>
+            <ScrollView
+                BindingContext="{Binding CompraModificar}">
+                <StackLayout
+                    Padding="20">
+                    <Label
+                        Text="Proveedor:"
+                        TextColor="Black"
+                        FontAttributes="Bold">
+                    </Label>
+                    <Label
+                        Text="{Binding Compra.ProvNombre}"
+                        TextColor="Black">
+                    </Label>
+                    
+                     <Label
+                        Text="Producto:"
+                        TextColor="Black"
+                        FontAttributes="Bold">
+                    </Label>
+                    <Label
+                        Text="{Binding Compra.prDescripcion}"
+                        TextColor="Black">
+                    </Label>
+                    <StackLayout
+                        Orientation="Horizontal">
+                        <Label
+                        TextColor="Black"
+                        FontAttributes="Bold"
+                        Text="Cantidad:">
+                        </Label>
+                        <Label
+                        TextColor="Black"
+                        HorizontalTextAlignment="End"
+                            HorizontalOptions="EndAndExpand"
+                        Text="{Binding Compra.Cantidad,StringFormat='{0:N2}'}"></Label>
+                    </StackLayout>
+                    <StackLayout
+                        Orientation="Horizontal">
+                        <Label
+                        TextColor="Black"
+                        FontAttributes="Bold"
+                        Text="Precio:"></Label>
+                        <Label
+                        TextColor="Black"
+                        HorizontalTextAlignment="End"
+                            HorizontalOptions="EndAndExpand"
+                        Text="{Binding Compra.Precio,StringFormat='{0:C2}'}"
+                        ></Label>
+                    </StackLayout>
+            <StackLayout
+                        Orientation="Horizontal">
+                <Label
+                TextColor="Black"
+                FontAttributes="Bold"
+                Text="Total:"></Label>
+            <Label 
+                TextColor="Black"
+                HorizontalTextAlignment="End"
+                            HorizontalOptions="EndAndExpand"
+                Text="{Binding Compra.Total,StringFormat='{0:C2}'}"></Label>
+                    </StackLayout>
+                    <Label
+                            FontSize="Medium"
+                            FontAttributes="Bold"
+                            Text="Comentario: "
+                            TextColor="Black"></Label>
+                    <Editor
+                            HeightRequest="150"
+                            FontSize="Medium"
+                            Text="{Binding Comentario, Mode=TwoWay}"
+                            TextColor="Black">
+                    </Editor>
+             <ActivityIndicator
+                    IsRunning="{Binding IsRunning}"
+                     VerticalOptions="CenterAndExpand">
+                    </ActivityIndicator>
+                    <Button
+                        BackgroundColor="Teal"
+                        TextColor="White"
+                        WidthRequest="200"
+                        Command="{Binding GuardarCommand}"
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                        VerticalOptions="End"
+                        Text="Guardar">
+                    </Button>
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

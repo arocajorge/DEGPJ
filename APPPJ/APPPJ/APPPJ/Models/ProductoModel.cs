@@ -10,7 +10,7 @@
         public int PKSQLite { get; set; }
 
         [JsonProperty("IdProducto")]
-        public long IdProducto { get; set; }
+        public int IdProducto { get; set; }
 
         [JsonProperty("Descripcion")]
         public string Descripcion { get; set; }
@@ -19,28 +19,31 @@
         public string Codigo { get; set; }
 
         [JsonProperty("CalificacionA")]
-        public long CalificacionA { get; set; }
+        public double CalificacionA { get; set; }
 
         [JsonProperty("CalificacionB")]
-        public long CalificacionB { get; set; }
+        public double CalificacionB { get; set; }
 
         [JsonProperty("CalificacionC")]
-        public long CalificacionC { get; set; }
+        public double CalificacionC { get; set; }
 
         [JsonProperty("CalificacionD")]
-        public long CalificacionD { get; set; }
+        public double CalificacionD { get; set; }
 
         [JsonProperty("PrecioA")]
-        public long PrecioA { get; set; }
+        public double PrecioA { get; set; }
 
         [JsonProperty("PrecioB")]
-        public long PrecioB { get; set; }
+        public double PrecioB { get; set; }
 
         [JsonProperty("PrecioC")]
-        public long PrecioC { get; set; }
+        public double PrecioC { get; set; }
 
         [JsonProperty("PrecioD")]
-        public long PrecioD { get; set; }
+        public double PrecioD { get; set; }
+
+        [JsonProperty("EscogerPrecioPor")]
+        public string EscogerPrecioPor { get; set; }
 
         [JsonProperty("Estado")]
         public bool Estado { get; set; }

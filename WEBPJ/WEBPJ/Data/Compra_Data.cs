@@ -32,7 +32,7 @@ namespace WEBPJ.Data
                                 IdUsuario = q.IdUsuario,
                                 IdProducto = q.IdProducto,
                                 Calificacion = q.Calificacion,
-                                Fecha = q.Fecha,
+                                Fecha = DateTime.Now,
                                 Precio = q.Precio,
                                 Cantidad = q.Cantidad,
                                 Total = q.Total,
@@ -111,6 +111,7 @@ namespace WEBPJ.Data
                        
                     }
                 }
+                Lista.ForEach(q=> q.EstadoCompra = ( q.Estado=="A"? "PROCESADO": (q.Estado == "P" ? "PENDIENTE": (q.Estado == "i" ? "NO PROCESADO": "ANULADO"))));
                 return Lista;
             }
             catch (Exception)
@@ -155,7 +156,28 @@ namespace WEBPJ.Data
                 throw;
             }
         }
-        
+
+        private decimal get_id()
+        {
+            try
+            {
+                decimal Id = 1;
+                using (EntitiesGeneral Context = new EntitiesGeneral())
+                {
+                    var lst = from q in Context.Compra
+                              select q;
+                    if (lst.Count() > 0)
+                        Id = lst.Max(q => q.IdCompra) + 1;
+                }
+                return Id;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public bool ModificarBD(List<Compra_Info> Lista)
         {
             try
@@ -192,6 +214,63 @@ namespace WEBPJ.Data
             }
         }
 
+        public bool GuardarBD(Compra_Info info)
+        {
+            try
+            {
+                using (EntitiesGeneral db = new EntitiesGeneral())
+                {
+                    db.Compra.Add(new Compra
+                    {
+                        IdCompra = info.IdCompra = get_id(),
+                        ProvCedulaRuc = info.ProvCedulaRuc,
+                        ProvNombre = info.ProvNombre,
+                        ProvCodigo = info.ProvCodigo,
+                        ProvTipo = info.ProvTipo,
+                        IdUsuario = info.IdUsuario,
+                        Codigo = info.Codigo,
+                        IdProducto = info.IdProducto,
+                        Calificacion = info.Calificacion,
+                        Precio = info.Precio,
+                        Fecha = info.Fecha,
+                        Cantidad = info.Cantidad,
+                        Total = info.Total,
+                        Comentario = info.Comentario,
+                        Estado = info.Estado
+                    });
+
+                    if (info.lst_CompraDetProducto.Count > 0)
+                    {
+                        int Secuencia = 1;
+                        foreach (var item in info.lst_CompraDetProducto)
+                        {
+                            db.CompraDetalle.Add(new CompraDetalle
+                            {
+                                IdCompra = info.IdCompra,
+                                Descripcion = item.Descripcion,
+                                Secuencia = Secuencia++,
+                                Minimo = item.Minimo,
+                                Maximo = item.Maximo,
+                                Ponderacion = item.Ponderacion,
+                                EsObligatorio = item.EsObligatorio,
+                                PorcentajeMinimo = item.PorcentajeMinimo,
+                                ValorOptimo = item.ValorOptimo,
+                                Valor = item.Valor
+                            });
+                        }
+                    }
+                    
+                    db.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception EX)
+            {
+
+                throw;
+            }
+        }
+
         public bool ModificarBD(Compra_Info info)
         {
             try
@@ -202,15 +281,43 @@ namespace WEBPJ.Data
 
                     if (entity != null)
                     {
-                        entity.IdProducto = info.IdProducto;
                         entity.IdUsuario = info.IdUsuario;
-                        entity.Calificacion = info.Calificacion;
+                        entity.ProvCodigo = info.ProvCodigo;
+                        entity.ProvCedulaRuc = info.ProvCedulaRuc;
+                        entity.ProvNombre = info.ProvNombre;
+                        entity.ProvTipo = info.ProvTipo;
                         entity.Fecha = info.Fecha;
+                        entity.Calificacion = info.Calificacion;
                         entity.Precio = info.Precio;
                         entity.Cantidad = info.Cantidad;
                         entity.Total = info.Total;
                         entity.Estado = info.Estado;
                         entity.Comentario = info.Comentario;
+                    }
+
+                    var lst_compra_detalle = db.CompraDetalle.Where(q => q.IdCompra == info.IdCompra).ToList();
+                    db.CompraDetalle.RemoveRange(lst_compra_detalle);
+
+                    if (info.lst_CompraDetProducto != null)
+                    {
+                        int Secuencia = 1;
+
+                        foreach (var item in info.lst_CompraDetProducto)
+                        {
+                            db.CompraDetalle.Add(new CompraDetalle
+                            {
+                                IdCompra = info.IdCompra,
+                                Descripcion = item.Descripcion,
+                                Secuencia = Secuencia++,
+                                Minimo = item.Minimo,
+                                Maximo = item.Maximo,
+                                Ponderacion = item.Ponderacion,
+                                EsObligatorio = item.EsObligatorio,
+                                PorcentajeMinimo = item.PorcentajeMinimo,
+                                ValorOptimo = item.ValorOptimo,
+                                Valor = item.Valor
+                            });
+                        }
                     }
 
                     db.SaveChanges();

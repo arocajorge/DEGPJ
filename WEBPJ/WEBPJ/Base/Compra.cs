@@ -14,7 +14,6 @@ namespace WEBPJ.Base
     
     public partial class Compra
     {
-        public decimal IdTransaccionSession { get; set; }
         public decimal IdCompra { get; set; }
         public string ProvCedulaRuc { get; set; }
         public string ProvNombre { get; set; }

@@ -30,8 +30,10 @@ namespace WEBPJ.Base
         public virtual DbSet<vwCompra> vwCompra { get; set; }
         public virtual DbSet<Proveedor> Proveedor { get; set; }
         public virtual DbSet<ProveedorProducto> ProveedorProducto { get; set; }
-        public virtual DbSet<Compra> Compra { get; set; }
         public virtual DbSet<Producto> Producto { get; set; }
         public virtual DbSet<ProductoDetalle> ProductoDetalle { get; set; }
+        public virtual DbSet<vwProveedorProducto> vwProveedorProducto { get; set; }
+        public virtual DbSet<Compra> Compra { get; set; }
+        public virtual DbSet<CompraDetalle> CompraDetalle { get; set; }
     }
 }
