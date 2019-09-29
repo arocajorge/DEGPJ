@@ -26,7 +26,7 @@ namespace WEBPJ.Base
         }
     
         public virtual DbSet<fcclient> fcclient { get; set; }
-        public virtual DbSet<vwProveedor> vwProveedor { get; set; }
-        public virtual DbSet<Proveedor> Proveedor { get; set; }
+        public virtual DbSet<FX_ProveedorMigrado> FX_ProveedorMigrado { get; set; }
+        public virtual DbSet<VWFX_ProveedorMigrado> VWFX_ProveedorMigrado { get; set; }
     }
 }

@@ -43,7 +43,7 @@ namespace WEBPJ.Data
 
                 using (EntitiesNexpirion db = new EntitiesNexpirion())
                 {
-                    Lista = db.vwProveedor.Select(q => new Proveedor_Info
+                    Lista = db.VWFX_ProveedorMigrado.Select(q => new Proveedor_Info
                     {
                         Tipo = q.tipo,
                         Codigo = q.codigo,
@@ -149,7 +149,7 @@ namespace WEBPJ.Data
 
                 using (EntitiesNexpirion db_nx = new EntitiesNexpirion())
                 {
-                    db_nx.Proveedor.Add(new Proveedor
+                    db_nx.FX_ProveedorMigrado.Add(new FX_ProveedorMigrado
                     {
                         Tipo = info.Tipo,
                         Codigo = info.Codigo,
@@ -208,7 +208,7 @@ namespace WEBPJ.Data
 
                 using (EntitiesNexpirion db_nx = new EntitiesNexpirion())
                 {
-                    Proveedor entity_nx = db_nx.Proveedor.Where(q => q.Tipo == info.Tipo && q.Codigo == info.Codigo).FirstOrDefault();
+                    FX_ProveedorMigrado entity_nx = db_nx.FX_ProveedorMigrado.Where(q => q.Tipo == info.Tipo && q.Codigo == info.Codigo).FirstOrDefault();
 
                     if (entity_nx == null)
                     {
@@ -246,7 +246,7 @@ namespace WEBPJ.Data
 
                 using (EntitiesNexpirion db_nx = new EntitiesNexpirion())
                 {
-                    var sql_nx = "delete from Proveedor where Tipo = '" + info.Tipo + "' and Codigo = '" + info.Codigo + "'";
+                    var sql_nx = "delete from FX_ProveedorMigrado where Tipo = '" + info.Tipo + "' and Codigo = '" + info.Codigo + "'";
 
                     db_nx.Database.ExecuteSqlCommand(sql_nx);
                 }

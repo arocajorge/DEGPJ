@@ -187,6 +187,9 @@
     <Compile Include="Base\fcclient.cs">
       <DependentUpon>ModelNexpirion.tt</DependentUpon>
     </Compile>
+    <Compile Include="Base\FX_ProveedorMigrado.cs">
+      <DependentUpon>ModelNexpirion.tt</DependentUpon>
+    </Compile>
     <Compile Include="Base\LogError.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
@@ -238,7 +241,7 @@
     <Compile Include="Base\vwCompra.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
-    <Compile Include="Base\vwProveedor.cs">
+    <Compile Include="Base\VWFX_ProveedorMigrado.cs">
       <DependentUpon>ModelNexpirion.tt</DependentUpon>
     </Compile>
     <Compile Include="Base\vwProveedorProducto.cs">
@@ -7450,6 +7453,7 @@
     <Content Include="Base\ModelNexpirion.edmx.diagram">
       <DependentUpon>ModelNexpirion.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
