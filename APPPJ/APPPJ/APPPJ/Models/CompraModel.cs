@@ -3,6 +3,7 @@
     using Newtonsoft.Json;
     using SQLite;
     using System;
+    using System.Collections.Generic;
 
     public class CompraModel
     {
@@ -51,6 +52,14 @@
         [JsonProperty("Estado")]
         public string Estado { get; set; }
 
+        [JsonProperty("Dispositivo")]
+        public string Dispositivo { get; set; }
+
+        [JsonProperty("ListaDetalle")]
+        public List<CompraDetalleModel> ListaDetalle { get; set; }
+
+        #region Campos que no existen en la tabla
         public string prDescripcion { get; set; }
+        #endregion
     }
 }
