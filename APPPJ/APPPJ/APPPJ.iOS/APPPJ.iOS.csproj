@@ -222,6 +222,9 @@
     <Reference Include="Rg.Plugins.Popup.Platform">
       <HintPath>..\..\packages\Rg.Plugins.Popup.1.0.4\lib\Xamarin.IOS\Rg.Plugins.Popup.Platform.dll</HintPath>
     </Reference>
+    <Reference Include="Plugin.DeviceInfo">
+      <HintPath>..\..\packages\Xam.Plugin.DeviceInfo.4.1.1\lib\xamarinios10\Plugin.DeviceInfo.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>

@@ -60,8 +60,8 @@
             api = new ApiService();
             this.IsEnabled = true;
             this.Usuario = "admin";
-            this.UrlServidorExterno = string.IsNullOrEmpty(Settings.UrlConexionExterna) ? "http://192.168.1.138:20000" : Settings.UrlConexionExterna;
-            this.UrlServidorInterno = string.IsNullOrEmpty(Settings.UrlConexionInterna) ? "http://192.168.1.138:20000" : Settings.UrlConexionInterna;
+            this.UrlServidorExterno = string.IsNullOrEmpty(Settings.UrlConexionExterna) ? "http://192.168.1.131:20000" : Settings.UrlConexionExterna;
+            this.UrlServidorInterno = string.IsNullOrEmpty(Settings.UrlConexionInterna) ? "http://192.168.1.131:20000" : Settings.UrlConexionInterna;
             this.RutaCarpeta = string.IsNullOrEmpty(Settings.RutaCarpeta) ? "/Api" : Settings.RutaCarpeta;
         }
         #endregion
@@ -258,11 +258,12 @@
             }
 
             var Compra = (CompraModel)response_compra.Result;
-            Settings.IdCompra = Compra == null ? "0" : Compra.IdCompra.ToString();
+            Settings.IdCompra = Compra == null ? "0" : Compra.IdCompra.ToString("n0");
             #endregion
 
             #region Limpio los settings
             Settings.IdUsuario = Usuario;
+            App.Data.DeleteAll<CompraModel>();
             #endregion
 
             this.IsEnabled = true;
