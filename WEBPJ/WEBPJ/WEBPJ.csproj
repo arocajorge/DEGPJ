@@ -181,7 +181,13 @@
     <Compile Include="Base\Compra.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
+    <Compile Include="Base\CompraDetalle.cs">
+      <DependentUpon>ModelGeneral.tt</DependentUpon>
+    </Compile>
     <Compile Include="Base\fcclient.cs">
+      <DependentUpon>ModelNexpirion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Base\FX_ProveedorMigrado.cs">
       <DependentUpon>ModelNexpirion.tt</DependentUpon>
     </Compile>
     <Compile Include="Base\LogError.cs">
@@ -235,14 +241,18 @@
     <Compile Include="Base\vwCompra.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
-    <Compile Include="Base\vwProveedor.cs">
+    <Compile Include="Base\VWFX_ProveedorMigrado.cs">
       <DependentUpon>ModelNexpirion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Base\vwProveedorProducto.cs">
+      <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CompraController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\ProveedorController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
+    <Compile Include="Data\CompraDetalle_Data.cs" />
     <Compile Include="Data\Compra_Data.cs" />
     <Compile Include="Data\ProductoDetalle_Data.cs" />
     <Compile Include="Data\Producto_Data.cs" />
@@ -255,6 +265,7 @@
     <Compile Include="Helps\DecimalModelBinder.cs" />
     <Compile Include="Helps\DoubleModelBinder.cs" />
     <Compile Include="Helps\SessionFixed.cs" />
+    <Compile Include="Info\CompraDetalle_Info.cs" />
     <Compile Include="Info\Enumeradores.cs" />
     <Compile Include="Info\Filtros_Info.cs" />
     <Compile Include="Info\Compra_Info.cs" />
@@ -7442,6 +7453,7 @@
     <Content Include="Base\ModelNexpirion.edmx.diagram">
       <DependentUpon>ModelNexpirion.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -7456,7 +7468,9 @@
     <Content Include="Scripts\ScriptsGenerales.js" />
     <Content Include="Scripts\ValidacionBotonSubmit.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -7488,6 +7502,12 @@
     <Content Include="Views\Proveedor\Anular.cshtml" />
     <Content Include="Views\Proveedor\Index2.cshtml" />
     <Content Include="Views\Proveedor\_GridViewPartial_ProveedorNexpirion.cshtml" />
+    <Content Include="Views\Shared\_LayoutConsulta.cshtml" />
+    <Content Include="Views\Compra\Nuevo.cshtml" />
+    <Content Include="Views\Compra\_CmbProveedor.cshtml" />
+    <Content Include="Views\Compra\_GridViewPartial_CompraProductoDetalle.cshtml" />
+    <Content Include="Views\Compra\Modificar.cshtml" />
+    <Content Include="Views\Compra\Anular.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -70,7 +70,7 @@
           <Property Name="bloqueado" Type="bit" Nullable="false" />
           <Property Name="contacto_correo" Type="varchar" MaxLength="254" Nullable="false" />
         </EntityType>
-        <EntityType Name="Proveedor">
+        <EntityType Name="FX_ProveedorMigrado">
           <Key>
             <PropertyRef Name="Tipo" />
             <PropertyRef Name="Codigo" />
@@ -81,8 +81,8 @@
           <Property Name="Ruc" Type="varchar" MaxLength="20" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Nexpirion.dbo.vwProveedor' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
-        <EntityType Name="vwProveedor">
+advertencia 6002: La tabla o vista 'Nexpirion.dbo.VWFX_ProveedorMigrado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="VWFX_ProveedorMigrado">
           <Key>
             <PropertyRef Name="tipo" />
             <PropertyRef Name="codigo" />
@@ -96,14 +96,14 @@ advertencia 6002: La tabla o vista 'Nexpirion.dbo.vwProveedor' no tiene definida
         </EntityType>
         <EntityContainer Name="ModelNexpirionStoreContainer">
           <EntitySet Name="fcclient" EntityType="Self.fcclient" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Proveedor" EntityType="Self.Proveedor" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="vwProveedor" EntityType="Self.vwProveedor" store:Type="Views" store:Schema="dbo">
+          <EntitySet Name="FX_ProveedorMigrado" EntityType="Self.FX_ProveedorMigrado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VWFX_ProveedorMigrado" EntityType="Self.VWFX_ProveedorMigrado" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [vwProveedor].[tipo] AS [tipo], 
-    [vwProveedor].[codigo] AS [codigo], 
-    [vwProveedor].[nombre] AS [nombre], 
-    [vwProveedor].[ruc] AS [ruc]
-    FROM [dbo].[vwProveedor] AS [vwProveedor]</DefiningQuery>
+    [VWFX_ProveedorMigrado].[tipo] AS [tipo], 
+    [VWFX_ProveedorMigrado].[codigo] AS [codigo], 
+    [VWFX_ProveedorMigrado].[nombre] AS [nombre], 
+    [VWFX_ProveedorMigrado].[ruc] AS [ruc]
+    FROM [dbo].[VWFX_ProveedorMigrado] AS [VWFX_ProveedorMigrado]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -177,10 +177,20 @@ advertencia 6002: La tabla o vista 'Nexpirion.dbo.vwProveedor' no tiene definida
         </EntityType>
         <EntityContainer Name="EntitiesNexpirion" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="fcclient" EntityType="Self.fcclient" />
-          <EntitySet Name="vwProveedor" EntityType="ModelNexpirion.vwProveedor" />
-          <EntitySet Name="Proveedor" EntityType="ModelNexpirion.Proveedor" />
+          <EntitySet Name="FX_ProveedorMigrado" EntityType="ModelNexpirion.FX_ProveedorMigrado" />
+          <EntitySet Name="VWFX_ProveedorMigrado" EntityType="ModelNexpirion.VWFX_ProveedorMigrado" />
         </EntityContainer>
-        <EntityType Name="vwProveedor">
+        <EntityType Name="FX_ProveedorMigrado">
+          <Key>
+            <PropertyRef Name="Tipo" />
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Tipo" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Codigo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Ruc" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="VWFX_ProveedorMigrado">
           <Key>
             <PropertyRef Name="tipo" />
             <PropertyRef Name="codigo" />
@@ -191,16 +201,6 @@ advertencia 6002: La tabla o vista 'Nexpirion.dbo.vwProveedor' no tiene definida
           <Property Name="codigo" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
           <Property Name="nombre" Type="String" Nullable="false" MaxLength="65" FixedLength="true" Unicode="false" />
           <Property Name="ruc" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="false" />
-        </EntityType>
-        <EntityType Name="Proveedor">
-          <Key>
-            <PropertyRef Name="Tipo" />
-            <PropertyRef Name="Codigo" />
-          </Key>
-          <Property Name="Tipo" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="Codigo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Ruc" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -273,23 +273,23 @@ advertencia 6002: La tabla o vista 'Nexpirion.dbo.vwProveedor' no tiene definida
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vwProveedor">
-            <EntityTypeMapping TypeName="ModelNexpirion.vwProveedor">
-              <MappingFragment StoreEntitySet="vwProveedor">
-                <ScalarProperty Name="ruc" ColumnName="ruc" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="codigo" ColumnName="codigo" />
-                <ScalarProperty Name="tipo" ColumnName="tipo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Proveedor">
-            <EntityTypeMapping TypeName="ModelNexpirion.Proveedor">
-              <MappingFragment StoreEntitySet="Proveedor">
+          <EntitySetMapping Name="FX_ProveedorMigrado">
+            <EntityTypeMapping TypeName="ModelNexpirion.FX_ProveedorMigrado">
+              <MappingFragment StoreEntitySet="FX_ProveedorMigrado">
                 <ScalarProperty Name="Ruc" ColumnName="Ruc" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VWFX_ProveedorMigrado">
+            <EntityTypeMapping TypeName="ModelNexpirion.VWFX_ProveedorMigrado">
+              <MappingFragment StoreEntitySet="VWFX_ProveedorMigrado">
+                <ScalarProperty Name="ruc" ColumnName="ruc" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="codigo" ColumnName="codigo" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

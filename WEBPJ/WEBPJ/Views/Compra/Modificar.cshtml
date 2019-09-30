@@ -1,0 +1,283 @@
+﻿@model WEBPJ.Info.Compra_Info
+@{
+    ViewBag.Title = "Modificar compra";
+    if (string.IsNullOrEmpty(@WEBPJ.Helps.SessionFixed.IdUsuario))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Modificar", "Compra", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+    @Html.HiddenFor(q => q.IdCompra);
+    @Html.HiddenFor(q => q.IdProducto, new { @id = "IdProducto" });
+    @Html.HiddenFor(q => q.IdUsuario, new { @id = "IdUsuario" });
+    @Html.HiddenFor(q => q.Precio, new { @id = "Precio" });
+    @Html.HiddenFor(q => q.Total, new { @id = "Total" });
+    @Html.HiddenFor(q => q.Calificacion, new { @id = "Calificacion" });
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id= "IdTransaccionSession" });
+
+    <div class="modal fade" id="ModalCompra" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Calificación</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-12 form-group">
+                                <label for="txtCantidad">Proveedor:</label>
+                                <input type="text" id="ProveedorCompra" class="form-control" readonly />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6 form-group">
+                                <label for="txtCantidad">Cantidad:</label>
+                                <input type="text" id="CantidadCompra" class="form-control" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6 form-group">
+                                <label for="txtCantidad">Precio:</label>
+                                <input type="text" id="PrecioCompra" class="form-control" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6 form-group">
+                                <label for="txtCantidad">Total:</label>
+                                <input type="text" id="TotalCompra" class="form-control" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6 form-group">
+                                <label for="txtCantidad">Calificacion</label>
+                                <input type="text" id="CalificacionCompra" class="form-control" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label for="IdProveedor">Proveedor*</label>
+                    @Html.DropDownListFor(q => q.ProvCodigo, new SelectList(ViewBag.lst_proveedor, "Codigo", "Nombre"), new { @class = "form-control", @id = "ProvCodigo" })
+                    @Html.ValidationMessageFor(q => q.ProvCodigo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label for="Descripcion">Producto</label>
+                    @Html.DropDownListFor(q => q.IdProducto, new SelectList(ViewBag.lst_productos, "IdProducto", "Descripcion"), new { @class = "form-control", @id = "IdProducto", @disabled= "disabled" })
+                    @Html.ValidationMessageFor(q => q.IdProducto, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Descripcion">Fecha</label>
+                    @Html.DevExpress().DateEditFor(q => q.Fecha, settings =>
+                    {
+                        settings.Name = "Fecha";
+                        settings.Properties.UseMaskBehavior = true;
+                        settings.Properties.EditFormat = EditFormat.Date;
+                        settings.Properties.EditFormatString = "dd/MM/yyyy";
+                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                        settings.Properties.AllowMouseWheel = false;
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Properties.AllowMouseWheel = false;
+                    }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.Fecha, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Cantidad">Usuario</label>
+                    @Html.DropDownListFor(q => q.IdUsuario, new SelectList(ViewBag.lst_Usuarios, "IdUsuario", "Nombre"), new { @class = "form-control", @id = "IdUsuario", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.IdUsuario, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Cantidad">Estado</label>
+                    @Html.DropDownListFor(q => q.Estado, new SelectList(ViewBag.lst_Estado, "Key", "Value"), new { @class = "form-control", @id = "Estado" })
+                    @Html.ValidationMessageFor(q => q.Estado, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Cantidad">Cantidad</label>
+                    @Html.TextBoxFor(q => q.Cantidad, new { @class = "form-control", @id = "Cantidad" })
+                    @Html.ValidationMessageFor(q => q.Cantidad, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Cantidad">Comentario</label>
+                    @Html.TextBoxFor(q => q.Comentario, new { @class = "form-control", @id = "Comentario" })
+                    @Html.ValidationMessageFor(q => q.Comentario, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body">
+        @Html.Action("GridViewPartial_CompraProductoDetalle")
+    </div>
+    <div class="box-footer">
+        <button type="button" class="btn btn-primary"  id="BtnCalificar" onclick="Calificar();">Calificar</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "Compra", new { Area ="General" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+
+<script type="text/javascript">
+    $(function () {
+        $("#BtnCalificar").show();
+
+        $("#ProvCodigo").change(function () {
+            cargar_productos();
+        });
+});
+
+function cargar_productos() {
+    if ($("#ProvCodigo").val() != "") {
+        $("#IdProducto").empty();
+        var datos = {
+            IdProveedor: $("#ProvCodigo").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("cargar_productos_x_proveedor", "Producto", new { Area = "General"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $.each(data, function (i, row) {
+                    $("#IdProducto").append("<option value=" + row.IdProducto + ">" + row.Descripcion + "</option>");
+                });
+
+                CargarProductoDetalle_Modificar();
+            },
+            error: function (error) {
+            }
+        });
+    }
+}
+
+function Calificar() {
+    var datos = {
+        IdTransaccionSession: $("#IdTransaccionSession").val(),
+        IdProveedor: $("#ProvCodigo").val(),
+        IdProducto: $("#IdProducto").val(),
+        Cantidad: $("#Cantidad").val()
+    }
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(datos),
+        url: '@Url.Action("CalificarProducto", "Compra",new { Area = "General"})',
+        async: false,
+        bDeferRender: true,
+        bProcessing: true,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            if (data.Mensaje!="") {
+                alert(data.Mensaje);
+
+                $("#ModalCompra").modal("hide");
+            }
+            else {
+                $("#ModalCompra").modal("show");
+            }
+
+            $("#CantidadCompra").val(data.CantidadCompra);
+            $("#PrecioCompra").val(data.PrecioCompra);
+            $("#TotalCompra").val(data.TotalCompra);
+            $("#ProveedorCompra").val(data.ProveedorCompra);
+            $("#CalificacionCompra").val(data.CalificacionCompra);
+
+            $("#Precio").val(data.PrecioCompra);
+            $("#Total").val(data.TotalCompra);
+            $("#Calificacion").val(data.CalificacionCompra);
+            GridViewPartial_CompraProductoDetalle.PerformCallback();
+            
+        },
+        error: function (error) {
+        }
+    });
+}
+
+function CargarProductoDetalle_Modificar() {
+    var datos = {
+        IdTransaccionSession: $("#IdTransaccionSession").val(),
+        IdCompra: $("#IdCompra").val(),
+        IdProveedor: $("#ProvCodigo").val(),
+        IdProducto: $("#IdProducto").val()
+    }
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(datos),
+        url: '@Url.Action("CargarProductoDetalle_Modificar", "Compra",new { Area = "General"})',
+        async: false,
+        bDeferRender: true,
+        bProcessing: true,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            if (data.msg!= "") {
+                alert(data.msg);
+                $("#BtnCalificar").hide();
+            }
+            else {
+                $("#BtnCalificar").show();
+            }
+
+            GridViewPartial_CompraProductoDetalle.PerformCallback();
+        },
+        error: function (error) {
+        }
+    });
+
+}
+</script>

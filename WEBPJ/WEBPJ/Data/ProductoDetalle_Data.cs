@@ -38,5 +38,34 @@ namespace WEBPJ.Data
                 throw;
             }
         }
+
+        public List<CompraDetalle_Info> GetList_CompraDetalle(int IdProducto)
+        {
+            try
+            {
+                List<CompraDetalle_Info> Lista = new List<CompraDetalle_Info>();
+
+                using (EntitiesGeneral db = new EntitiesGeneral())
+                {
+                    Lista = db.ProductoDetalle.Where(q => q.IdProducto == IdProducto).Select(q => new CompraDetalle_Info
+                    {
+                        Secuencia = q.Secuencia,
+                        Descripcion = q.Descripcion + " ("+(q.Minimo + " - "+q.Maximo+")"),
+                        Minimo = q.Minimo,
+                        Maximo = q.Maximo,
+                        Ponderacion = q.Ponderacion,
+                        EsObligatorio = q.EsObligatorio,
+                        PorcentajeMinimo = q.PorcentajeMinimo,
+                        ValorOptimo = q.ValorOptimo
+                    }).ToList();
+
+                    return Lista;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }
