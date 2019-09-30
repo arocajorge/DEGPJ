@@ -3,6 +3,7 @@ using DevExpress.Web.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WEBPJ.Data;
@@ -25,6 +26,7 @@ namespace WEBPJ.Controllers
         Compra_List Lista_Compra = new Compra_List();
         CompraDetalle_List Lista_CompraDet = new CompraDetalle_List();
         ProductoDetalle_Data data_producto_detalle = new ProductoDetalle_Data();
+        Dispositivo_Data data_dispositivo = new Dispositivo_Data();
         string mensaje = string.Empty;
         #endregion
 
@@ -181,6 +183,7 @@ namespace WEBPJ.Controllers
             model.ProvNombre = info_proveedor.Nombre;
             model.ProvTipo = info_proveedor.Tipo;
             model.Codigo = info_producto.Codigo;
+            model.Dispositivo = Dns.GetHostName();
 
             if (!validar(model, ref mensaje))
             {
@@ -384,11 +387,12 @@ namespace WEBPJ.Controllers
             return Json(lst_producto_detalle, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult CalificarProducto(decimal IdTransaccionSession = 0, string IdProveedor = "", int IdProducto = 0, double Cantidad = 0)
+        public JsonResult CalificarProducto(decimal IdTransaccionSession = 0, string IdProveedor = "", string IdUsuario="", int IdProducto = 0, double Cantidad = 0)
         {
             var ListaDetalle = Lista_CompraDet.get_list(IdTransaccionSession);
             var Producto = data_producto.get_info(IdProducto);
             var Proveedor = data_proveedor.get_info("PRV", IdProveedor);
+            var Comprador = data_usuario.get_info(IdUsuario);
             var msg = "";
 
             foreach (var q in ListaDetalle)
@@ -493,7 +497,7 @@ namespace WEBPJ.Controllers
             var PrecioCompra = Precio.ToString("n2");
 
             Lista_CompraDet.set_list(ListaDetalle, IdTransaccionSession);
-            return Json(new { CantidadCompra = CantidadCompra, PrecioCompra = PrecioCompra, TotalCompra = TotalCompra, ProveedorCompra = Proveedor.Nombre, CalificacionCompra = CalificacionCompra, Mensaje= msg }, JsonRequestBehavior.AllowGet);
+            return Json(new { CantidadCompra = CantidadCompra, PrecioCompra = PrecioCompra, TotalCompra = TotalCompra, ProveedorCompra = Proveedor.Nombre, Comprador = Comprador.Nombre, CalificacionCompra = CalificacionCompra, Mensaje= msg }, JsonRequestBehavior.AllowGet);
         }
         #endregion
 

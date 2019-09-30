@@ -9,6 +9,7 @@ namespace WEBPJ.Data
 {
     public class Compra_Data
     {
+        Dispositivo_Data data_dispositivo = new Dispositivo_Data();
         public List<Compra_Info> get_list(DateTime fecha_ini, DateTime fecha_fin, string IdUsuario, string Estado)
         {
             try
@@ -178,6 +179,28 @@ namespace WEBPJ.Data
             }
         }
 
+        private int get_SecuencialDispositivo(string IdUsuario, string Dispositivo)
+        {
+            try
+            {
+                int Secuencia = 1;
+                using (EntitiesGeneral Context = new EntitiesGeneral())
+                {
+                    var lst = from q in Context.Compra
+                              where q.IdUsuario == IdUsuario && q.Dispositivo== Dispositivo
+                              select q;
+                    if (lst.Count() > 0)
+                        Secuencia = lst.Max(q => q.SecuenciaDispositivoComp) + 1;
+                }
+                return Secuencia;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public bool ModificarBD(List<Compra_Info> Lista)
         {
             try
@@ -220,6 +243,17 @@ namespace WEBPJ.Data
             {
                 using (EntitiesGeneral db = new EntitiesGeneral())
                 {
+                    var info_dispositivo = data_dispositivo.get_info(info.Dispositivo);
+                    if (info_dispositivo == null )
+                    {
+                        db.Dispositivo.Add(new Dispositivo
+                        {
+                            IdDispositivo = data_dispositivo.get_id(),
+                            Dispositivo1 = info.Dispositivo,
+                            di_Descripcion = ""
+                        });
+                    }
+                    
                     db.Compra.Add(new Compra
                     {
                         IdCompra = info.IdCompra = get_id(),
@@ -236,6 +270,8 @@ namespace WEBPJ.Data
                         Cantidad = info.Cantidad,
                         Total = info.Total,
                         Comentario = info.Comentario,
+                        Dispositivo = info.Dispositivo,
+                        SecuenciaDispositivoComp = info.SecuenciaDispositivoComp = get_SecuencialDispositivo(info.IdUsuario, info.Dispositivo),
                         Estado = info.Estado
                     });
 

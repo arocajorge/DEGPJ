@@ -41,7 +41,23 @@
                         <div class="col-md-12">
                             <div class="col-md-12 form-group">
                                 <label for="txtCantidad">Proveedor:</label>
-                                <input type="text" id="ProveedorCompra" class="form-control" readonly />
+                                <h3 id="ProveedorCompra"></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6 form-group">
+                                <label for="txtCantidad">Calificacion:</label>
+                                <h3 id="CalificacionCompra"></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-12 form-group">
+                                <label for="txtCantidad">Comprador:</label>
+                                <h3 id="Comprador"></h3>
                             </div>
                         </div>
                     </div>
@@ -49,7 +65,7 @@
                         <div class="col-md-12">
                             <div class="col-md-6 form-group">
                                 <label for="txtCantidad">Cantidad:</label>
-                                <input type="text" id="CantidadCompra" class="form-control" readonly/>
+                                <h3 class="form-group" id="CantidadCompra"></h3>
                             </div>
                         </div>
                     </div>
@@ -57,7 +73,7 @@
                         <div class="col-md-12">
                             <div class="col-md-6 form-group">
                                 <label for="txtCantidad">Precio:</label>
-                                <input type="text" id="PrecioCompra" class="form-control" readonly/>
+                                <h3 id="PrecioCompra"></h3>
                             </div>
                         </div>
                     </div>
@@ -65,18 +81,11 @@
                         <div class="col-md-12">
                             <div class="col-md-6 form-group">
                                 <label for="txtCantidad">Total:</label>
-                                <input type="text" id="TotalCompra" class="form-control" readonly/>
+                                <h3 id="TotalCompra"></h3>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="col-md-6 form-group">
-                                <label for="txtCantidad">Calificacion</label>
-                                <input type="text" id="CalificacionCompra" class="form-control" readonly/>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Guardar</button>
@@ -209,6 +218,7 @@ function Calificar() {
     var datos = {
         IdTransaccionSession: $("#IdTransaccionSession").val(),
         IdProveedor: $("#ProvCodigo").val(),
+        IdUsuario: $("#IdUsuario").val(),
         IdProducto: $("#IdProducto").val(),
         Cantidad: $("#Cantidad").val()
     }
@@ -231,11 +241,12 @@ function Calificar() {
                 $("#ModalCompra").modal("show");
             }
 
-            $("#CantidadCompra").val(data.CantidadCompra);
-            $("#PrecioCompra").val(data.PrecioCompra);
-            $("#TotalCompra").val(data.TotalCompra);
-            $("#ProveedorCompra").val(data.ProveedorCompra);
-            $("#CalificacionCompra").val(data.CalificacionCompra);
+            $("#ProveedorCompra").text(data.ProveedorCompra);
+            $("#CalificacionCompra").text(data.CalificacionCompra);
+            $("#Comprador").text(data.Comprador);
+            $("#CantidadCompra").text(data.CantidadCompra);
+            $("#PrecioCompra").text(data.PrecioCompra);
+            $("#TotalCompra").text(data.TotalCompra);
 
             $("#Precio").val(data.PrecioCompra);
             $("#Total").val(data.TotalCompra);

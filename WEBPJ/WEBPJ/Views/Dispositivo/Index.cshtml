@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Consulta de productos";
+    ViewBag.Title = "Consulta de dispositivos";
     if (string.IsNullOrEmpty(@WEBPJ.Helps.SessionFixed.IdUsuario))
     {
         Response.Redirect("~/Account/Login");
@@ -9,6 +9,6 @@
 
 @using (Html.BeginForm())
 {
-    @Html.Action("GridViewPartial_Producto");
+    @Html.Action("GridViewPartial_Dispositivo");
 
 }

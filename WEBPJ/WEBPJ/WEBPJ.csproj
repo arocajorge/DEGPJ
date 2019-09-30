@@ -184,6 +184,9 @@
     <Compile Include="Base\CompraDetalle.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
+    <Compile Include="Base\Dispositivo.cs">
+      <DependentUpon>ModelGeneral.tt</DependentUpon>
+    </Compile>
     <Compile Include="Base\fcclient.cs">
       <DependentUpon>ModelNexpirion.tt</DependentUpon>
     </Compile>
@@ -249,11 +252,13 @@
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CompraController.cs" />
+    <Compile Include="Controllers\DispositivoController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\ProveedorController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Data\CompraDetalle_Data.cs" />
     <Compile Include="Data\Compra_Data.cs" />
+    <Compile Include="Data\Dispositivo_Data.cs" />
     <Compile Include="Data\ProductoDetalle_Data.cs" />
     <Compile Include="Data\Producto_Data.cs" />
     <Compile Include="Data\ProveedorProducto_Data.cs" />
@@ -266,6 +271,7 @@
     <Compile Include="Helps\DoubleModelBinder.cs" />
     <Compile Include="Helps\SessionFixed.cs" />
     <Compile Include="Info\CompraDetalle_Info.cs" />
+    <Compile Include="Info\Dispositivo_Info.cs" />
     <Compile Include="Info\Enumeradores.cs" />
     <Compile Include="Info\Filtros_Info.cs" />
     <Compile Include="Info\Compra_Info.cs" />
@@ -7508,6 +7514,9 @@
     <Content Include="Views\Compra\_GridViewPartial_CompraProductoDetalle.cshtml" />
     <Content Include="Views\Compra\Modificar.cshtml" />
     <Content Include="Views\Compra\Anular.cshtml" />
+    <Content Include="Views\Dispositivo\_GridViewPartial_Dispositivo.cshtml" />
+    <Content Include="Views\Dispositivo\Index.cshtml" />
+    <Content Include="Views\Dispositivo\Modificar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

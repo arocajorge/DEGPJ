@@ -32,6 +32,8 @@ namespace WEBPJ.Info
         public string Comentario { get; set; }
         [Required(ErrorMessage = ("el campo estado es obligatorio"))]
         public string Estado { get; set; }
+        public int SecuenciaDispositivoComp { get; set; }
+        public string Dispositivo { get; set; }
 
 
         #region Campos que no existen en la tabla
