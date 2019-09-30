@@ -38,6 +38,7 @@ namespace APPPJ.ViewModels
         {
             if (instance == null)
             {
+                instance = new CompraConsultaViewModel();
                 return new CompraConsultaViewModel();
             }
             else

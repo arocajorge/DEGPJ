@@ -2,6 +2,7 @@
 namespace APPPJ.Helpers
 {
     using APPPJ.Models;
+    using Plugin.DeviceInfo;
     using SQLite;
     using System;
     using System.Collections.Generic;
@@ -13,12 +14,12 @@ namespace APPPJ.Helpers
         public DataAccess(string dbPath)
         {
             this.connection = new SQLiteConnection(dbPath);
-                    //Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "DBREC.db3"));
             connection.CreateTable<UsuarioModel>();
             connection.CreateTable<ProductoModel>();
             connection.CreateTable<ProveedorModel>();
             connection.CreateTable<ProductoDetalleModel>();
             connection.CreateTable<CompraModel>();
+            connection.CreateTable<CompraDetalleModel>();
             connection.CreateTable<ProveedorProductoModel>();
         }
         #region Funciones generales
@@ -113,16 +114,35 @@ namespace APPPJ.Helpers
             else
                 return Lista.Max(q => q.PKSQLite) + 1;
         }
+        public int GetSecuencia()
+        {
+            var Lista = this.connection.Table<CompraDetalleModel>().ToList();
+            if (Lista.Count == 0)
+                return 1;
+            else
+                return Lista.Max(q => q.PKSQLite) + 1;
+        }
 
         public bool Guardar(CompraModel model)
         {
             if (model.PKSQLite == 0)
             {
+                Settings.IdCompra = Settings.IdCompra == "0.0" ? "0" : Settings.IdCompra;
+                model.IdCompra = Convert.ToInt32(Settings.IdCompra);
+                Settings.IdCompra = (Convert.ToInt32(string.IsNullOrEmpty(Settings.IdCompra) ? "0" : Settings.IdCompra) + 1).ToString("0000000000");
                 model.PKSQLite = GetId();
-                Settings.IdCompra = (Convert.ToInt32(string.IsNullOrEmpty(Settings.IdCompra) ? "0" : Settings.IdCompra ) + 1).ToString("0000000000");
+                model.Dispositivo = CrossDeviceInfo.Current.Id;
                 model.Codigo = string.IsNullOrEmpty(Settings.IdCompra) ? "0" : Settings.IdCompra;
                 this.connection.Insert(model);
-            }else
+
+                foreach (var item in model.ListaDetalle)
+                {
+                    item.IdCompra = model.IdCompra;
+                    item.PKSQLite = GetSecuencia();
+                    this.connection.Insert(item);
+                }
+            }
+            else
             {
                 var Entity = this.connection.Table<CompraModel>().ToList().Where(q => q.PKSQLite == model.PKSQLite).FirstOrDefault();
                 if (Entity != null)
