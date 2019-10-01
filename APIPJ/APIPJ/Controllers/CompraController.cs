@@ -38,7 +38,7 @@ namespace APIPJ.Controllers
                 return new CompraModel();
             }
         }
-
+        
         public void Post([FromBody]List<CompraModel> value)
         {
             string IdUsuario = value.First().IdUsuario;
@@ -55,7 +55,7 @@ namespace APIPJ.Controllers
                         IdCompra = item.IdCompra = IdCompra++,
                         ProvCedulaRuc = item.ProvCedulaRuc,
                         ProvNombre = item.ProvNombre,
-                        ProvTipo = item.ProvTipo,
+                        ProvTipo = "PRV",
                         ProvCodigo = item.ProvCodigo,
                         IdUsuario = item.IdUsuario,
                         Codigo = item.Codigo,
@@ -98,7 +98,8 @@ namespace APIPJ.Controllers
                     db.Dispositivo.Add(new Dispositivo
                     {
                         IdDispositivo = IdDispositivo,
-                        Dispositivo1 = Dispositivo
+                        Dispositivo1 = Dispositivo,
+                        di_Descripcion = " "
                     });
                 }
                 db.SaveChanges();
