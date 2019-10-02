@@ -33,7 +33,7 @@ namespace WEBPJ.Data
                                 IdUsuario = q.IdUsuario,
                                 IdProducto = q.IdProducto,
                                 Calificacion = q.Calificacion,
-                                Fecha = DateTime.Now,
+                                Fecha = q.Fecha,
                                 Precio = q.Precio,
                                 Cantidad = q.Cantidad,
                                 Total = q.Total,
@@ -385,6 +385,149 @@ namespace WEBPJ.Data
                 return true;
             }
             catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool ActualizarEstadoBD(Compra_Info info)
+        {
+            try
+            {
+                using (EntitiesGeneral db = new EntitiesGeneral())
+                {
+                    Compra entity = db.Compra.Where(q => q.IdCompra == info.IdCompra).FirstOrDefault();
+
+                    if (entity == null)
+                    {
+                        return false;
+                    }
+
+                    entity.Estado = info.Estado;
+
+                    db.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool GuardarOrdenCompraBD(Compra_Info info)
+        {
+            try
+            {
+                using (EntitiesNexpirion db = new EntitiesNexpirion())
+                {
+                    dbultnum entity = db.dbultnum.Where(q => q.tipo == "CO").FirstOrDefault();
+                    var num_compra = entity.numero + 1;
+
+                    db.indocume.Add(new indocume
+                    {
+                        tipo = "CO",
+                        numero = num_compra,
+                        pedido = 0,
+                        fecha = DateTime.Now.Date,
+                        fecha_fac = info.Fecha,
+                        fecha_com = info.Fecha,
+                        producto = "",
+                        nombre = "",
+                        cantidad = Convert.ToDecimal(info.Cantidad),
+                        proveedor = info.ProvCodigo,
+                        concepto = "",
+                        plazo = 0,
+                        porc_desc = 0,
+                        factor = 0,
+                        total = Convert.ToDecimal(info.Total),
+                        costo = Convert.ToDecimal(info.Precio),
+                        fob = 0,
+                        orden = "0",
+                        comentario = info.Comentario,
+                        tip_aplic = "",
+                        num_aplic = 0,
+                        tip_aplix = "",
+                        num_aplix = 0,
+                        bloqueado = false,
+                        aprobado = false,
+                        usuario = "",
+                        digitado = DateTime.Now.Date,
+                        fecha_apr = DateTime.Now.Date,
+                        cantidad_op = 0,
+                        impreso = false,
+                        eliminado = false,
+                        bodega_int = "001-002   ",
+                        bodega_orig = "",
+                        solicita = false,
+                        aceptado = false,
+                        fecha_soli = DateTime.Now.Date,
+                        fecha_recep = DateTime.Now.Date,
+                        fecha_acep = DateTime.Now.Date,
+                        recibido = false,
+                        lote = "",
+                        num_recibo = "",
+                        usr_agr = "",
+                        usr_cor = "",
+                        centro = ""
+                    });
+
+                    foreach (var item in info.lst_CompraDetProducto)
+                    {
+                        db.fcmovinv.Add(new fcmovinv
+                        {
+                            tipo = "CO",
+                            numero = num_compra,
+                            numreg = 1,
+                            fecha = info.Fecha,
+                            producto = info.Codigo,
+                            nombre = info.NomProducto,
+                            bodega = "",
+                            fra =0,
+                            peso = 0,
+                            und = Convert.ToDecimal(info.Cantidad),
+                            cantidad = Convert.ToDecimal(info.Cantidad),
+                            stock = 0,
+                            tip_ped ="",
+                            pedido = 0,
+                            tipreg = 0,
+                            descuento = 0,
+                            precio_vta = Convert.ToDecimal(info.Precio),
+                            precio_lst = Convert.ToDecimal(info.Precio),
+                            subtotal = Convert.ToDecimal(info.Total),
+                            costo_und = Convert.ToDecimal(info.Precio),
+                            costo = Convert.ToDecimal(info.Precio),
+                            promedio =0,
+                            tip_prec = 0,
+                            tip_produc = "0001",
+                            porc_desc = 0,
+                            sucursal = "",
+                            cliente = "",
+                            vendedor = "",
+                            servicio = false,
+                            ubicacion = "",
+                            motivo = "",
+                            eliminado= false,
+                            usuario = "",
+                            digitado =DateTime.Now.Date,
+                            concepto = "",
+                            comentario= info.Comentario,
+                            bodega_int = "001-002   ",
+                            lote = "",
+                            usr_agr = "",
+                            usr_cor = ""
+                        });
+                    }
+
+                    entity.numero = num_compra;
+
+                    db.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception EX)
             {
 
                 throw;

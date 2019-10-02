@@ -11,6 +11,7 @@ namespace WEBPJ.Info
     {
         public decimal IdTransaccionSession { get; set; }
         public string IdUsuario { get; set; }
+        public string TipoUsuario { get; set; }
         public string Estado { get; set; }
         [Required(ErrorMessage = "El campo fecha inicio es obligatorio")]
         [DataType(DataType.Date, ErrorMessage = "El campo fecha inicio debe ser una fecha en formato dd/MM/yyyy")]

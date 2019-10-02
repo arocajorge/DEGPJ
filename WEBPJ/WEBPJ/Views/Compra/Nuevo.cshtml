@@ -20,6 +20,8 @@
             </h4>
         </div>
     }
+    @Html.HiddenFor(q => q.Estado, new { @id = "Estado" });
+    @Html.HiddenFor(q => q.IdUsuario, new { @id = "IdUsuario" });
     @Html.HiddenFor(q => q.Precio, new { @id = "Precio" });
     @Html.HiddenFor(q => q.Total, new { @id = "Total" });
     @Html.HiddenFor(q => q.Calificacion, new { @id = "Calificacion" });
@@ -99,6 +101,24 @@
                     <label for="IdProveedor">Proveedor*</label>
                     @Html.DropDownListFor(q => q.ProvCodigo, new SelectList(ViewBag.lst_proveedor, "Codigo", "Nombre"), new { @class = "form-control", @id = "ProvCodigo" })
                     @Html.ValidationMessageFor(q => q.ProvCodigo, "", new { @class = "text-danger" })
+                    @*@Html.DevExpress().ComboBox(settings =>
+                       {
+                           settings.Name = "ProvCodigo";
+                           settings.Width = 180;
+                           settings.SelectedIndex = 0;
+                           settings.Properties.DropDownWidth = 550;
+                           settings.Properties.DropDownStyle = DropDownStyle.DropDownList;
+                           settings.CallbackRouteValues = new { Controller = "Compra", Action = "Cmb_Proveedor" };
+                           settings.Properties.CallbackPageSize = 30;
+                           settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                           settings.Properties.TextFormatString = "{0}";
+                           settings.Properties.ValueField = "ProvCodigo";
+                           settings.Properties.ValueType = typeof(string);
+
+                           settings.Properties.Columns.Add("ProvCodigo", "Codigo", 100);
+                           settings.Properties.Columns.Add("ProvCedulaRuc", "Cedula/Ruc", 100);
+                           settings.Properties.Columns.Add("ProvNombre", "Nombre", 200);
+                       }).BindList(Model).GetHtml()*@
                 </div>
             </div>
             <div class="col-md-5">
@@ -132,14 +152,14 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="Cantidad">Usuario</label>
-                    @Html.DropDownListFor(q => q.IdUsuario, new SelectList(ViewBag.lst_Usuarios, "IdUsuario", "Nombre"), new { @class = "form-control", @id = "IdUsuario" })
+                    @Html.DropDownListFor(q => q.IdUsuario, new SelectList(ViewBag.lst_Usuarios, "IdUsuario", "Nombre"), new { @class = "form-control", @disabled= "disabled" })
                     @Html.ValidationMessageFor(q => q.IdUsuario, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="Cantidad">Estado</label>
-                    @Html.DropDownListFor(q => q.Estado, new SelectList(ViewBag.lst_Estado, "Key", "Value"), new { @class = "form-control", @id = "Estado" })
+                    @Html.DropDownListFor(q => q.Estado, new SelectList(ViewBag.lst_Estado, "Key", "Value"), new { @class = "form-control", @disabled = "disabled" })
                     @Html.ValidationMessageFor(q => q.Estado, "", new { @class = "text-danger" })
                 </div>
             </div>

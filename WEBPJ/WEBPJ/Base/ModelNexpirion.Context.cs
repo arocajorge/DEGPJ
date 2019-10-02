@@ -28,5 +28,8 @@ namespace WEBPJ.Base
         public virtual DbSet<fcclient> fcclient { get; set; }
         public virtual DbSet<FX_ProveedorMigrado> FX_ProveedorMigrado { get; set; }
         public virtual DbSet<VWFX_ProveedorMigrado> VWFX_ProveedorMigrado { get; set; }
+        public virtual DbSet<dbultnum> dbultnum { get; set; }
+        public virtual DbSet<fcmovinv> fcmovinv { get; set; }
+        public virtual DbSet<indocume> indocume { get; set; }
     }
 }

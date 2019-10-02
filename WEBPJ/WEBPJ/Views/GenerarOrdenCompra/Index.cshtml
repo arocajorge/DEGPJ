@@ -1,7 +1,7 @@
 ﻿@model WEBPJ.Info.Filtros_Info
 @using WEBPJ.Info
 @{
-    ViewBag.Title = "Consulta de compras";
+    ViewBag.Title = "Generar orden de compra";
     if (string.IsNullOrEmpty(@WEBPJ.Helps.SessionFixed.IdUsuario))
     {
         Response.Redirect("~/Account/Login");
@@ -9,18 +9,30 @@
     Layout = "~/Views/Shared/_LayoutConsulta.cshtml";
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script type="text/javascript">
 
-@using (Html.BeginForm("Index", "Compra", FormMethod.Post, new { @role = "form", @class = "form", @id = "myform" }))
+     var selectedIDs;
+    function OnBeginCallback(s, e) {
+        //Pass all selected keys to GridView callback action
+        e.customArgs["selectedIDs"] = selectedIDs;
+    }
+    function OnSelectionChanged(s, e) {
+        s.GetSelectedFieldValues("IdCompra", GetSelectedFieldValuesCallback);
+    }
+    function GetSelectedFieldValuesCallback(values) {
+        //Capture all selected keys
+        selectedIDs = values.join(',');
+    }
+</script>
+@using (Html.BeginForm("Index", "GenerarOrdenCompra", FormMethod.Post, new { @role = "form", @class = "form", @id = "myform" }))
 {
     @Html.HiddenFor(q => q.IdTransaccionSession);
-    @Html.HiddenFor(q => q.IdUsuario);
-    @Html.HiddenFor(q => q.TipoUsuario, new { @id = "TipoUsuario" });
-    
     <div class="box ">
         <div class="box-header with-border">
             <div class="row">
                 <div class="col-md-12">
                     <button type="submit" class="btn btn-primary">Aplicar filtros</button>
+                    <button type="button" class="btn btn-primary" id="btn_generar" onclick="GenerarOrdenCompra();">Generar orden de Compra</button>
                 </div>
             </div>
             <div class="box-tools pull-right">
@@ -39,7 +51,7 @@
                         <div class="form-group">
                             <label for="IdSucursal">Usuario*</label>
                             <div class="form-group">
-                                @Html.DropDownListFor(q => q.IdUsuario, new SelectList(ViewBag.lst_Usuarios, "IdUsuario", "Nombre"), new { @class = "form-control", @id = "IdUsuario", @disabled= "disabled" })
+                                @Html.DropDownListFor(q => q.IdUsuario, new SelectList(ViewBag.lst_Usuarios, "IdUsuario", "Nombre"), new { @class = "form-control", @id = "IdUsuario" })
                                 @Html.ValidationMessageFor(q => q.IdUsuario, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -84,15 +96,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="IdSucursal">Estado*</label>
-                            <div class="form-group">
-                                @Html.DropDownListFor(q => q.Estado, new SelectList(ViewBag.lst_Estado, "Key", "Value"), new { @class = "form-control", @id = "Estado" })
-                                @Html.ValidationMessageFor(q => q.Estado, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="row">
@@ -121,7 +124,7 @@
             </div>
         </div>
         <div class="box-body">
-            @Html.Action("GridViewPartial_Compra", new { Fecha_ini = Model.fecha_ini, Fecha_fin = Model.fecha_fin, IdUsuario = Model.IdUsuario, Estado = Model.Estado })
+            @Html.Action("GridViewPartial_OrdenCompra", new { Fecha_ini = Model.fecha_ini, Fecha_fin = Model.fecha_fin, IdUsuario = Model.IdUsuario })
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
@@ -132,26 +135,15 @@
 }
 
 <script type="text/javascript">
-$(function () {
-    //VerUsuarios();
-});
-
-function VerUsuarios() {
-    if ($("#TipoUsuario").val() == "ADMINISTRADOR") {
-        $("#IdUsuario").prop("disabled", false);
-    }
-    else {
-        $("#IdUsuario").prop("disabled", true);
-    }
-}
-     @*function guardar() {
+    function GenerarOrdenCompra() {
         var datos = {
-            IdTransaccionSession: $("#IdTransaccionSession").val(),
-            }
+            Ids: selectedIDs
+        }
+        $("#btn_generar").disabled = true;
         $.ajax({
             type: 'POST',
             data: JSON.stringify(datos),
-            url: '@Url.Action("GuardarLista", "Compra", new { Area = "General" })',
+            url: '@Url.Action("GenerarOrdenCompra", "GenerarOrdenCompra", new { Area = "General" })',
             async: false,
             bDeferRender: true,
             bProcessing: true,
@@ -159,10 +151,12 @@ function VerUsuarios() {
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
                 $("#myform").submit();
-                GridViewPartial_Compra.PerformCallback();
+                GridViewPartial_OrdenCompra.UnselectRows();
+                GridViewPartial_OrdenCompra.PerformCallback();
+
             },
             error: function (error) {
             }
         });
-    }*@
+    }
 </script>

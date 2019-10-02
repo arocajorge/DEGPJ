@@ -45,6 +45,13 @@ namespace WEBPJ.Controllers
             return data_proveedor.get_info_bajo_demanda(args, "PRV");
         }
         #endregion
+        #region Proveedor
+        public ActionResult Cmb_Proveedor()
+        {
+            var model = data_proveedor.get_list();
+            return PartialView(model);
+        }
+        #endregion
 
         #region Index
         public ActionResult Index()
@@ -55,10 +62,11 @@ namespace WEBPJ.Controllers
             Filtros_Info model = new Filtros_Info
             {
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
-                IdUsuario = "",
+                IdUsuario = (SessionFixed.TipoUsuario == @WEBPJ.Info.Enumeradores.eTipoUsuario.ADMINISTRADOR.ToString() ? "" : SessionFixed.IdUsuario),
+                TipoUsuario = SessionFixed.TipoUsuario,
                 Estado = "",
                 fecha_ini = DateTime.Now.Date.AddMonths(-1),
-                fecha_fin = DateTime.Now.Date
+                fecha_fin = DateTime.Now.Date,
             };
 
             lst_Compra = data_compra.get_list(model.fecha_ini, model.fecha_fin, model.IdUsuario, model.Estado);
