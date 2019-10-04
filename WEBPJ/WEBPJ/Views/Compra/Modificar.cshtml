@@ -9,11 +9,7 @@
 }
 
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
-<script type="text/javascript">
-    function OnBeginGridCallback(s, e) {
-        e.customArgs = MVCxClientUtils.GetSerializedEditorValuesInContainer("options");
-    }
-</script>
+
 @using (Html.BeginForm("Modificar", "Compra", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     if (ViewBag.mensaje != null)
@@ -186,9 +182,6 @@
 }
 
 <script type="text/javascript">
-    $(function () {
-        $("#BtnCalificar").show();
-});
 
 function cargar_productos() {
     if (ProvCodigo.GetValue() != "") {
@@ -254,7 +247,7 @@ function Calificar() {
             $("#Total").val(data.Calculo);
             $("#Calificacion").val(data.CalificacionCompra);
 
-            GridViewPartial_CompraProductoDetalle.PerformCallback();
+            //GridViewPartial_CompraProductoDetalle.PerformCallback();
             
         },
         error: function (error) {

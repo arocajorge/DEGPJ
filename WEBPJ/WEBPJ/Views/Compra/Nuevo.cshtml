@@ -9,11 +9,7 @@
 }
 
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
-<script type="text/javascript">
-    function OnBeginGridCallback(s, e) {
-        e.customArgs = MVCxClientUtils.GetSerializedEditorValuesInContainer("options");
-    }
-</script>
+
 @using (Html.BeginForm("Nuevo", "Compra", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     if (ViewBag.mensaje != null)

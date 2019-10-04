@@ -1,7 +1,7 @@
 ﻿@using System.Web.UI.WebControls;
 @{
     Html.EnableClientValidation();
-    Html.EnableUnobtrusiveJavaScript();
+    //Html.EnableUnobtrusiveJavaScript();
 }
 @{
     var grid = Html.DevExpress().GridView(settings =>
@@ -15,22 +15,13 @@
         settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
         settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
         settings.SettingsEditing.NewItemRowPosition = GridViewNewItemRowPosition.Bottom;
-        //settings.ClientSideEvents.BatchEditStartEditing = "TextInfoGrid_StartBatchEditing";
-        //settings.ClientSideEvents.BatchEditEndEditing = "TextInfoGrid_EndBatchEditing";
-        //settings.ClientSideEvents.Init = "TextInfoGrid_OnInit";
-
-        //settings.SettingsPager.Mode = BatchEditingOptions.PagerMode;
-        //settings.SettingsEditing.BatchEditSettings.EditMode = BatchEditingOptions.EditMode;
-        //settings.SettingsEditing.BatchEditSettings.HighlightDeletedRows = BatchEditingOptions.HighlightDeletedRows;
-        settings.SettingsEditing.BatchEditSettings.KeepChangesOnCallbacks = DefaultBoolean.False;
-        //settings.Settings.VerticalScrollableHeight = 594;
+        settings.SettingsEditing.BatchEditSettings.KeepChangesOnCallbacks = DefaultBoolean.True;
 
         settings.CommandColumn.Visible = true;
         settings.CommandColumn.ShowCancelButton = true;
         settings.CommandColumn.ShowDeleteButton = false;
         settings.CommandColumn.ShowNewButtonInHeader = false;
         settings.CommandColumn.ShowCancelButton = true;
-        //settings.CommandColumn.Width = Unit.Pixel(150);
 
         settings.Columns.Add(column =>
         {
@@ -54,11 +45,8 @@
             column.Width = Unit.Percentage(10);
             column.EditFormSettings.Visible = DefaultBoolean.True;
         });
-        //settings.ClientSideEvents.BeginCallback = "OnBeginGridCallback";
 
-        //DevExpress.Web.Demos.GridViewFeaturesHelper.SetupGlobalGridViewBehavior(settings);
-
-        settings.ClientSideEvents.BeginCallback = "function(s,e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); OnBeginGridCallback(s,e);}";
+        settings.ClientSideEvents.BeginCallback = "function(s,e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val();}";//OnBeginGridCallback(s,e);
         settings.ClientSideEvents.Init = "function(s,e) { GridViewPartial_CompraProductoDetalle.PerformCallback(); }";
     });
 }

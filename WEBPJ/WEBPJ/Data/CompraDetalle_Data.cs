@@ -30,7 +30,7 @@ namespace WEBPJ.Data
                         ValorOptimo = q.ValorOptimo,
                         Valor = q.Valor
                     }).ToList();
-                        
+                    //Lista.ForEach(q => q.Descripcion += "(" + q.Minimo.ToString() + " - " + q.Maximo.ToString() + ")");       
                 }
                 return Lista;
             }
