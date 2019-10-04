@@ -103,9 +103,9 @@ namespace WEBPJ.Controllers
                     if (info_compra != null)
                     {
                         info_compra.Estado = "A";
-                        if (data_compra.ActualizarEstadoBD(info_compra))
+                        if (data_compra.GuardarOrdenCompraBD(info_compra))
                         {
-                            data_compra.GuardarOrdenCompraBD(info_compra);
+                            data_compra.ActualizarEstadoBD(info_compra);
                         }
                     }
                         

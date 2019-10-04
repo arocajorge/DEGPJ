@@ -10,6 +10,9 @@ namespace WEBPJ.Data
     public class Compra_Data
     {
         Dispositivo_Data data_dispositivo = new Dispositivo_Data();
+        Producto_Data data_producto = new Producto_Data();
+        Proveedor_Data data_proveedor = new Proveedor_Data();
+
         public List<Compra_Info> get_list(DateTime fecha_ini, DateTime fecha_fin, string IdUsuario, string Estado)
         {
             try
@@ -423,6 +426,9 @@ namespace WEBPJ.Data
             {
                 using (EntitiesNexpirion db = new EntitiesNexpirion())
                 {
+                    var info_producto = data_producto.get_info_ProductoNexp(info.Codigo.ToString().Trim());
+                    var info_proveedor = data_proveedor.get_info_ProveedorNexp(info.ProvCodigo.ToString().Trim());
+                    var nombre = info_producto.nombre.ToString().Substring(0,59);
                     dbultnum entity = db.dbultnum.Where(q => q.tipo == "CO").FirstOrDefault();
                     var num_compra = entity.numero + 1;
 
@@ -434,10 +440,10 @@ namespace WEBPJ.Data
                         fecha = DateTime.Now.Date,
                         fecha_fac = info.Fecha,
                         fecha_com = info.Fecha,
-                        producto = "",
-                        nombre = "",
+                        producto = info_producto.codigo,
+                        nombre = nombre,
                         cantidad = Convert.ToDecimal(info.Cantidad),
-                        proveedor = info.ProvCodigo,
+                        proveedor = info_proveedor.codigo,
                         concepto = "",
                         plazo = 0,
                         porc_desc = 0,
@@ -482,11 +488,11 @@ namespace WEBPJ.Data
                             numero = num_compra,
                             numreg = 1,
                             fecha = info.Fecha,
-                            producto = info.Codigo,
-                            nombre = info.NomProducto,
+                            producto = info_producto.codigo,
+                            nombre = nombre,
                             bodega = "",
-                            fra =0,
-                            peso = 0,
+                            fra = Convert.ToDecimal(info.Precio),
+                            peso = Convert.ToDecimal(info.Cantidad),
                             und = Convert.ToDecimal(info.Cantidad),
                             cantidad = Convert.ToDecimal(info.Cantidad),
                             stock = 0,
@@ -501,7 +507,7 @@ namespace WEBPJ.Data
                             costo = Convert.ToDecimal(info.Precio),
                             promedio =0,
                             tip_prec = 0,
-                            tip_produc = "0001",
+                            tip_produc = info_producto.tipoitm,
                             porc_desc = 0,
                             sucursal = "",
                             cliente = "",

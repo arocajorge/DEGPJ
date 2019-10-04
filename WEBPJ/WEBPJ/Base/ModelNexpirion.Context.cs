@@ -31,5 +31,6 @@ namespace WEBPJ.Base
         public virtual DbSet<dbultnum> dbultnum { get; set; }
         public virtual DbSet<fcmovinv> fcmovinv { get; set; }
         public virtual DbSet<indocume> indocume { get; set; }
+        public virtual DbSet<fcproduc> fcproduc { get; set; }
     }
 }

@@ -4,13 +4,14 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="7566fd251b2d4cb690872279360cd459" Name="Diagram1" ZoomLevel="46">
+      <Diagram DiagramId="7566fd251b2d4cb690872279360cd459" Name="Diagram1" ZoomLevel="88">
         <EntityTypeShape EntityType="ModelNexpirion.fcclient" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ModelNexpirion.FX_ProveedorMigrado" Width="1.5" PointX="3.375" PointY="0.75" />
         <EntityTypeShape EntityType="ModelNexpirion.VWFX_ProveedorMigrado" Width="1.5" PointX="3.375" PointY="3.75" />
         <EntityTypeShape EntityType="ModelNexpirion.dbultnum" Width="1.5" PointX="5.375" PointY="0.75" />
         <EntityTypeShape EntityType="ModelNexpirion.fcmovinv" Width="1.5" PointX="3.375" PointY="6.75" />
         <EntityTypeShape EntityType="ModelNexpirion.indocume" Width="1.5" PointX="5.375" PointY="6.75" />
+        <EntityTypeShape EntityType="ModelNexpirion.fcproduc" Width="1.5" PointX="7.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

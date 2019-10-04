@@ -302,5 +302,33 @@ namespace WEBPJ.Data
             return get_info(Tipo, args.Value == null ? "" : args.Value.ToString());
         }
 
+        public fcclient_Info get_info_ProveedorNexp(string Codigo)
+        {
+            try
+            {
+                fcclient_Info info = new fcclient_Info();
+                using (EntitiesNexpirion Context = new EntitiesNexpirion())
+                {
+                    fcclient Entity = Context.fcclient.Where(q => q.codigo.ToString().Trim() == Codigo).FirstOrDefault();
+
+                    if (Entity == null) return null;
+                    info = new fcclient_Info
+                    {
+                        tipo = Entity.tipo,
+                        codigo = Entity.codigo,
+                        nombre = Entity.nombre,
+                        tip_aplic = Entity.tip_aplic,
+                        tipvta = Entity.tipvta
+                    };
+                }
+
+                return info;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
     }
 }

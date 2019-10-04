@@ -1,7 +1,7 @@
 ﻿@model WEBPJ.Info.Filtros_Info
 @using WEBPJ.Info
 @{
-    ViewBag.Title = "Generar orden de compra";
+    ViewBag.Title = "Aprobación de compras";
     if (string.IsNullOrEmpty(@WEBPJ.Helps.SessionFixed.IdUsuario))
     {
         Response.Redirect("~/Account/Login");
@@ -47,15 +47,6 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="IdSucursal">Usuario*</label>
-                            <div class="form-group">
-                                @Html.DropDownListFor(q => q.IdUsuario, new SelectList(ViewBag.lst_Usuarios, "IdUsuario", "Nombre"), new { @class = "form-control", @id = "IdUsuario" })
-                                @Html.ValidationMessageFor(q => q.IdUsuario, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                    </div>
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="">Fecha inicio*</label>

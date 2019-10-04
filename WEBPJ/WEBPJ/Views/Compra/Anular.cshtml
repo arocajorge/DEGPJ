@@ -21,6 +21,7 @@
         </div>
     }
     @Html.HiddenFor(q => q.IdCompra);
+    @Html.HiddenFor(q => q.IdProducto, new { @id = "IdProducto" });
     @Html.HiddenFor(q => q.Precio, new { @id= "Precio" });
     @Html.HiddenFor(q => q.Total, new { @id = "Total" });
     @Html.HiddenFor(q => q.Calificacion, new { @id = "Calificacion" });
@@ -31,14 +32,14 @@
             <div class="col-md-5">
                 <div class="form-group">
                     <label for="IdProveedor">Proveedor*</label>
-                    @Html.DropDownListFor(q => q.ProvCodigo, new SelectList(ViewBag.lst_proveedor, "Codigo", "Nombre"), new { @class = "form-control", @id = "ProvCodigo" })
+                    @Html.Partial("_CmbProveedor", Model.ProvCodigo)
                     @Html.ValidationMessageFor(q => q.ProvCodigo, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-md-5">
                 <div class="form-group">
                     <label for="Descripcion">Producto</label>
-                    @Html.DropDownListFor(q => q.IdProducto, new SelectList(ViewBag.lst_productos, "IdProducto", "Descripcion"), new { @class = "form-control", @id = "IdProducto" })
+                    @Html.DropDownListFor(q => q.IdProducto, new SelectList(ViewBag.lst_productos, "IdProducto", "Descripcion"), new { @class = "form-control", @id = "IdProducto", @disabled = "disabled" })
                     @Html.ValidationMessageFor(q => q.IdProducto, "", new { @class = "text-danger" })
                 </div>
             </div>

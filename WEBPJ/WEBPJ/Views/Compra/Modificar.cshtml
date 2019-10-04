@@ -9,7 +9,11 @@
 }
 
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
-
+<script type="text/javascript">
+    function OnBeginGridCallback(s, e) {
+        e.customArgs = MVCxClientUtils.GetSerializedEditorValuesInContainer("options");
+    }
+</script>
 @using (Html.BeginForm("Modificar", "Compra", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     if (ViewBag.mensaje != null)
@@ -102,7 +106,7 @@
             <div class="col-md-5">
                 <div class="form-group">
                     <label for="IdProveedor">Proveedor*</label>
-                    @Html.DropDownListFor(q => q.ProvCodigo, new SelectList(ViewBag.lst_proveedor, "Codigo", "Nombre"), new { @class = "form-control", @id = "ProvCodigo" })
+                    @Html.Partial("_CmbProveedor", Model.ProvCodigo)
                     @Html.ValidationMessageFor(q => q.ProvCodigo, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -184,17 +188,13 @@
 <script type="text/javascript">
     $(function () {
         $("#BtnCalificar").show();
-
-        $("#ProvCodigo").change(function () {
-            cargar_productos();
-        });
 });
 
 function cargar_productos() {
-    if ($("#ProvCodigo").val() != "") {
+    if (ProvCodigo.GetValue() != "") {
         $("#IdProducto").empty();
         var datos = {
-            IdProveedor: $("#ProvCodigo").val()
+            IdProveedor: ProvCodigo.GetValue()
         }
         $.ajax({
             type: 'POST',
@@ -219,7 +219,7 @@ function cargar_productos() {
 function Calificar() {
     var datos = {
         IdTransaccionSession: $("#IdTransaccionSession").val(),
-        IdProveedor: $("#ProvCodigo").val(),
+        IdProveedor: ProvCodigo.GetValue(),
         IdUsuario: $("#IdUsuario").val(),
         IdProducto: $("#IdProducto").val(),
         Cantidad: $("#Cantidad").val()
@@ -265,7 +265,7 @@ function CargarProductoDetalle_Modificar() {
     var datos = {
         IdTransaccionSession: $("#IdTransaccionSession").val(),
         IdCompra: $("#IdCompra").val(),
-        IdProveedor: $("#ProvCodigo").val(),
+        IdProveedor: ProvCodigo.GetValue(),
         IdProducto: $("#IdProducto").val()
     }
     $.ajax({

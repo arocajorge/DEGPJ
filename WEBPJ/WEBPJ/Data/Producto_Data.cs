@@ -262,5 +262,31 @@ namespace WEBPJ.Data
                 throw;
             }
         }
+
+        public fcproduc_Info get_info_ProductoNexp(string Codigo)
+        {
+            try
+            {
+                fcproduc_Info info = new fcproduc_Info();
+                using (EntitiesNexpirion Context = new EntitiesNexpirion())
+                {
+                    fcproduc Entity = Context.fcproduc.Where(q => q.codigo.ToString().Trim() == Codigo).FirstOrDefault();
+
+                    if (Entity == null) return null;
+                    info = new fcproduc_Info
+                    {
+                        codigo = Entity.codigo,
+                        nombre = Entity.nombre,
+                        tipoitm = Entity.tipoitm
+                    };
+                }
+
+                return info;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

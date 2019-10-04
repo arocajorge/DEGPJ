@@ -45,13 +45,6 @@ namespace WEBPJ.Controllers
             return data_proveedor.get_info_bajo_demanda(args, "PRV");
         }
         #endregion
-        #region Proveedor
-        public ActionResult Cmb_Proveedor()
-        {
-            var model = data_proveedor.get_list();
-            return PartialView(model);
-        }
-        #endregion
 
         #region Index
         public ActionResult Index()
@@ -218,7 +211,7 @@ namespace WEBPJ.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
-
+            
             Compra_Info model = data_compra.get_info(IdCompra);
 
             if (model == null)
@@ -510,7 +503,7 @@ namespace WEBPJ.Controllers
         #endregion
 
         #region ProductoDetalle
-        public ActionResult GridViewPartial_CompraProductoDetalle()
+        public ActionResult GridViewPartial_CompraProductoDetalleX()
         {
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
             var model = Lista_CompraDet.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
@@ -525,6 +518,29 @@ namespace WEBPJ.Controllers
 
             var model = Lista_CompraDet.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_CompraProductoDetalle", model);
+        }
+        #endregion
+
+        #region CompraDetalle
+        [ValidateInput(false)]
+        public ActionResult GridViewPartial_CompraProductoDetalle()
+        {
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_CompraDet.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+
+            //ViewBag.BatchEditingOptions = options;
+            return PartialView("_GridViewPartial_CompraProductoDetalle", model);
+        }
+
+        [ValidateInput(false)]
+        public ActionResult BatchEditingUpdateModel(MVCxGridViewBatchUpdateValues<CompraDetalle_Info, int> updateValues)
+        {
+            foreach (var product in updateValues.Update)
+            {
+                if (updateValues.IsValid(product))
+                    Lista_CompraDet.UpdateRow(product, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            }
+            return GridViewPartial_CompraProductoDetalle();
         }
         #endregion
     }
