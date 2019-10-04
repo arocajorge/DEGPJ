@@ -9,7 +9,17 @@
 }
 
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
-
+<script>
+    var timerHandle = -1;
+    function OnBatchEditStartEditing(s, e) {
+        clearTimeout(timerHandle);
+    }
+    function OnBatchEditEndEditing(s, e) {
+        timerHandle = setTimeout(function () {
+            s.UpdateEdit();
+        }, 200);
+    }
+</script>
 @using (Html.BeginForm("Modificar", "Compra", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     if (ViewBag.MensajeSuccess != null)
@@ -182,7 +192,7 @@
         @Html.Action("GridViewPartial_CompraProductoDetalle")
     </div>
     <div class="box-footer">
-        <button type="button" class="btn btn-primary"  id="BtnCalificar" onclick="Calificar();">Calificar</button>
+        <button type="button" class="btn btn-primary"  id="BtnCalificar" onclick="Cali();">Calificar</button>
         <a class="btn btn-default" href="@Url.Action("Index", "Compra", new { Area ="General" }, null)">Cancelar</a>
     </div>
 
@@ -192,6 +202,8 @@
 }
 
 <script type="text/javascript">
+
+  
 
 function cargar_productos() {
     if (ProvCodigo.GetValue() != "") {
@@ -218,8 +230,10 @@ function cargar_productos() {
         });
     }
 }
-
-function Calificar() {
+    function Cali() {
+        setTimeout(function () { Calificar(); }, 1000);
+    }
+    function Calificar() {
     var datos = {
         IdTransaccionSession: $("#IdTransaccionSession").val(),
         IdProveedor: ProvCodigo.GetValue(),

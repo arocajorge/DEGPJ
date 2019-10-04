@@ -9,7 +9,17 @@
 }
 
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
-
+<script>
+    var timerHandle = -1;
+    function OnBatchEditStartEditing(s, e) {
+        clearTimeout(timerHandle);
+    }
+    function OnBatchEditEndEditing(s, e) {
+        timerHandle = setTimeout(function () {
+            s.UpdateEdit();
+        }, 200);
+    }
+</script>
 @using (Html.BeginForm("Nuevo", "Compra", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     if (ViewBag.mensaje != null)
@@ -169,7 +179,7 @@
         @Html.Action("GridViewPartial_CompraProductoDetalle")
     </div>
     <div class="box-footer">
-        <button type="button" class="btn btn-primary" onclick="Calificar();">Calificar</button>
+        <button type="button" class="btn btn-primary" onclick="Cali();">Calificar</button>
         <a class="btn btn-default" href="@Url.Action("Index", "Compra", new { Area ="General" }, null)">Cancelar</a>
     </div>
 
@@ -213,9 +223,12 @@ function cargar_productos() {
     }
 }
 
+    function Cali() {
+        setTimeout(function () { Calificar(); }, 1000);
+    }
+
 function Calificar() {
-        GridViewPartial_CompraProductoDetalle.UpdateEdit();
-        GridViewPartial_CompraProductoDetalle.PerformCallback();
+    
 
     var datos = {
         IdTransaccionSession: $("#IdTransaccionSession").val(),
