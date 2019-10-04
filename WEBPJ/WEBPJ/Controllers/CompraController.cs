@@ -72,7 +72,7 @@ namespace WEBPJ.Controllers
         public ActionResult Index(Filtros_Info model)
         {
             lst_Compra = data_compra.get_list(model.fecha_ini, model.fecha_fin, model.IdUsuario, model.Estado);
-            Lista_Compra.set_list(lst_Compra, model.IdTransaccionSession);
+            Lista_Compra.set_list(lst_Compra, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos_consulta();
             return View(model);
         }
@@ -167,7 +167,7 @@ namespace WEBPJ.Controllers
                 IdUsuario = SessionFixed.IdUsuario,
                 Estado = "P"
             };
-
+            ViewBag.EsAdministrador = (SessionFixed.TipoUsuario == @WEBPJ.Info.Enumeradores.eTipoUsuario.ADMINISTRADOR.ToString() ? true : false);
             model.lst_CompraDetProducto = new List<CompraDetalle_Info>();
             Lista_CompraDet.set_list(model.lst_CompraDetProducto, model.IdTransaccionSession);
             cargar_combos(model);
@@ -226,6 +226,8 @@ namespace WEBPJ.Controllers
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
 
+            ViewBag.EsAdministrador = (SessionFixed.TipoUsuario == @WEBPJ.Info.Enumeradores.eTipoUsuario.ADMINISTRADOR.ToString() ? true : false);
+
             cargar_combos(model);
             return View(model);
         }
@@ -233,6 +235,12 @@ namespace WEBPJ.Controllers
         [HttpPost]
         public ActionResult Modificar(Compra_Info model)
         {
+            var info_compra = data_compra.get_info(model.IdCompra);
+            if (SessionFixed.TipoUsuario != @WEBPJ.Info.Enumeradores.eTipoUsuario.ADMINISTRADOR.ToString())
+            {
+                model.Estado = info_compra.Estado;
+            }
+
             model.lst_CompraDetProducto = Lista_CompraDet.get_list(model.IdTransaccionSession);
             var info_proveedor = data_proveedor.get_info("PRV", model.ProvCodigo);
             var info_producto = data_producto.get_info(model.IdProducto);
@@ -276,6 +284,8 @@ namespace WEBPJ.Controllers
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             model.lst_CompraDetProducto = data_compra_det.get_list(Convert.ToInt32(model.IdCompra));
             Lista_CompraDet.set_list(model.lst_CompraDetProducto, model.IdTransaccionSession);
+
+            ViewBag.EsAdministrador = (SessionFixed.TipoUsuario == @WEBPJ.Info.Enumeradores.eTipoUsuario.ADMINISTRADOR.ToString() ? true : false);
             cargar_combos(model);
             return View(model);
         }

@@ -8,9 +8,7 @@
     }
     Layout = "~/Views/Shared/_LayoutConsulta.cshtml";
 }
-<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 <script type="text/javascript">
-
      var selectedIDs;
     function OnBeginCallback(s, e) {
         //Pass all selected keys to GridView callback action
@@ -127,10 +125,10 @@
 
 <script type="text/javascript">
     function GenerarOrdenCompra() {
+        $('#btn_generar').attr("disabled", true);
         var datos = {
             Ids: selectedIDs
         }
-        $("#btn_generar").disabled = true;
         $.ajax({
             type: 'POST',
             data: JSON.stringify(datos),
@@ -144,7 +142,7 @@
                 $("#myform").submit();
                 GridViewPartial_OrdenCompra.UnselectRows();
                 GridViewPartial_OrdenCompra.PerformCallback();
-
+                $('#BtnCalificar').attr("disabled", false);
             },
             error: function (error) {
             }

@@ -125,7 +125,7 @@ namespace WEBPJ.Data
             }
         }
 
-        public Compra_Info get_info(int IdCompra)
+        public Compra_Info get_info(decimal IdCompra)
         {
             try
             {

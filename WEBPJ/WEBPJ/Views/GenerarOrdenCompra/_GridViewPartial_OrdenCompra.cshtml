@@ -93,7 +93,8 @@
         settings.Columns.Add("EstadoCompra", "Estado").Width = Unit.Percentage(10);
 
         settings.ClientSideEvents.SelectionChanged = "OnSelectionChanged";
-        settings.ClientSideEvents.BeginCallback = "OnBeginCallback";
+        //settings.ClientSideEvents.BeginCallback = "OnBeginCallback";
+        settings.ClientSideEvents.BeginCallback = "function(s,e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); OnBeginCallback(s,e); }";
         settings.ClientSideEvents.Init = "function(s,e) { GridViewPartial_OrdenCompra.PerformCallback(); }";
     });
 }

@@ -41,14 +41,13 @@
         </div>
     }
     @Html.HiddenFor(q => q.IdCompra);
-    @Html.HiddenFor(q => q.Estado, new { @id = "Estado" });
     @Html.HiddenFor(q => q.IdUsuario, new { @id = "IdUsuario" });
     @Html.HiddenFor(q => q.IdProducto, new { @id = "IdProducto" });
     @Html.HiddenFor(q => q.IdUsuario, new { @id = "IdUsuario" });
     @Html.HiddenFor(q => q.Precio, new { @id = "Precio" });
     @Html.HiddenFor(q => q.Total, new { @id = "Total" });
     @Html.HiddenFor(q => q.Calificacion, new { @id = "Calificacion" });
-    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id= "IdTransaccionSession" });
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" });
 
     <div class="modal fade" id="ModalCompra" role="dialog">
         <div class="modal-dialog">
@@ -126,10 +125,10 @@
                     @Html.ValidationMessageFor(q => q.ProvCodigo, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label for="Descripcion">Producto</label>
-                    @Html.DropDownListFor(q => q.IdProducto, new SelectList(ViewBag.lst_productos, "IdProducto", "Descripcion"), new { @class = "form-control", @id = "IdProducto", @disabled= "disabled" })
+                    @Html.DropDownListFor(q => q.IdProducto, new SelectList(ViewBag.lst_productos, "IdProducto", "Descripcion"), new { @class = "form-control", @id = "IdProducto", @disabled = "disabled" })
                     @Html.ValidationMessageFor(q => q.IdProducto, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -150,6 +149,13 @@
                     @Html.ValidationMessageFor(q => q.Fecha, "", new { @class = "text-danger" })
                 </div>
             </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <a type="button" class="btn btn-primary form-control " href="@Url.Action("Nuevo","Compra",new { Area = "General" },null)">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row">
@@ -161,13 +167,26 @@
                     @Html.ValidationMessageFor(q => q.IdUsuario, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="Cantidad">Estado</label>
-                    @Html.DropDownListFor(q => q.Estado, new SelectList(ViewBag.lst_Estado, "Key", "Value"), new { @class = "form-control", @id = "Estado" })
-                    @Html.ValidationMessageFor(q => q.Estado, "", new { @class = "text-danger" })
+            @if (ViewBag.EsAdministrador == true)
+            {
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="Cantidad">Estado</label>
+                        @Html.DropDownListFor(q => q.Estado, new SelectList(ViewBag.lst_Estado, "Key", "Value"), new { @class = "form-control", @id = "Estado"})
+                        @Html.ValidationMessageFor(q => q.Estado, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
+            }
+            else
+            {
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="Cantidad">Estado</label>
+                        @Html.DropDownListFor(q => q.Estado, new SelectList(ViewBag.lst_Estado, "Key", "Value"), new { @class = "form-control", @id = "Estado", @disabled = "disabled" })
+                        @Html.ValidationMessageFor(q => q.Estado, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            }
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="Cantidad">Cantidad</label>
@@ -192,7 +211,7 @@
         @Html.Action("GridViewPartial_CompraProductoDetalle")
     </div>
     <div class="box-footer">
-        <button type="button" class="btn btn-primary"  id="BtnCalificar" onclick="Cali();">Calificar</button>
+        <button type="button" class="btn btn-primary" id="BtnCalificar" onclick="Cali();">Calificar</button>
         <a class="btn btn-default" href="@Url.Action("Index", "Compra", new { Area ="General" }, null)">Cancelar</a>
     </div>
 
@@ -202,113 +221,120 @@
 }
 
 <script type="text/javascript">
+    function cargar_productos() {
+        if (ProvCodigo.GetValue() != "") {
+            $("#IdProducto").empty();
+            var datos = {
+                IdProveedor: ProvCodigo.GetValue()
+            }
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("cargar_productos_x_proveedor", "Producto", new { Area = "General"})',
+                async: false,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $.each(data, function (i, row) {
+                        $("#IdProducto").append("<option value=" + row.IdProducto + ">" + row.Descripcion + "</option>");
+                    });
 
-  
+                    CargarProductoDetalle_Modificar();
+                },
+                error: function (error) {
+                }
+            });
+        }
+    }
 
-function cargar_productos() {
-    if (ProvCodigo.GetValue() != "") {
-        $("#IdProducto").empty();
+    function Cali() {
+        if (ProvCodigo.GetValue() != "" && $("#IdProducto").val() != 0 && $("#IdUsuario").val() != "" && $("#Estado").val() != "" && $("#Cantidad").val() > 0 && $("#Comentario").val() != "") {
+            $('#BtnCalificar').attr("disabled", true);
+            setTimeout(function () {
+                Calificar();
+                $('#BtnCalificar').attr("disabled", false);
+            }, 1000);
+        }
+        else {
+            alert("Faltan campos por registrar");
+        }
+    }
+
+    function Calificar() {
+        //$('#BtnCalificar').attr("disabled", true);
         var datos = {
-            IdProveedor: ProvCodigo.GetValue()
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+            IdProveedor: ProvCodigo.GetValue(),
+            IdUsuario: $("#IdUsuario").val(),
+            IdProducto: $("#IdProducto").val(),
+            Cantidad: $("#Cantidad").val()
         }
         $.ajax({
             type: 'POST',
             data: JSON.stringify(datos),
-            url: '@Url.Action("cargar_productos_x_proveedor", "Producto", new { Area = "General"})',
+            url: '@Url.Action("CalificarProducto", "Compra",new { Area = "General"})',
             async: false,
+            bDeferRender: true,
+            bProcessing: true,
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                $.each(data, function (i, row) {
-                    $("#IdProducto").append("<option value=" + row.IdProducto + ">" + row.Descripcion + "</option>");
-                });
+                if (data.Mensaje != "") {
+                    alert(data.Mensaje);
+                    $("#ModalCompra").modal("hide");
+                }
+                else {
+                    $("#ModalCompra").modal("show");
+                }
 
-                CargarProductoDetalle_Modificar();
+                $("#ProveedorCompra").text(data.ProveedorCompra);
+                $("#CalificacionCompra").text(data.CalificacionCompra);
+                $("#Comprador").text(data.Comprador);
+                $("#CantidadCompra").text(data.CantidadCompra);
+                $("#PrecioCompra").text(data.PrecioCompra);
+                $("#TotalCompra").text(data.TotalCompra);
+
+                $("#Precio").val(data.PrecioCompra);
+                $("#Total").val(data.Calculo);
+                $("#Calificacion").val(data.CalificacionCompra);
+
+                //$('#BtnCalificar').attr("disabled", false);
             },
             error: function (error) {
             }
         });
     }
-}
-    function Cali() {
-        setTimeout(function () { Calificar(); }, 1000);
-    }
-    function Calificar() {
-    var datos = {
-        IdTransaccionSession: $("#IdTransaccionSession").val(),
-        IdProveedor: ProvCodigo.GetValue(),
-        IdUsuario: $("#IdUsuario").val(),
-        IdProducto: $("#IdProducto").val(),
-        Cantidad: $("#Cantidad").val()
-    }
-    $.ajax({
-        type: 'POST',
-        data: JSON.stringify(datos),
-        url: '@Url.Action("CalificarProducto", "Compra",new { Area = "General"})',
-        async: false,
-        bDeferRender: true,
-        bProcessing: true,
-        dataType: 'json',
-        contentType: 'application/json; charset=utf-8',
-        success: function (data) {
-            if (data.Mensaje!="") {
-                alert(data.Mensaje);
 
-                $("#ModalCompra").modal("hide");
-            }
-            else {
-                $("#ModalCompra").modal("show");
-            }
-
-            $("#ProveedorCompra").text(data.ProveedorCompra);
-            $("#CalificacionCompra").text(data.CalificacionCompra);
-            $("#Comprador").text(data.Comprador);
-            $("#CantidadCompra").text(data.CantidadCompra);
-            $("#PrecioCompra").text(data.PrecioCompra);
-            $("#TotalCompra").text(data.TotalCompra);
-
-            $("#Precio").val(data.PrecioCompra);
-            $("#Total").val(data.Calculo);
-            $("#Calificacion").val(data.CalificacionCompra);
-
-            //GridViewPartial_CompraProductoDetalle.PerformCallback();
-            
-        },
-        error: function (error) {
+    function CargarProductoDetalle_Modificar() {
+        var datos = {
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+            IdCompra: $("#IdCompra").val(),
+            IdProveedor: ProvCodigo.GetValue(),
+            IdProducto: $("#IdProducto").val()
         }
-    });
-}
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("CargarProductoDetalle_Modificar", "Compra",new { Area = "General"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data.msg != "") {
+                    alert(data.msg);
+                    $("#BtnCalificar").hide();
+                }
+                else {
+                    $("#BtnCalificar").show();
+                }
 
-function CargarProductoDetalle_Modificar() {
-    var datos = {
-        IdTransaccionSession: $("#IdTransaccionSession").val(),
-        IdCompra: $("#IdCompra").val(),
-        IdProveedor: ProvCodigo.GetValue(),
-        IdProducto: $("#IdProducto").val()
+                GridViewPartial_CompraProductoDetalle.PerformCallback();
+            },
+            error: function (error) {
+            }
+        });
+
     }
-    $.ajax({
-        type: 'POST',
-        data: JSON.stringify(datos),
-        url: '@Url.Action("CargarProductoDetalle_Modificar", "Compra",new { Area = "General"})',
-        async: false,
-        bDeferRender: true,
-        bProcessing: true,
-        dataType: 'json',
-        contentType: 'application/json; charset=utf-8',
-        success: function (data) {
-            if (data.msg!= "") {
-                alert(data.msg);
-                $("#BtnCalificar").hide();
-            }
-            else {
-                $("#BtnCalificar").show();
-            }
-
-            GridViewPartial_CompraProductoDetalle.PerformCallback();
-        },
-        error: function (error) {
-        }
-    });
-
-}
 </script>

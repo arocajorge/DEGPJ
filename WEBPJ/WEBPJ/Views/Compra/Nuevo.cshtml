@@ -179,7 +179,7 @@
         @Html.Action("GridViewPartial_CompraProductoDetalle")
     </div>
     <div class="box-footer">
-        <button type="button" class="btn btn-primary" onclick="Cali();">Calificar</button>
+        <button type="button" class="btn btn-primary" id="BtnCalificar" onclick="Cali();">Calificar</button>
         <a class="btn btn-default" href="@Url.Action("Index", "Compra", new { Area ="General" }, null)">Cancelar</a>
     </div>
 
@@ -223,12 +223,21 @@ function cargar_productos() {
     }
 }
 
-    function Cali() {
-        setTimeout(function () { Calificar(); }, 1000);
+function Cali() {
+    if (ProvCodigo.GetValue() != "" && $("#IdProducto").val() != 0 && $("#IdUsuario").val() != "" && $("#Estado").val() != "" && $("#Cantidad").val() > 0 && $("#Comentario").val() != "") {
+        $('#BtnCalificar').attr("disabled", true);
+        setTimeout(function () {
+            Calificar();
+            $('#BtnCalificar').attr("disabled", false);
+        }, 1000);
     }
+    else {
+        alert("Faltan campos por registrar");
+    }
+}
 
 function Calificar() {
-    
+    $('#BtnCalificar').attr("disabled", true);
 
     var datos = {
         IdTransaccionSession: $("#IdTransaccionSession").val(),
@@ -253,6 +262,7 @@ function Calificar() {
             }
             else {
                 $("#ModalCompra").modal("show");
+                $('#BtnCalificar').attr("disabled", false);
             }
 
             $("#ProveedorCompra").text(data.ProveedorCompra);
