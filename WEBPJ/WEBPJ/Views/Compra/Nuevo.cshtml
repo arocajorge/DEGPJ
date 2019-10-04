@@ -251,9 +251,10 @@ function Calificar() {
             $("#TotalCompra").text(data.TotalCompra);
             
             $("#Precio").val(data.PrecioCompra);
-            $("#Total").val(data.TotalCompra);
+            $("#Total").val(data.Calculo);
             $("#Calificacion").val(data.CalificacionCompra);
-            //GridViewPartial_CompraProductoDetalle.PerformCallback();
+
+            GridViewPartial_CompraProductoDetalle.PerformCallback();
         },
         error: function (error) {
         }
@@ -275,7 +276,7 @@ function CargarProductoDetalle() {
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function (data) {
-            //GridViewPartial_CompraProductoDetalle.PerformCallback();
+            GridViewPartial_CompraProductoDetalle.PerformCallback();
         },
         error: function (error) {
         }

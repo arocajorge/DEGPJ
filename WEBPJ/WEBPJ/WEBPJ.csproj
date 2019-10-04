@@ -194,6 +194,9 @@
     <Compile Include="Base\fcclient.cs">
       <DependentUpon>ModelNexpirion.tt</DependentUpon>
     </Compile>
+    <Compile Include="Base\fcexipro.cs">
+      <DependentUpon>ModelNexpirion.tt</DependentUpon>
+    </Compile>
     <Compile Include="Base\fcmovinv.cs">
       <DependentUpon>ModelNexpirion.tt</DependentUpon>
     </Compile>
@@ -289,6 +292,7 @@
     <Compile Include="Info\Dispositivo_Info.cs" />
     <Compile Include="Info\Enumeradores.cs" />
     <Compile Include="Info\fcclient_Info.cs" />
+    <Compile Include="Info\fcexipro_Info.cs" />
     <Compile Include="Info\fcmovinv_Info.cs" />
     <Compile Include="Info\fcproduc_Info.cs" />
     <Compile Include="Info\Filtros_Info.cs" />

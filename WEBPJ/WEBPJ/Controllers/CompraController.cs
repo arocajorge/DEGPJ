@@ -498,7 +498,7 @@ namespace WEBPJ.Controllers
             var PrecioCompra = Precio.ToString("n2");
 
             Lista_CompraDet.set_list(ListaDetalle, IdTransaccionSession);
-            return Json(new { CantidadCompra = CantidadCompra, PrecioCompra = PrecioCompra, TotalCompra = TotalCompra, ProveedorCompra = Proveedor.Nombre, Comprador = Comprador.Nombre, CalificacionCompra = CalificacionCompra, Mensaje= msg }, JsonRequestBehavior.AllowGet);
+            return Json(new { CantidadCompra = CantidadCompra, PrecioCompra = PrecioCompra, TotalCompra = TotalCompra, ProveedorCompra = Proveedor.Nombre, Comprador = Comprador.Nombre, CalificacionCompra = CalificacionCompra, Mensaje= msg, Calculo= Calculo }, JsonRequestBehavior.AllowGet);
         }
         #endregion
 

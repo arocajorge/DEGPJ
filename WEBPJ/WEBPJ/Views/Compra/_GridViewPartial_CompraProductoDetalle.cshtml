@@ -17,12 +17,12 @@
         settings.SettingsEditing.NewItemRowPosition = GridViewNewItemRowPosition.Bottom;
         //settings.ClientSideEvents.BatchEditStartEditing = "TextInfoGrid_StartBatchEditing";
         //settings.ClientSideEvents.BatchEditEndEditing = "TextInfoGrid_EndBatchEditing";
-        settings.ClientSideEvents.Init = "TextInfoGrid_OnInit";
+        //settings.ClientSideEvents.Init = "TextInfoGrid_OnInit";
 
         //settings.SettingsPager.Mode = BatchEditingOptions.PagerMode;
         //settings.SettingsEditing.BatchEditSettings.EditMode = BatchEditingOptions.EditMode;
         //settings.SettingsEditing.BatchEditSettings.HighlightDeletedRows = BatchEditingOptions.HighlightDeletedRows;
-        //settings.SettingsEditing.BatchEditSettings.KeepChangesOnCallbacks = BatchEditingOptions.KeepChangesOnCallbacks ? DefaultBoolean.True : DefaultBoolean.False;
+        settings.SettingsEditing.BatchEditSettings.KeepChangesOnCallbacks = DefaultBoolean.False;
         //settings.Settings.VerticalScrollableHeight = 594;
 
         settings.CommandColumn.Visible = true;

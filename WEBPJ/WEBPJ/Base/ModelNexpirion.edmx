@@ -94,6 +94,20 @@
           <Property Name="bloqueado" Type="bit" Nullable="false" />
           <Property Name="contacto_correo" Type="varchar" MaxLength="254" Nullable="false" />
         </EntityType>
+        <EntityType Name="fcexipro">
+          <Key>
+            <PropertyRef Name="producto" />
+            <PropertyRef Name="bodega_int" />
+          </Key>
+          <Property Name="producto" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="bodega_int" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="bodega" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="stock" Type="numeric" Precision="20" Scale="5" Nullable="false" />
+          <Property Name="stock_2" Type="numeric" Precision="20" Scale="5" Nullable="false" />
+          <Property Name="orden" Type="numeric" Precision="8" Scale="0" Nullable="false" />
+          <Property Name="usr_agr" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="usr_cor" Type="char" MaxLength="10" Nullable="false" />
+        </EntityType>
         <EntityType Name="fcmovinv">
           <Key>
             <PropertyRef Name="tipo" />
@@ -333,6 +347,7 @@ advertencia 6002: La tabla o vista 'Nexpirion.dbo.VWFX_ProveedorMigrado' no tien
         <EntityContainer Name="ModelNexpirionStoreContainer">
           <EntitySet Name="dbultnum" EntityType="Self.dbultnum" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="fcclient" EntityType="Self.fcclient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="fcexipro" EntityType="Self.fcexipro" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="fcmovinv" EntityType="Self.fcmovinv" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="fcproduc" EntityType="Self.fcproduc" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FX_ProveedorMigrado" EntityType="Self.FX_ProveedorMigrado" Schema="dbo" store:Type="Tables" />
@@ -423,6 +438,7 @@ advertencia 6002: La tabla o vista 'Nexpirion.dbo.VWFX_ProveedorMigrado' no tien
           <EntitySet Name="fcmovinv" EntityType="ModelNexpirion.fcmovinv" />
           <EntitySet Name="indocume" EntityType="ModelNexpirion.indocume" />
           <EntitySet Name="fcproduc" EntityType="ModelNexpirion.fcproduc" />
+          <EntitySet Name="fcexipro" EntityType="ModelNexpirion.fcexipro" />
         </EntityContainer>
         <EntityType Name="FX_ProveedorMigrado">
           <Key>
@@ -681,6 +697,20 @@ advertencia 6002: La tabla o vista 'Nexpirion.dbo.VWFX_ProveedorMigrado' no tien
           <Property Name="cuenta_ventas_desc_no_grava" Type="String" Nullable="false" MaxLength="12" FixedLength="true" Unicode="false" />
           <Property Name="cuenta_ventas_desc_si_grava" Type="String" Nullable="false" MaxLength="12" FixedLength="true" Unicode="false" />
           <Property Name="gracostocap" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fcexipro">
+          <Key>
+            <PropertyRef Name="producto" />
+            <PropertyRef Name="bodega_int" />
+          </Key>
+          <Property Name="producto" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="bodega_int" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="bodega" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="stock" Type="Decimal" Nullable="false" Precision="20" Scale="5" />
+          <Property Name="stock_2" Type="Decimal" Nullable="false" Precision="20" Scale="5" />
+          <Property Name="orden" Type="Decimal" Nullable="false" Precision="8" Scale="0" />
+          <Property Name="usr_agr" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="usr_cor" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1007,6 +1037,20 @@ advertencia 6002: La tabla o vista 'Nexpirion.dbo.VWFX_ProveedorMigrado' no tien
                 <ScalarProperty Name="bloquea" ColumnName="bloquea" />
                 <ScalarProperty Name="imprimir" ColumnName="imprimir" />
                 <ScalarProperty Name="codigo" ColumnName="codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fcexipro">
+            <EntityTypeMapping TypeName="ModelNexpirion.fcexipro">
+              <MappingFragment StoreEntitySet="fcexipro">
+                <ScalarProperty Name="usr_cor" ColumnName="usr_cor" />
+                <ScalarProperty Name="usr_agr" ColumnName="usr_agr" />
+                <ScalarProperty Name="orden" ColumnName="orden" />
+                <ScalarProperty Name="stock_2" ColumnName="stock_2" />
+                <ScalarProperty Name="stock" ColumnName="stock" />
+                <ScalarProperty Name="bodega" ColumnName="bodega" />
+                <ScalarProperty Name="bodega_int" ColumnName="bodega_int" />
+                <ScalarProperty Name="producto" ColumnName="producto" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

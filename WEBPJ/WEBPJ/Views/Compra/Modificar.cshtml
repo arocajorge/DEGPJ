@@ -251,8 +251,9 @@ function Calificar() {
             $("#TotalCompra").text(data.TotalCompra);
 
             $("#Precio").val(data.PrecioCompra);
-            $("#Total").val(data.TotalCompra);
+            $("#Total").val(data.Calculo);
             $("#Calificacion").val(data.CalificacionCompra);
+
             GridViewPartial_CompraProductoDetalle.PerformCallback();
             
         },

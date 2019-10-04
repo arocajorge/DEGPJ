@@ -428,6 +428,7 @@ namespace WEBPJ.Data
                 {
                     var info_producto = data_producto.get_info_ProductoNexp(info.Codigo.ToString().Trim());
                     var info_proveedor = data_proveedor.get_info_ProveedorNexp(info.ProvCodigo.ToString().Trim());
+                    var info_bodega = data_producto.get_info_BodegaNexp(info.Codigo.ToString().Trim());
                     var nombre = info_producto.nombre.ToString().Substring(0,59);
                     dbultnum entity = db.dbultnum.Where(q => q.tipo == "CO").FirstOrDefault();
                     var num_compra = entity.numero + 1;
@@ -444,7 +445,7 @@ namespace WEBPJ.Data
                         nombre = nombre,
                         cantidad = Convert.ToDecimal(info.Cantidad),
                         proveedor = info_proveedor.codigo,
-                        concepto = "",
+                        concepto = "0022      ",
                         plazo = 0,
                         porc_desc = 0,
                         factor = 0,
@@ -465,7 +466,7 @@ namespace WEBPJ.Data
                         cantidad_op = 0,
                         impreso = false,
                         eliminado = false,
-                        bodega_int = "001-002   ",
+                        bodega_int = info_bodega.bodega_int,
                         bodega_orig = "",
                         solicita = false,
                         aceptado = false,
@@ -480,52 +481,49 @@ namespace WEBPJ.Data
                         centro = ""
                     });
 
-                    foreach (var item in info.lst_CompraDetProducto)
+                    db.fcmovinv.Add(new fcmovinv
                     {
-                        db.fcmovinv.Add(new fcmovinv
-                        {
-                            tipo = "CO",
-                            numero = num_compra,
-                            numreg = 1,
-                            fecha = info.Fecha,
-                            producto = info_producto.codigo,
-                            nombre = nombre,
-                            bodega = "",
-                            fra = Convert.ToDecimal(info.Precio),
-                            peso = Convert.ToDecimal(info.Cantidad),
-                            und = Convert.ToDecimal(info.Cantidad),
-                            cantidad = Convert.ToDecimal(info.Cantidad),
-                            stock = 0,
-                            tip_ped ="",
-                            pedido = 0,
-                            tipreg = 0,
-                            descuento = 0,
-                            precio_vta = Convert.ToDecimal(info.Precio),
-                            precio_lst = Convert.ToDecimal(info.Precio),
-                            subtotal = Convert.ToDecimal(info.Total),
-                            costo_und = Convert.ToDecimal(info.Precio),
-                            costo = Convert.ToDecimal(info.Precio),
-                            promedio =0,
-                            tip_prec = 0,
-                            tip_produc = info_producto.tipoitm,
-                            porc_desc = 0,
-                            sucursal = "",
-                            cliente = "",
-                            vendedor = "",
-                            servicio = false,
-                            ubicacion = "",
-                            motivo = "",
-                            eliminado= false,
-                            usuario = "",
-                            digitado =DateTime.Now.Date,
-                            concepto = "",
-                            comentario= info.Comentario,
-                            bodega_int = "001-002   ",
-                            lote = "",
-                            usr_agr = "",
-                            usr_cor = ""
-                        });
-                    }
+                        tipo = "CO",
+                        numero = num_compra,
+                        numreg = 1,
+                        fecha = info.Fecha,
+                        producto = info_producto.codigo,
+                        nombre = nombre,
+                        bodega = "",
+                        fra = Convert.ToDecimal(info.Precio),
+                        peso = Convert.ToDecimal(info.Cantidad),
+                        und = Convert.ToDecimal(info.Cantidad),
+                        cantidad = Convert.ToDecimal(info.Cantidad),
+                        stock = 0,
+                        tip_ped ="",
+                        pedido = 0,
+                        tipreg = 0,
+                        descuento = 0,
+                        precio_vta = Convert.ToDecimal(info.Precio),
+                        precio_lst = Convert.ToDecimal(info.Precio),
+                        subtotal = Convert.ToDecimal(info.Total),
+                        costo_und = Convert.ToDecimal(info.Precio),
+                        costo = Convert.ToDecimal(info.Precio),
+                        promedio =0,
+                        tip_prec = 0,
+                        tip_produc = info_producto.tipoitm,
+                        porc_desc = 0,
+                        sucursal = "",
+                        cliente = "",
+                        vendedor = "",
+                        servicio = false,
+                        ubicacion = "",
+                        motivo = "",
+                        eliminado= false,
+                        usuario = "",
+                        digitado =DateTime.Now.Date,
+                        concepto = "",
+                        comentario= info.Comentario,
+                        bodega_int = info_bodega.bodega_int,
+                        lote = "",
+                        usr_agr = "",
+                        usr_cor = ""
+                    });
 
                     entity.numero = num_compra;
 
@@ -535,7 +533,6 @@ namespace WEBPJ.Data
             }
             catch (Exception EX)
             {
-
                 throw;
             }
         }
