@@ -214,6 +214,9 @@ function cargar_productos() {
 }
 
 function Calificar() {
+        GridViewPartial_CompraProductoDetalle.UpdateEdit();
+        GridViewPartial_CompraProductoDetalle.PerformCallback();
+
     var datos = {
         IdTransaccionSession: $("#IdTransaccionSession").val(),
         IdProveedor: ProvCodigo.GetValue(),
@@ -250,7 +253,7 @@ function Calificar() {
             $("#Total").val(data.Calculo);
             $("#Calificacion").val(data.CalificacionCompra);
 
-            GridViewPartial_CompraProductoDetalle.PerformCallback();
+            //GridViewPartial_CompraProductoDetalle.PerformCallback();  
         },
         error: function (error) {
         }

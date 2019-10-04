@@ -1,6 +1,6 @@
 ﻿@using System.Web.UI.WebControls;
 @{
-    Html.EnableClientValidation();
+    //Html.EnableClientValidation();
     //Html.EnableUnobtrusiveJavaScript();
 }
 @{
@@ -14,7 +14,6 @@
 
         settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
         settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
-        settings.SettingsEditing.NewItemRowPosition = GridViewNewItemRowPosition.Bottom;
         settings.SettingsEditing.BatchEditSettings.KeepChangesOnCallbacks = DefaultBoolean.True;
 
         settings.CommandColumn.Visible = true;
@@ -48,6 +47,7 @@
 
         settings.ClientSideEvents.BeginCallback = "function(s,e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val();}";//OnBeginGridCallback(s,e);
         settings.ClientSideEvents.Init = "function(s,e) { GridViewPartial_CompraProductoDetalle.PerformCallback(); }";
+        
     });
 }
 @grid.Bind(Model).GetHtml()

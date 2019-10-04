@@ -445,7 +445,7 @@ namespace WEBPJ.Data
                         nombre = nombre,
                         cantidad = Convert.ToDecimal(info.Cantidad),
                         proveedor = info_proveedor.codigo,
-                        concepto = "0022      ",
+                        concepto = "",
                         plazo = 0,
                         porc_desc = 0,
                         factor = 0,

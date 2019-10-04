@@ -28,6 +28,7 @@ namespace WEBPJ.Controllers
         ProductoDetalle_Data data_producto_detalle = new ProductoDetalle_Data();
         Dispositivo_Data data_dispositivo = new Dispositivo_Data();
         string mensaje = string.Empty;
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
 
         #region Metodos ComboBox bajo demanda
@@ -197,13 +198,14 @@ namespace WEBPJ.Controllers
             if (!data_compra.GuardarBD(model))
             {
                 SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
+                ViewBag.mensaje = "No se ha podido guardar el registro";
                 cargar_combos(model);
                 return View(model);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Modificar", new { IdCompra = model.IdCompra, Exito = true });
         }
-        public ActionResult Modificar(int IdCompra = 0)
+        public ActionResult Modificar(int IdCompra = 0, bool Exito = false)
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -220,6 +222,9 @@ namespace WEBPJ.Controllers
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             model.lst_CompraDetProducto = data_compra_det.get_list(Convert.ToInt32(model.IdCompra));
             Lista_CompraDet.set_list(model.lst_CompraDetProducto, model.IdTransaccionSession);
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
 
             cargar_combos(model);
             return View(model);
@@ -248,10 +253,12 @@ namespace WEBPJ.Controllers
             if (!data_compra.ModificarBD(model))
             {
                 SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
+                ViewBag.mensaje = "No se ha podido modificar el registro";
                 cargar_combos(model);
                 return View(model);
             }
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
+            return RedirectToAction("Modificar", new { IdCompra = model.IdCompra, Exito = true });
         }
 
         public ActionResult Anular(int IdCompra = 0)
