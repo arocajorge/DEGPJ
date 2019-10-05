@@ -27,7 +27,7 @@ namespace WEBPJ.Data
                     {
                         if (IdUsuario == "" || IdUsuario == null)
                         {
-                            Lista = db.vwCompra.Where(q=> fecha_ini <= q.Fecha && q.Fecha <= fecha_fin).Select(q => new Compra_Info
+                            Lista = db.vwCompra.Where(q=> fecha_ini <= q.Fecha && q.Fecha <= fecha_fin).OrderByDescending(q => q.IdCompra).Select(q => new Compra_Info
                             {
                                 IdCompra = q.IdCompra,
                                 ProvCedulaRuc = q.ProvCedulaRuc,
@@ -48,7 +48,7 @@ namespace WEBPJ.Data
                         }
                         else
                         {
-                            Lista = db.vwCompra.Where(q=>q.IdUsuario == IdUsuario && fecha_ini <= q.Fecha && q.Fecha <= fecha_fin).Select(q => new Compra_Info
+                            Lista = db.vwCompra.Where(q=>q.IdUsuario == IdUsuario && fecha_ini <= q.Fecha && q.Fecha <= fecha_fin).OrderByDescending(q => q.IdCompra).Select(q => new Compra_Info
                             {
                                 IdCompra = q.IdCompra,
                                 ProvCedulaRuc = q.ProvCedulaRuc,
@@ -72,7 +72,7 @@ namespace WEBPJ.Data
                     {
                         if (IdUsuario == "" || IdUsuario == null)
                         {
-                            Lista = db.vwCompra.Where(q => q.Estado == Estado && fecha_ini <= q.Fecha && q.Fecha <= fecha_fin).Select(q => new Compra_Info
+                            Lista = db.vwCompra.Where(q => q.Estado == Estado && fecha_ini <= q.Fecha && q.Fecha <= fecha_fin).OrderByDescending(q => q.IdCompra).Select(q => new Compra_Info
                             {
                                 IdCompra = q.IdCompra,
                                 ProvCedulaRuc = q.ProvCedulaRuc,
@@ -93,7 +93,7 @@ namespace WEBPJ.Data
                         }
                         else
                         {
-                            Lista = db.vwCompra.Where(q => q.Estado == Estado && q.IdUsuario == IdUsuario && fecha_ini <= q.Fecha && q.Fecha <= fecha_fin).Select(q => new Compra_Info
+                            Lista = db.vwCompra.Where(q => q.Estado == Estado && q.IdUsuario == IdUsuario && fecha_ini <= q.Fecha && q.Fecha <= fecha_fin).OrderByDescending(q=>q.IdCompra).Select(q => new Compra_Info
                             {
                                 IdCompra = q.IdCompra,
                                 ProvCedulaRuc = q.ProvCedulaRuc,

@@ -186,7 +186,7 @@ namespace WEBPJ.Controllers
             model.ProvTipo = info_proveedor.Tipo;
             model.Codigo = info_producto.Codigo;
             model.Dispositivo = Dns.GetHostName();
-
+            model.Comentario = (model.Comentario == null ? "" : model.Comentario);
             if (!validar(model, ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
@@ -249,7 +249,7 @@ namespace WEBPJ.Controllers
             model.ProvCodigo = info_proveedor.Codigo;
             model.ProvNombre = info_proveedor.Nombre;
             model.ProvTipo = info_proveedor.Tipo;
-
+            model.Comentario = (model.Comentario == null ? "" : model.Comentario);
             if (!validar(model, ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
