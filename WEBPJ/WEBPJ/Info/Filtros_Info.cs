@@ -19,11 +19,15 @@ namespace WEBPJ.Info
         [Required(ErrorMessage = "El campo fecha fin es obligatorio")]
         [DataType(DataType.Date, ErrorMessage = "El campo fecha fin debe ser una fecha en formato dd/MM/yyyy")]
         public DateTime fecha_fin { get; set; }
+        public int IdProducto { get; set; }
+        public string ProvCodigo { get; set; }
 
         public Filtros_Info()
         {
             IdTransaccionSession = 0;
             IdUsuario = SessionFixed.IdUsuario;
+            IdProducto = 0;
+            ProvCodigo = "";
             Estado = "";
             fecha_ini = DateTime.Now.Date.AddMonths(-1);
             fecha_fin = DateTime.Now.Date;

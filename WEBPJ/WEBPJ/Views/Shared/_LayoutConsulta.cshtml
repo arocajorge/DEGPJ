@@ -115,7 +115,14 @@
                         <ul class="treeview-menu">
                             @if (@WEBPJ.Helps.SessionFixed.TipoUsuario == @WEBPJ.Info.Enumeradores.eTipoUsuario.ADMINISTRADOR.ToString())
                             {
-                                <li class="treeview">
+                                <li><a href="/Usuario/Index"><i class="fa fa-circle-o"></i>Usuarios</a></li>
+                                <li><a href="/Producto/Index"><i class="fa fa-circle-o"></i>Productos</a></li>
+                                <li><a href="/Proveedor/Index"><i class="fa fa-circle-o"></i>Proveedores</a></li>
+                                <li><a href="/Dispositivo/Index"><i class="fa fa-circle-o"></i>Dispositivos</a></li>
+                                <li><a href="/Compra/Index"><i class="fa fa-circle-o"></i>Compras</a></li>
+                                <li><a href="/GenerarOrdenCompra/Index"><i class="fa fa-circle-o"></i>Aprobación Compras</a></li>
+                                <li><a href="/Reportes/Rpt_001"><i class="fa fa-circle-o"></i>Reporte</a></li>
+                                @*<li class="treeview">
                                     <a href="#">
                                         <i class="fa fa-circle-o"></i> Opciones
                                         <span class="pull-right-container">
@@ -130,22 +137,13 @@
                                         <li><a href="/Compra/Index"><i class="fa fa-circle-o"></i>Compras</a></li>
                                         <li><a href="/GenerarOrdenCompra/Index"><i class="fa fa-circle-o"></i>Aprobación de Compras</a></li>
                                     </ul>
-                                </li>
+                                </li>*@
                             }
                             else
                             {
-                                <li class="treeview">
-                                    <a href="#">
-                                        <i class="fa fa-circle-o"></i> Opciones
-                                        <span class="pull-right-container">
-                                            <i class="fa fa-angle-left pull-right"></i>
-                                        </span>
-                                    </a>
-                                    <ul class="treeview-menu">
-                                        <li><a href="/Compra/Index"><i class="fa fa-circle-o"></i>Compras</a></li>
-                                        <li><a href="/GenerarOrdenCompra/Index"><i class="fa fa-circle-o"></i>Aprobación de Compras</a></li>
-                                    </ul>
-                                </li>
+                                <li><a href="/Compra/Index"><i class="fa fa-circle-o"></i>Compras</a></li>
+                                <li><a href="/GenerarOrdenCompra/Index"><i class="fa fa-circle-o"></i>Aprobación Compras</a></li>
+                                <li><a href="/Reportes/Rpt_001"><i class="fa fa-circle-o"></i>Reporte</a></li>
                             }
 
                         </ul>

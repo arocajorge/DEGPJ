@@ -97,7 +97,6 @@ namespace WEBPJ.Controllers
 
                     info_compra = data_compra.get_info(Convert.ToInt32(item.Key));
                     var info_producto = data_producto.get_info(info_compra.IdProducto);
-                    info_compra.Codigo = info_producto.Codigo;
                     info_compra.NomProducto = info_producto.Descripcion;
                     info_compra.lst_CompraDetProducto = data_compra_det.get_list(Convert.ToInt32(item.Key));
                     if (info_compra != null)

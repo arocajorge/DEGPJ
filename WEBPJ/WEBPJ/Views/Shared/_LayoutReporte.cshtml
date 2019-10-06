@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>@ViewBag.Title - Fixed ERP</title>
+    <title>@ViewBag.Title</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
@@ -80,82 +80,98 @@
 
         )
 </head>
-<body class="fixed skin-blue layout-top-nav">
+<body class="hold-transition skin-blue sidebar-collapse sidebar-mini">
     <div class="wrapper">
         <header class="main-header">
+            <!-- Logo -->
+            <a href="#" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini"><b>N</b>X</span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg"><b>NEXPIRION</b></span>
+            </a>
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/Producto/Index" title="Productos"><i class="fa fa-product-hunt text-white"></i></a></li>
+                        <li><a href="/Proveedor/Index" title="Proveedores"><i class="fa fa-user-circle-o text-white"></i> </a></li>
+                        <li><a href="/Compra/Index" title="Compras"><i class="fa fa-shopping-basket text-white"></i></a></li>
 
-            <nav class="navbar navbar-inverse navbar-static-top" style="font-family: Helvetica Neue, Helvetica, Arial, sans-serif; padding: 0 15px; height: 50px; font-size: 25px;line-height: 50px; font-weight: 300;">
-                <div class="container">
-                    <a class="navbar-brand text-center center-block" href="#myModal" data-toggle="modal">
-                        <span class="logo-lg"><strong>Fixed</strong> ERP</span>
-                    </a>
+
+                        <!-- User Account: style can be found in dropdown.less -->
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <span class="hidden-xs">Usuario: @WEBPJ.Helps.SessionFixed.IdUsuario</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a @*class="btn btn-default"*@ href="@Url.Action("Login","Account",new { Area = "" },null)">Salir</a>
+                        </li>
+                    </ul>
                 </div>
             </nav>
-            <!-- Logo -->
-
 
         </header>
 
+        <!-- Left side column. contains the sidebar -->
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <!-- sidebar menu: : style can be found in sidebar.less -->
+                <ul class="sidebar-menu" data-widget="tree">
+                    <li class="header">NAVEGACION</li>
+
+                    <li class="treeview active">
+                        <a href="#">
+                            <i class="fa fa-files-o"></i>
+                            <span>MENÚ</span>
+                        </a>
+                        <ul class="treeview-menu">
+                            @if (@WEBPJ.Helps.SessionFixed.TipoUsuario == @WEBPJ.Info.Enumeradores.eTipoUsuario.ADMINISTRADOR.ToString())
+                            {
+                                <li><a href="/Usuario/Index"><i class="fa fa-circle-o"></i>Usuarios</a></li>
+                                <li><a href="/Producto/Index"><i class="fa fa-circle-o"></i>Productos</a></li>
+                                <li><a href="/Proveedor/Index"><i class="fa fa-circle-o"></i>Proveedores</a></li>
+                                <li><a href="/Dispositivo/Index"><i class="fa fa-circle-o"></i>Dispositivos</a></li>
+                                <li><a href="/Compra/Index"><i class="fa fa-circle-o"></i>Compras</a></li>
+                                <li><a href="/GenerarOrdenCompra/Index"><i class="fa fa-circle-o"></i>Aprobación Compras</a></li>
+                                <li><a href="/Reportes/Rpt_001"><i class="fa fa-circle-o"></i>Reporte</a></li>
+                            }
+                            else
+                            {
+                                <li><a href="/Compra/Index"><i class="fa fa-circle-o"></i>Compras</a></li>
+                                <li><a href="/GenerarOrdenCompra/Index"><i class="fa fa-circle-o"></i>Aprobación Compras</a></li>
+                                <li><a href="/Reportes/Rpt_001"><i class="fa fa-circle-o"></i>Reporte</a></li>
+                            }
+
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+            <!-- /.sidebar -->
+        </aside>
         <!-- =============================================== -->
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Main content -->
             <section class="content">
-                <div class="box">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">@ViewBag.Title</h3>
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                                <i class="fa fa-minus"></i>
-                            </button>
-                            <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-                                <i class="fa fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="box-body">
-                        <div class="modal fade" id="myModal" role="dialog">
-                            <div class="modal-dialog">
-                                <!-- Modal content-->
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <a class="btn btn-primary" href="@Url.Action("Consulta","ReportesPorUsuario",new { Area = "General" },null)">Reportes</a>
-                                        <a class="btn btn-default glyphicon glyphicon-expand" href="@Url.Action("Index","VisorDeVideo",new { Area = "General"},null)"></a>
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    </div>
-                                    <div class="modal-body">
-                                        @Html.DevExpress().TreeView(settings =>
-                                   {
-                                       settings.Name = "treeViewMenu";
-                                       settings.EnableHotTrack = true;
-                                       var Nodes = new List<Core.Erp.Info.SeguridadAcceso.seg_Menu_x_Empresa_x_Usuario_Info>();
-                                       Core.Erp.Web.Areas.SeguridadAcceso.Controllers.MenuPorEmpresaPorUsuarioController.CreateTreeViewNodesRecursive(Nodes, settings.Nodes, 0, (Session["IdEmpresa"] == null ? 0 : Convert.ToInt32(Session["IdEmpresa"])), (Session["IdUsuario"] == null ? "" : Session["IdUsuario"].ToString()));
-
-                                   }).GetHtml()
-                                    </div>
-                                    <div class="modal-footer">
-                                        <a class="btn btn-danger" href="@Url.Action("Login","Account",new { Area = "" },null)">Cerrar sesión @Session["IdUsuario"]</a>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        @RenderBody()
-                    </div>
-                    <!-- /.box-body -->
-                    <div class="box-footer">
-                        [@Session["IdEmpresa"]] @Session["nom_empresa"]
-                    </div>
-                    <!-- /.box-footer-->
-                </div>
+                @RenderBody()
                 <!-- /.box -->
             </section>
             <!-- /.content -->
         </div>
+
         <!-- /.content-wrapper -->
         <footer class="main-footer">
-            <strong>Copyright &copy; 2018 Fixed S.A.</strong> All rights
+            <strong>Copyright &copy; 2019 Fixed S.A.</strong> All rights
             reserved.
         </footer>
         <!-- /.control-sidebar -->

@@ -265,7 +265,6 @@ namespace WEBPJ.Data
                         ProvCodigo = info.ProvCodigo,
                         ProvTipo = info.ProvTipo,
                         IdUsuario = info.IdUsuario,
-                        Codigo = info.Codigo,
                         IdProducto = info.IdProducto,
                         Calificacion = info.Calificacion,
                         Precio = info.Precio,
@@ -275,6 +274,7 @@ namespace WEBPJ.Data
                         Comentario = info.Comentario,
                         Dispositivo = info.Dispositivo,
                         SecuenciaDispositivoComp = info.SecuenciaDispositivoComp = get_SecuencialDispositivo(info.IdUsuario, info.Dispositivo),
+                        Codigo = info.SecuenciaDispositivoComp.ToString().PadLeft(10, '0'),
                         Estado = info.Estado
                     });
 
@@ -537,5 +537,49 @@ namespace WEBPJ.Data
             }
         }
 
+        public List<Compra_Info> get_list_rpt(string ProvCodigo, string IdUsuario, int IdProducto, string Estado, DateTime fecha_ini, DateTime fecha_fin)
+        {
+            try
+            {
+                fecha_ini = fecha_ini.Date;
+                fecha_fin = fecha_fin.Date;
+                List<Compra_Info> Lista;
+
+                using (EntitiesGeneral db = new EntitiesGeneral())
+                {
+                    Lista = db.vwCompra.Where(q => fecha_ini <= q.Fecha && q.Fecha <= fecha_fin
+                    && q.ProvCodigo == (ProvCodigo=="" ? q.ProvCodigo : ProvCodigo)
+                    && q.IdUsuario == (IdUsuario == "" ? q.IdUsuario : IdUsuario)
+                    && q.IdProducto == (IdProducto == 0 ? q.IdProducto : IdProducto)
+                    && q.Estado == (Estado == "" ? q.Estado : Estado)
+                    ).OrderByDescending(q => q.IdCompra).Select(q => new Compra_Info
+                    {
+                        IdCompra = q.IdCompra,
+                        ProvCedulaRuc = q.ProvCedulaRuc,
+                        ProvNombre = q.ProvNombre,
+                        ProvCodigo = q.ProvCodigo,
+                        IdUsuario = q.IdUsuario,
+                        IdProducto = q.IdProducto,
+                        Calificacion = q.Calificacion,
+                        Fecha = q.Fecha,
+                        Precio = q.Precio,
+                        Cantidad = q.Cantidad,
+                        Total = q.Total,
+                        Comentario = q.Comentario,
+                        Estado = q.Estado,
+                        NomProducto = q.NomProducto,
+                        NomUsuario = q.NomUsuario
+                    }).ToList();       
+                }
+
+                Lista.ForEach(q => q.EstadoCompra = (q.Estado == "A" ? "PROCESADO" : (q.Estado == "P" ? "PENDIENTE" : (q.Estado == "I" ? "NO PROCESADO" : "ANULADO"))));
+                return Lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
