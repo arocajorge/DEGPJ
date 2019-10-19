@@ -7,7 +7,9 @@
     using APPPJ.Helpers;
     using APPPJ.Models;
     using APPPJ.Services;
+    using APPPJ.Views;
     using GalaSoft.MvvmLight.Command;
+    using Plugin.DeviceInfo;
     using Xamarin.Forms;
 
     public class SincronizacionViewModel : BaseViewModel
@@ -18,7 +20,7 @@
         private ApiService api;
         private bool _IsRunning;
         private bool _IsEnabled;
-        private List<CompraModel> _ListaCompras;
+        private List<CompraSincronizacionModel> _ListaCompras;
         #endregion
 
         #region Propiedades
@@ -42,7 +44,7 @@
             get { return this._Cantidad; }
             set { SetValue(ref this._Cantidad, value); }
         }
-        public List<CompraModel> ListaCompras
+        public List<CompraSincronizacionModel> ListaCompras
         {
             get { return this._ListaCompras; }
             set { SetValue(ref this._ListaCompras, value); }
@@ -105,6 +107,18 @@
                 else
                     Settings.UrlConexionActual = Settings.UrlConexionInterna;
                 #endregion
+
+                var response_sinc = await api.Post<List<CompraSincronizacionModel>>(                 Settings.UrlConexionActual,                 Settings.RutaCarpeta,                 "Compra",                 this.ListaCompras);
+                if (!response_sinc.IsSuccess)
+                {
+                    this.IsEnabled = true;
+                    this.IsRunning = false;
+                    await Application.Current.MainPage.DisplayAlert(
+                        "Alerta",
+                        response_sinc.Message,
+                        "Aceptar");
+                    return;
+                } 
 
                 #region Usuario
                 var response_usuario = await api.GetList<UsuarioModel>(Settings.UrlConexionActual, Settings.RutaCarpeta, "Usuario", "?IdUsuario=" + Settings.IdUsuario);
@@ -212,7 +226,7 @@
                 #endregion
 
                 #region Ultima compra
-                var response_compra = await api.GetObject<CompraModel>(Settings.UrlConexionActual, Settings.RutaCarpeta, "Compra", "IdUsuario=" + Settings.IdUsuario);
+                var response_compra = await api.GetObject<CompraModel>(Settings.UrlConexionActual, Settings.RutaCarpeta, "Compra", "IdUsuario=" + Settings.IdUsuario+"&Dispositivo="+ CrossDeviceInfo.Current.Id);
                 if (!response_compra.IsSuccess)
                 {
                     this.IsEnabled = true;
@@ -223,9 +237,20 @@
                         "Aceptar");
                     return;
                 }
+                App.Data.DeleteAll<CompraModel>();
+                App.Data.DeleteAll<CompraDetalleModel>();
 
                 var Compra = (CompraModel)response_compra.Result;
-                Settings.IdCompra = Compra == null ? "0" : Compra.IdCompra.ToString();
+                Settings.IdCompra = Compra == null ? "0" : Compra.IdCompra.ToString("n0");
+
+                await Application.Current.MainPage.DisplayAlert(
+                        "Alerta",
+                        "Sincronización exitosa",
+                        "Aceptar");
+                IsRunning = false;
+                IsEnabled = true;
+                MainViewModel.GetInstance().Compra = new CompraViewModel();
+                Application.Current.MainPage = new MasterPage();
                 #endregion
             }
             catch (Exception ex)

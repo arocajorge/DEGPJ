@@ -25,6 +25,39 @@
                     </Image.GestureRecognizers>
                 </Image>
             </StackLayout>
+             <Label
+                TextColor="Black"
+                FontSize="Large"
+                FontAttributes="Bold"
+                Text="Proveedor:">
+            </Label>
+            <Label
+                TextColor="Teal"
+                FontSize="Large"
+                HorizontalTextAlignment="End"
+                Text="{Binding Proveedor}"></Label>
+            <Label
+                TextColor="Black"
+                FontSize="Large"
+                FontAttributes="Bold"
+                Text="Recolector:">
+            </Label>
+            <Label
+                TextColor="Teal"
+                FontSize="Large"
+                HorizontalTextAlignment="End"
+                Text="{Binding IdUsuario}"></Label>
+            <Label
+                TextColor="Black"
+                FontSize="Large"
+                FontAttributes="Bold"
+                Text="Calificación:">
+            </Label>
+            <Label
+                TextColor="Teal"
+                FontSize="Large"
+                HorizontalTextAlignment="End"
+                Text="{Binding Calificacion,StringFormat='{0:N2}'}"></Label>
             <Label
                 TextColor="Black"
                 FontSize="Large"

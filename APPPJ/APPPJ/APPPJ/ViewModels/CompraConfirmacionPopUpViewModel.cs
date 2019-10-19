@@ -8,6 +8,7 @@ namespace APPPJ.ViewModels
     using Xamarin.Forms;
     using Rg.Plugins.Popup.Extensions;
     using APPPJ.Views;
+    using System.Collections.Generic;
 
     public class CompraConfirmacionPopUpViewModel : BaseViewModel
     {
@@ -16,8 +17,12 @@ namespace APPPJ.ViewModels
         private double _Precio;
         private double _Cantidad;
         private double _Total;
+        private double _Calificacion;
         private bool _IsRunning;
         private bool _IsEnabled;
+        private string _IdUsuario;
+        private string _Proveedor;
+        private List<CompraDetalleModel> Lista;
         #endregion
 
         #region Propiedades
@@ -25,6 +30,11 @@ namespace APPPJ.ViewModels
         {
             get { return this._Cantidad; }
             set { SetValue(ref this._Cantidad, value); }
+        }
+        public double Calificacion
+        {
+            get { return this._Calificacion; }
+            set { SetValue(ref this._Calificacion, value); }
         }
         public double Total
         {
@@ -46,16 +56,30 @@ namespace APPPJ.ViewModels
             get { return this._IsEnabled; }
             set { SetValue(ref this._IsEnabled, value); }
         }
+        public string Proveedor
+        {
+            get { return this._Proveedor; }
+            set { SetValue(ref this._Proveedor, value); }
+        }
+        public string IdUsuario
+        {
+            get { return this._IdUsuario; }
+            set { SetValue(ref this._IdUsuario, value); }
+        }
         #endregion
 
         #region Constructor
-        public CompraConfirmacionPopUpViewModel(CompraModel _Model)
+        public CompraConfirmacionPopUpViewModel(CompraModel _Model, List<CompraDetalleModel> _Lista)
         {
             _Compra = _Model;
             Cantidad = _Model.Cantidad;
             Precio = _Model.Precio;
             Total =  Cantidad * Precio;
+            Calificacion = _Model.Calificacion;
+            Proveedor = _Model.ProvNombre;
+            IdUsuario = Settings.IdUsuario;
             IsEnabled = true;
+            Lista = _Lista;
         }
         #endregion
 
@@ -76,17 +100,19 @@ namespace APPPJ.ViewModels
                 _Compra.Cantidad = Cantidad;
                 _Compra.Precio = Precio;
                 _Compra.Total = Total;
+                _Compra.Calificacion = Calificacion;
                 _Compra.Comentario = "";
                 _Compra.IdUsuario = Settings.IdUsuario;
-                _Compra.Estado = "PENDIENTE";
+                _Compra.Estado = "P";
 
-                if(App.Data.Guardar(_Compra))
+                if(App.Data.Guardar(_Compra,Lista))
                 {
                     await Application.Current.MainPage.DisplayAlert(
                            "Alerta",
                            "Compra "+ _Compra.Codigo+" registrada exitósamente",
                            "Aceptar");
                 }
+                await Application.Current.MainPage.Navigation.PopAllPopupAsync();
                 MainViewModel.GetInstance().Compra = new CompraViewModel();
                 Application.Current.MainPage = new MasterPage();
             }

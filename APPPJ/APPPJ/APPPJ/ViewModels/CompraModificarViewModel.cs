@@ -70,7 +70,7 @@
 
                 Compra.Comentario = Comentario;
 
-                if (App.Data.Guardar(Compra))
+                if (App.Data.Guardar(Compra, new System.Collections.Generic.List<CompraDetalleModel>()))
                 {
                     IsRunning = false;
                     IsEnabled = true;

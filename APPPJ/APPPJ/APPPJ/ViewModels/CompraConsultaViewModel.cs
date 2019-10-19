@@ -79,7 +79,7 @@ namespace APPPJ.ViewModels
         public void CargarCompras()
         {
             IsRefreshing = true;
-            ListaCompras = new ObservableCollection<CompraModel>(ToEgresoItemViewModel(App.Data.GetListCompras()));
+            ListaCompras = new ObservableCollection<CompraModel>(ToEgresoItemViewModel(App.Data.GetListModificar()));
             IsRefreshing = false;
         }
         #endregion

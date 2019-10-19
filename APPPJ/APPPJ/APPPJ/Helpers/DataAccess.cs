@@ -101,9 +101,36 @@ namespace APPPJ.Helpers
             return Lista;
         }
 
-        public List<CompraModel> GetListCompras()
+        public List<CompraModel> GetListModificar()
         {
             return this.connection.Table<CompraModel>().ToList();
+        }
+
+        public List<CompraSincronizacionModel> GetListCompras()
+        {
+           var lst = this.connection.Table<CompraModel>().ToList().Select(q=> new CompraSincronizacionModel
+           {
+               IdCompra = q.IdCompra,
+               ProvCodigo = q.ProvCodigo,
+               ProvCedulaRuc = q.ProvCedulaRuc,
+               ProvNombre = q.ProvNombre,
+               IdUsuario = q.IdUsuario,
+               Codigo = q.Codigo,
+               IdProducto = q.IdProducto,
+               Calificacion = q.Calificacion,
+               Fecha = q.Fecha,
+               Precio = q.Precio,
+               Cantidad = q.Cantidad,
+               Total = q.Total,
+               Comentario = q.Comentario,
+               Estado = q.Estado,
+               Dispositivo = q.Dispositivo
+           }).ToList();
+            foreach (var item in lst)
+            {
+                item.ListaDetalle = new List<CompraDetalleModel>(this.connection.Table<CompraDetalleModel>().ToList().Where(q => q.IdCompra == item.IdCompra).ToList());
+            }
+            return lst;
         }
 
         public int GetId()
@@ -123,19 +150,20 @@ namespace APPPJ.Helpers
                 return Lista.Max(q => q.PKSQLite) + 1;
         }
 
-        public bool Guardar(CompraModel model)
+        public bool Guardar(CompraModel model, List<CompraDetalleModel> ListaDetalle)
         {
             if (model.PKSQLite == 0)
             {
                 Settings.IdCompra = Settings.IdCompra == "0.0" ? "0" : Settings.IdCompra;
                 model.IdCompra = Convert.ToInt32(Settings.IdCompra);
-                Settings.IdCompra = (Convert.ToInt32(string.IsNullOrEmpty(Settings.IdCompra) ? "0" : Settings.IdCompra) + 1).ToString("0000000000");
+                model.Codigo = string.IsNullOrEmpty(Settings.IdCompra) ? "0" : Settings.IdCompra;
+                Settings.IdCompra = (Convert.ToInt32(string.IsNullOrEmpty(Settings.IdCompra) ? "0" : Settings.IdCompra) + 1).ToString("n0");
                 model.PKSQLite = GetId();
                 model.Dispositivo = CrossDeviceInfo.Current.Id;
-                model.Codigo = string.IsNullOrEmpty(Settings.IdCompra) ? "0" : Settings.IdCompra;
+
                 this.connection.Insert(model);
 
-                foreach (var item in model.ListaDetalle)
+                foreach (var item in ListaDetalle)
                 {
                     item.IdCompra = model.IdCompra;
                     item.PKSQLite = GetSecuencia();

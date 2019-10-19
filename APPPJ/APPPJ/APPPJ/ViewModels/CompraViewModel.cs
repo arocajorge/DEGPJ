@@ -347,10 +347,22 @@ namespace APPPJ.ViewModels
                             Compra.Precio = Max;
                         break;
                 }
-
+                Compra.Calificacion = Ponderacion;
                 Compra.Cantidad = Cantidad;
-
-                MainViewModel.GetInstance().CompraConfirmacionPopUp = new CompraConfirmacionPopUpViewModel(Compra);
+                var lstDetalle = new List<ProductoDetalleModel>(ListaDetalle);
+                var lst = lstDetalle.Select(q => new CompraDetalleModel
+                {
+                    Secuencia = (int)q.Secuencia,
+                    Descripcion = q.Descripcion,
+                    Minimo = q.Minimo,
+                    Maximo = q.Maximo,
+                    Ponderacion = q.Ponderacion,
+                    EsObligatorio = q.EsObligatorio,
+                    PorcentajeMinimo = q.PorcentajeMinimo,
+                    ValorOptimo = q.ValorOptimo,
+                    Valor = q.Calificacion
+                }).ToList();
+                MainViewModel.GetInstance().CompraConfirmacionPopUp = new CompraConfirmacionPopUpViewModel(Compra, lst);
                 await PopupNavigation.PushAsync(new CompraConfirmacionPopUpPage());
 
                 IsRunning = false;

@@ -7,6 +7,7 @@
     using APPPJ.Services;
     using APPPJ.Views;
     using GalaSoft.MvvmLight.Command;
+    using Plugin.DeviceInfo;
     using Xamarin.Forms;
 
     public class ConfiguracionViewModel : BaseViewModel
@@ -60,8 +61,8 @@
             api = new ApiService();
             this.IsEnabled = true;
             this.Usuario = "admin";
-            this.UrlServidorExterno = string.IsNullOrEmpty(Settings.UrlConexionExterna) ? "http://192.168.1.131:20000" : Settings.UrlConexionExterna;
-            this.UrlServidorInterno = string.IsNullOrEmpty(Settings.UrlConexionInterna) ? "http://192.168.1.131:20000" : Settings.UrlConexionInterna;
+            this.UrlServidorExterno = string.IsNullOrEmpty(Settings.UrlConexionExterna) ? "http://recolector.degeremcia.com" : Settings.UrlConexionExterna;
+            this.UrlServidorInterno = string.IsNullOrEmpty(Settings.UrlConexionInterna) ? "http://recolector.degeremcia.com" : Settings.UrlConexionInterna;
             this.RutaCarpeta = string.IsNullOrEmpty(Settings.RutaCarpeta) ? "/Api" : Settings.RutaCarpeta;
         }
         #endregion
@@ -245,7 +246,7 @@
             #endregion
 
             #region Ultima compra
-            var response_compra = await api.GetObject<CompraModel>(Settings.UrlConexionActual, RutaCarpeta, "Compra", "IdUsuario=" + this.Usuario);
+            var response_compra = await api.GetObject<CompraModel>(Settings.UrlConexionActual, Settings.RutaCarpeta, "Compra", "IdUsuario=" + Settings.IdUsuario + "&Dispositivo=" + CrossDeviceInfo.Current.Id);
             if (!response_compra.IsSuccess)
             {
                 this.IsEnabled = true;
@@ -264,6 +265,7 @@
             #region Limpio los settings
             Settings.IdUsuario = Usuario;
             App.Data.DeleteAll<CompraModel>();
+            App.Data.DeleteAll<CompraDetalleModel>();
             #endregion
 
             this.IsEnabled = true;

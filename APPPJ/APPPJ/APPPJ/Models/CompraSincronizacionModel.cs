@@ -1,15 +1,11 @@
 ﻿namespace APPPJ.Models
 {
-    using Newtonsoft.Json;
-    using SQLite;
     using System;
     using System.Collections.Generic;
+    using Newtonsoft.Json;
 
-    public class CompraModel
+    public class CompraSincronizacionModel 
     {
-        [PrimaryKey]
-        public int PKSQLite { get; set; }
-
         [JsonProperty("IdCompra")]
         public decimal IdCompra { get; set; }
 
@@ -54,12 +50,8 @@
 
         [JsonProperty("Dispositivo")]
         public string Dispositivo { get; set; }
-        /*
+
         [JsonProperty("ListaDetalle")]
         public List<CompraDetalleModel> ListaDetalle { get; set; }
-        */
-        #region Campos que no existen en la tabla
-        public string prDescripcion { get; set; }
-        #endregion
     }
 }
