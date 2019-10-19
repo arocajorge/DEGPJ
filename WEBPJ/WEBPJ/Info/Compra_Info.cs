@@ -28,10 +28,11 @@ namespace WEBPJ.Info
         [Required(ErrorMessage = ("el campo cantidad es obligatorio"))]
         public double Cantidad { get; set; }
         public double Total { get; set; }
-        [Required(ErrorMessage = ("el campo comentario es obligatorio"))]
         public string Comentario { get; set; }
         [Required(ErrorMessage = ("el campo estado es obligatorio"))]
         public string Estado { get; set; }
+        public int SecuenciaDispositivoComp { get; set; }
+        public string Dispositivo { get; set; }
 
 
         #region Campos que no existen en la tabla

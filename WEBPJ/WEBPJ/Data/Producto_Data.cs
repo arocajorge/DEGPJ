@@ -262,5 +262,57 @@ namespace WEBPJ.Data
                 throw;
             }
         }
+
+        public fcproduc_Info get_info_ProductoNexp(string Codigo)
+        {
+            try
+            {
+                fcproduc_Info info = new fcproduc_Info();
+                using (EntitiesNexpirion Context = new EntitiesNexpirion())
+                {
+                    fcproduc Entity = Context.fcproduc.Where(q => q.codigo.ToString().Trim() == Codigo).FirstOrDefault();
+
+                    if (Entity == null) return null;
+                    info = new fcproduc_Info
+                    {
+                        codigo = Entity.codigo,
+                        nombre = Entity.nombre,
+                        tipoitm = Entity.tipoitm
+                    };
+                }
+
+                return info;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public fcexipro_Info get_info_BodegaNexp(string Codigo)
+        {
+            try
+            {
+                fcexipro_Info info = new fcexipro_Info();
+                using (EntitiesNexpirion Context = new EntitiesNexpirion())
+                {
+                    fcexipro Entity = Context.fcexipro.Where(q => q.producto.ToString().Trim() == Codigo && q.bodega_int!="").FirstOrDefault();
+
+                    if (Entity == null) return null;
+                    info = new fcexipro_Info
+                    {
+                        producto = Entity.producto,
+                        bodega = Entity.bodega,
+                        bodega_int = Entity.bodega_int
+                    };
+                }
+
+                return info;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

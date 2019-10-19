@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Consulta de dispositivos";
+    if (string.IsNullOrEmpty(@WEBPJ.Helps.SessionFixed.IdUsuario))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.Action("GridViewPartial_Dispositivo");
+
+}

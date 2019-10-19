@@ -21,7 +21,7 @@ namespace WEBPJ.Data
                     {
                         IdCompra = q.IdCompra,
                         Secuencia = q.Secuencia,
-                        Descripcion = q.Descripcion + " (" + (q.Minimo + " - " + q.Maximo + ")"),
+                        Descripcion = q.Descripcion,
                         Minimo = q.Minimo,
                         Maximo = q.Maximo,
                         Ponderacion = q.Ponderacion,
@@ -30,7 +30,7 @@ namespace WEBPJ.Data
                         ValorOptimo = q.ValorOptimo,
                         Valor = q.Valor
                     }).ToList();
-                        
+                    //Lista.ForEach(q => q.Descripcion += "(" + q.Minimo.ToString() + " - " + q.Maximo.ToString() + ")");       
                 }
                 return Lista;
             }

@@ -16,10 +16,11 @@
         <AssociationConnector Association="ModelGeneral.FK_ProductoDetalle_Producto" />
         <AssociationConnector Association="ModelGeneral.FK_ProveedorProducto_Producto" />
         <EntityTypeShape EntityType="ModelGeneral.vwProveedorProducto" Width="1.5" PointX="3.375" PointY="0.75" />
-        <EntityTypeShape EntityType="ModelGeneral.Compra" Width="1.5" PointX="9" PointY="1.25" />
         <EntityTypeShape EntityType="ModelGeneral.CompraDetalle" Width="1.5" PointX="3.375" PointY="3.75" />
+        <EntityTypeShape EntityType="ModelGeneral.Compra" Width="1.5" PointX="9" PointY="1" />
         <AssociationConnector Association="ModelGeneral.FK_Compra_Producto" />
         <AssociationConnector Association="ModelGeneral.FK_Compra_Usuario" />
+        <EntityTypeShape EntityType="ModelGeneral.Dispositivo" Width="1.5" PointX="3.375" PointY="7.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

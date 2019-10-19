@@ -5,6 +5,30 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="ModelNexpirion.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="dbultnum">
+          <Key>
+            <PropertyRef Name="tipo" />
+          </Key>
+          <Property Name="tipo" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="nombre" Type="char" MaxLength="40" Nullable="false" />
+          <Property Name="numero" Type="numeric" Precision="12" Scale="0" Nullable="false" />
+          <Property Name="agrega" Type="char" MaxLength="254" Nullable="false" />
+          <Property Name="corrige" Type="char" MaxLength="254" Nullable="false" />
+          <Property Name="elimina" Type="char" MaxLength="254" Nullable="false" />
+          <Property Name="imprime" Type="char" MaxLength="254" Nullable="false" />
+          <Property Name="imprime1" Type="char" MaxLength="254" Nullable="false" />
+          <Property Name="permite_aprob" Type="bit" Nullable="false" />
+          <Property Name="doc_previo" Type="bit" Nullable="false" />
+          <Property Name="autoimpresor" Type="bit" Nullable="false" />
+          <Property Name="serie" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="enviado" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="formato1" Type="char" MaxLength="100" Nullable="false" />
+          <Property Name="formato2" Type="char" MaxLength="100" Nullable="false" />
+          <Property Name="formato3" Type="char" MaxLength="100" Nullable="false" />
+          <Property Name="usr_agr" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="usr_cor" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="ruta_xml" Type="char" MaxLength="254" Nullable="false" />
+        </EntityType>
         <EntityType Name="fcclient">
           <Key>
             <PropertyRef Name="tipo" />
@@ -70,6 +94,182 @@
           <Property Name="bloqueado" Type="bit" Nullable="false" />
           <Property Name="contacto_correo" Type="varchar" MaxLength="254" Nullable="false" />
         </EntityType>
+        <EntityType Name="fcexipro">
+          <Key>
+            <PropertyRef Name="producto" />
+            <PropertyRef Name="bodega_int" />
+          </Key>
+          <Property Name="producto" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="bodega_int" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="bodega" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="stock" Type="numeric" Precision="20" Scale="5" Nullable="false" />
+          <Property Name="stock_2" Type="numeric" Precision="20" Scale="5" Nullable="false" />
+          <Property Name="orden" Type="numeric" Precision="8" Scale="0" Nullable="false" />
+          <Property Name="usr_agr" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="usr_cor" Type="char" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fcmovinv">
+          <Key>
+            <PropertyRef Name="tipo" />
+            <PropertyRef Name="numero" />
+            <PropertyRef Name="numreg" />
+          </Key>
+          <Property Name="tipo" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="numero" Type="numeric" Precision="7" Scale="0" Nullable="false" />
+          <Property Name="numreg" Type="numeric" Precision="7" Scale="0" Nullable="false" />
+          <Property Name="fecha" Type="datetime" Nullable="false" />
+          <Property Name="producto" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="nombre" Type="char" MaxLength="120" Nullable="false" />
+          <Property Name="bodega" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="fra" Type="numeric" Precision="20" Scale="5" Nullable="false" />
+          <Property Name="peso" Type="numeric" Precision="20" Scale="5" Nullable="false" />
+          <Property Name="und" Type="numeric" Precision="20" Scale="5" Nullable="false" />
+          <Property Name="cantidad" Type="numeric" Precision="20" Scale="5" Nullable="false" />
+          <Property Name="stock" Type="numeric" Precision="8" Scale="0" Nullable="false" />
+          <Property Name="tip_ped" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="pedido" Type="numeric" Precision="8" Scale="0" Nullable="false" />
+          <Property Name="tipreg" Type="numeric" Precision="2" Scale="0" Nullable="false" />
+          <Property Name="descuento" Type="numeric" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="precio_vta" Type="numeric" Precision="25" Scale="15" Nullable="false" />
+          <Property Name="precio_lst" Type="numeric" Precision="25" Scale="18" Nullable="false" />
+          <Property Name="subtotal" Type="numeric" Precision="25" Scale="15" Nullable="false" />
+          <Property Name="costo_und" Type="numeric" Precision="25" Scale="15" Nullable="false" />
+          <Property Name="costo" Type="numeric" Precision="25" Scale="15" Nullable="false" />
+          <Property Name="promedio" Type="numeric" Precision="25" Scale="15" Nullable="false" />
+          <Property Name="tip_prec" Type="numeric" Precision="1" Scale="0" Nullable="false" />
+          <Property Name="tip_produc" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="porc_desc" Type="numeric" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="sucursal" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="cliente" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="vendedor" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="servicio" Type="bit" Nullable="false" />
+          <Property Name="ubicacion" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="motivo" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="eliminado" Type="bit" Nullable="false" />
+          <Property Name="usuario" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="digitado" Type="datetime" Nullable="false" />
+          <Property Name="concepto" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="comentario" Type="char" MaxLength="200" Nullable="false" />
+          <Property Name="bodega_int" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="lote" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="usr_agr" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="usr_cor" Type="char" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fcproduc">
+          <Key>
+            <PropertyRef Name="codigo" />
+          </Key>
+          <Property Name="codigo" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="imprimir" Type="bit" Nullable="false" />
+          <Property Name="bloquea" Type="bit" Nullable="false" />
+          <Property Name="importado" Type="bit" Nullable="false" />
+          <Property Name="nombre" Type="char" MaxLength="100" />
+          <Property Name="imagen" Type="char" MaxLength="120" Nullable="false" />
+          <Property Name="tipoitm" Type="char" MaxLength="4" />
+          <Property Name="linea" Type="char" MaxLength="4" />
+          <Property Name="proveedor" Type="char" MaxLength="4" />
+          <Property Name="grupo" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="subgrupo" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="cuantos" Type="numeric" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="unidad" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="peso" Type="numeric" Precision="20" Scale="10" Nullable="false" />
+          <Property Name="med_peso" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="ubicacion" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="descuento" Type="numeric" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="coniva" Type="bit" Nullable="false" />
+          <Property Name="bloqueado" Type="bit" Nullable="false" />
+          <Property Name="servicio" Type="bit" Nullable="false" />
+          <Property Name="precio" Type="numeric" Precision="15" Scale="5" Nullable="false" />
+          <Property Name="precio_2" Type="numeric" Precision="15" Scale="5" Nullable="false" />
+          <Property Name="precio_3" Type="numeric" Precision="15" Scale="5" Nullable="false" />
+          <Property Name="precio_4" Type="numeric" Precision="15" Scale="5" Nullable="false" />
+          <Property Name="precio_5" Type="numeric" Precision="15" Scale="5" Nullable="false" />
+          <Property Name="costo_fob" Type="numeric" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="costo_loc" Type="numeric" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="costo" Type="numeric" Precision="15" Scale="5" Nullable="false" />
+          <Property Name="ult_costo" Type="numeric" Precision="15" Scale="5" Nullable="false" />
+          <Property Name="minimo" Type="numeric" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="medio" Type="numeric" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="maximo" Type="numeric" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="ult_vta" Type="datetime" Nullable="false" />
+          <Property Name="ult_com" Type="datetime" Nullable="false" />
+          <Property Name="can_vta" Type="numeric" Precision="8" Scale="0" Nullable="false" />
+          <Property Name="can_com" Type="numeric" Precision="8" Scale="0" Nullable="false" />
+          <Property Name="prv1" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="pvp1" Type="numeric" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="mar1" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="fec1" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="prv2" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="pvp2" Type="numeric" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="mar2" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="fec2" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="prv3" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="pvp3" Type="numeric" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="mar3" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="fec3" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="prv4" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="pvp4" Type="numeric" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="mar4" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="fec4" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="prv5" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="pvp5" Type="numeric" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="mar5" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="fec5" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="prv6" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="pvp6" Type="numeric" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="mar6" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="fec6" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="desc_ampl" Type="char" MaxLength="254" Nullable="false" />
+          <Property Name="comentario" Type="char" MaxLength="250" Nullable="false" />
+          <Property Name="pcener" Type="numeric" Precision="12" Scale="0" Nullable="false" />
+          <Property Name="pcfebr" Type="numeric" Precision="12" Scale="0" Nullable="false" />
+          <Property Name="pcmarz" Type="numeric" Precision="12" Scale="0" Nullable="false" />
+          <Property Name="pcabri" Type="numeric" Precision="12" Scale="0" Nullable="false" />
+          <Property Name="pcmayo" Type="numeric" Precision="12" Scale="0" Nullable="false" />
+          <Property Name="pcjuni" Type="numeric" Precision="12" Scale="0" Nullable="false" />
+          <Property Name="pcjuli" Type="numeric" Precision="12" Scale="0" Nullable="false" />
+          <Property Name="pcagos" Type="numeric" Precision="12" Scale="0" Nullable="false" />
+          <Property Name="pcsept" Type="numeric" Precision="12" Scale="0" Nullable="false" />
+          <Property Name="pcoctu" Type="numeric" Precision="12" Scale="0" Nullable="false" />
+          <Property Name="pcnovi" Type="numeric" Precision="12" Scale="0" Nullable="false" />
+          <Property Name="pcdici" Type="numeric" Precision="12" Scale="0" Nullable="false" />
+          <Property Name="ppener" Type="numeric" Precision="12" Scale="0" Nullable="false" />
+          <Property Name="ppfebr" Type="numeric" Precision="12" Scale="0" Nullable="false" />
+          <Property Name="ppmarz" Type="numeric" Precision="12" Scale="0" Nullable="false" />
+          <Property Name="ppabri" Type="numeric" Precision="12" Scale="0" Nullable="false" />
+          <Property Name="ppmayo" Type="numeric" Precision="12" Scale="0" Nullable="false" />
+          <Property Name="ppjuni" Type="numeric" Precision="12" Scale="0" Nullable="false" />
+          <Property Name="ppjuli" Type="numeric" Precision="12" Scale="0" Nullable="false" />
+          <Property Name="ppagos" Type="numeric" Precision="12" Scale="0" Nullable="false" />
+          <Property Name="ppsept" Type="numeric" Precision="12" Scale="0" Nullable="false" />
+          <Property Name="ppoctu" Type="numeric" Precision="12" Scale="0" Nullable="false" />
+          <Property Name="ppnovi" Type="numeric" Precision="12" Scale="0" Nullable="false" />
+          <Property Name="ppdici" Type="numeric" Precision="12" Scale="0" Nullable="false" />
+          <Property Name="pdv_tipoitm" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="pdv_pizza" Type="bit" Nullable="false" />
+          <Property Name="pdv_yogurt" Type="bit" Nullable="false" />
+          <Property Name="ice" Type="bit" Nullable="false" />
+          <Property Name="irbp" Type="bit" Nullable="false" />
+          <Property Name="usr_agr" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="usr_cor" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="fec_agr" Type="datetime" Nullable="false" />
+          <Property Name="fec_cor" Type="datetime" Nullable="false" />
+          <Property Name="und_uat" Type="numeric" Precision="18" Scale="5" Nullable="false" />
+          <Property Name="val_uat1" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="val_uat2" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="val_uat3" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="val_uat4" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="val_uat5" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="val_uat6" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="prco_max" Type="numeric" Precision="25" Scale="15" Nullable="false" />
+          <Property Name="ruta_foto" Type="char" MaxLength="254" Nullable="false" />
+          <Property Name="porc_tole_op" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="cuenta_ventas_no_grava" Type="char" MaxLength="12" Nullable="false" />
+          <Property Name="cuenta_ventas_si_grava" Type="char" MaxLength="12" Nullable="false" />
+          <Property Name="cuenta_ventas_desc_no_grava" Type="char" MaxLength="12" Nullable="false" />
+          <Property Name="cuenta_ventas_desc_si_grava" Type="char" MaxLength="12" Nullable="false" />
+          <Property Name="gracostocap" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="FX_ProveedorMigrado">
           <Key>
             <PropertyRef Name="Tipo" />
@@ -79,6 +279,56 @@
           <Property Name="Codigo" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="Ruc" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="indocume">
+          <Key>
+            <PropertyRef Name="tipo" />
+            <PropertyRef Name="numero" />
+          </Key>
+          <Property Name="tipo" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="numero" Type="numeric" Precision="7" Scale="0" Nullable="false" />
+          <Property Name="pedido" Type="numeric" Precision="7" Scale="0" Nullable="false" />
+          <Property Name="fecha" Type="datetime" Nullable="false" />
+          <Property Name="fecha_fac" Type="datetime" Nullable="false" />
+          <Property Name="fecha_com" Type="datetime" Nullable="false" />
+          <Property Name="producto" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="nombre" Type="char" MaxLength="60" Nullable="false" />
+          <Property Name="cantidad" Type="numeric" Precision="15" Scale="5" Nullable="false" />
+          <Property Name="proveedor" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="concepto" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="plazo" Type="numeric" Precision="3" Scale="0" Nullable="false" />
+          <Property Name="porc_desc" Type="numeric" Precision="7" Scale="3" Nullable="false" />
+          <Property Name="factor" Type="numeric" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="total" Type="numeric" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="costo" Type="numeric" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="fob" Type="numeric" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="orden" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="comentario" Type="char" MaxLength="250" Nullable="false" />
+          <Property Name="tip_aplic" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="num_aplic" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="tip_aplix" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="num_aplix" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="bloqueado" Type="bit" Nullable="false" />
+          <Property Name="aprobado" Type="bit" Nullable="false" />
+          <Property Name="usuario" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="digitado" Type="datetime" Nullable="false" />
+          <Property Name="fecha_apr" Type="datetime" Nullable="false" />
+          <Property Name="cantidad_op" Type="numeric" Precision="15" Scale="5" Nullable="false" />
+          <Property Name="impreso" Type="bit" Nullable="false" />
+          <Property Name="eliminado" Type="bit" Nullable="false" />
+          <Property Name="bodega_int" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="bodega_orig" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="solicita" Type="bit" Nullable="false" />
+          <Property Name="aceptado" Type="bit" Nullable="false" />
+          <Property Name="fecha_soli" Type="datetime" Nullable="false" />
+          <Property Name="fecha_recep" Type="datetime" Nullable="false" />
+          <Property Name="fecha_acep" Type="datetime" Nullable="false" />
+          <Property Name="recibido" Type="bit" Nullable="false" />
+          <Property Name="lote" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="num_recibo" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="usr_agr" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="usr_cor" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="centro" Type="char" MaxLength="12" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'Nexpirion.dbo.VWFX_ProveedorMigrado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -95,8 +345,13 @@ advertencia 6002: La tabla o vista 'Nexpirion.dbo.VWFX_ProveedorMigrado' no tien
           <Property Name="ruc" Type="char" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityContainer Name="ModelNexpirionStoreContainer">
+          <EntitySet Name="dbultnum" EntityType="Self.dbultnum" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="fcclient" EntityType="Self.fcclient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="fcexipro" EntityType="Self.fcexipro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="fcmovinv" EntityType="Self.fcmovinv" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="fcproduc" EntityType="Self.fcproduc" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FX_ProveedorMigrado" EntityType="Self.FX_ProveedorMigrado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="indocume" EntityType="Self.indocume" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VWFX_ProveedorMigrado" EntityType="Self.VWFX_ProveedorMigrado" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [VWFX_ProveedorMigrado].[tipo] AS [tipo], 
@@ -179,6 +434,11 @@ advertencia 6002: La tabla o vista 'Nexpirion.dbo.VWFX_ProveedorMigrado' no tien
           <EntitySet Name="fcclient" EntityType="Self.fcclient" />
           <EntitySet Name="FX_ProveedorMigrado" EntityType="ModelNexpirion.FX_ProveedorMigrado" />
           <EntitySet Name="VWFX_ProveedorMigrado" EntityType="ModelNexpirion.VWFX_ProveedorMigrado" />
+          <EntitySet Name="dbultnum" EntityType="ModelNexpirion.dbultnum" />
+          <EntitySet Name="fcmovinv" EntityType="ModelNexpirion.fcmovinv" />
+          <EntitySet Name="indocume" EntityType="ModelNexpirion.indocume" />
+          <EntitySet Name="fcproduc" EntityType="ModelNexpirion.fcproduc" />
+          <EntitySet Name="fcexipro" EntityType="ModelNexpirion.fcexipro" />
         </EntityContainer>
         <EntityType Name="FX_ProveedorMigrado">
           <Key>
@@ -201,6 +461,256 @@ advertencia 6002: La tabla o vista 'Nexpirion.dbo.VWFX_ProveedorMigrado' no tien
           <Property Name="codigo" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
           <Property Name="nombre" Type="String" Nullable="false" MaxLength="65" FixedLength="true" Unicode="false" />
           <Property Name="ruc" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="dbultnum">
+          <Key>
+            <PropertyRef Name="tipo" />
+          </Key>
+          <Property Name="tipo" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="40" FixedLength="true" Unicode="false" />
+          <Property Name="numero" Type="Decimal" Nullable="false" Precision="12" Scale="0" />
+          <Property Name="agrega" Type="String" Nullable="false" MaxLength="254" FixedLength="true" Unicode="false" />
+          <Property Name="corrige" Type="String" Nullable="false" MaxLength="254" FixedLength="true" Unicode="false" />
+          <Property Name="elimina" Type="String" Nullable="false" MaxLength="254" FixedLength="true" Unicode="false" />
+          <Property Name="imprime" Type="String" Nullable="false" MaxLength="254" FixedLength="true" Unicode="false" />
+          <Property Name="imprime1" Type="String" Nullable="false" MaxLength="254" FixedLength="true" Unicode="false" />
+          <Property Name="permite_aprob" Type="Boolean" Nullable="false" />
+          <Property Name="doc_previo" Type="Boolean" Nullable="false" />
+          <Property Name="autoimpresor" Type="Boolean" Nullable="false" />
+          <Property Name="serie" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="enviado" Type="Decimal" Nullable="false" Precision="10" Scale="0" />
+          <Property Name="formato1" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="false" />
+          <Property Name="formato2" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="false" />
+          <Property Name="formato3" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="false" />
+          <Property Name="usr_agr" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="usr_cor" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="ruta_xml" Type="String" Nullable="false" MaxLength="254" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="fcmovinv">
+          <Key>
+            <PropertyRef Name="tipo" />
+            <PropertyRef Name="numero" />
+            <PropertyRef Name="numreg" />
+          </Key>
+          <Property Name="tipo" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="numero" Type="Decimal" Nullable="false" Precision="7" Scale="0" />
+          <Property Name="numreg" Type="Decimal" Nullable="false" Precision="7" Scale="0" />
+          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="producto" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="120" FixedLength="true" Unicode="false" />
+          <Property Name="bodega" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="fra" Type="Decimal" Nullable="false" Precision="20" Scale="5" />
+          <Property Name="peso" Type="Decimal" Nullable="false" Precision="20" Scale="5" />
+          <Property Name="und" Type="Decimal" Nullable="false" Precision="20" Scale="5" />
+          <Property Name="cantidad" Type="Decimal" Nullable="false" Precision="20" Scale="5" />
+          <Property Name="stock" Type="Decimal" Nullable="false" Precision="8" Scale="0" />
+          <Property Name="tip_ped" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="pedido" Type="Decimal" Nullable="false" Precision="8" Scale="0" />
+          <Property Name="tipreg" Type="Decimal" Nullable="false" Precision="2" Scale="0" />
+          <Property Name="descuento" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+          <Property Name="precio_vta" Type="Decimal" Nullable="false" Precision="25" Scale="15" />
+          <Property Name="precio_lst" Type="Decimal" Nullable="false" Precision="25" Scale="18" />
+          <Property Name="subtotal" Type="Decimal" Nullable="false" Precision="25" Scale="15" />
+          <Property Name="costo_und" Type="Decimal" Nullable="false" Precision="25" Scale="15" />
+          <Property Name="costo" Type="Decimal" Nullable="false" Precision="25" Scale="15" />
+          <Property Name="promedio" Type="Decimal" Nullable="false" Precision="25" Scale="15" />
+          <Property Name="tip_prec" Type="Decimal" Nullable="false" Precision="1" Scale="0" />
+          <Property Name="tip_produc" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="porc_desc" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+          <Property Name="sucursal" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="cliente" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="vendedor" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="servicio" Type="Boolean" Nullable="false" />
+          <Property Name="ubicacion" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="motivo" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="eliminado" Type="Boolean" Nullable="false" />
+          <Property Name="usuario" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="digitado" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="concepto" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="comentario" Type="String" Nullable="false" MaxLength="200" FixedLength="true" Unicode="false" />
+          <Property Name="bodega_int" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="lote" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="usr_agr" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="usr_cor" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="indocume">
+          <Key>
+            <PropertyRef Name="tipo" />
+            <PropertyRef Name="numero" />
+          </Key>
+          <Property Name="tipo" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="numero" Type="Decimal" Nullable="false" Precision="7" Scale="0" />
+          <Property Name="pedido" Type="Decimal" Nullable="false" Precision="7" Scale="0" />
+          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fecha_fac" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fecha_com" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="producto" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="60" FixedLength="true" Unicode="false" />
+          <Property Name="cantidad" Type="Decimal" Nullable="false" Precision="15" Scale="5" />
+          <Property Name="proveedor" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="concepto" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="plazo" Type="Decimal" Nullable="false" Precision="3" Scale="0" />
+          <Property Name="porc_desc" Type="Decimal" Nullable="false" Precision="7" Scale="3" />
+          <Property Name="factor" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+          <Property Name="total" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
+          <Property Name="costo" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
+          <Property Name="fob" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
+          <Property Name="orden" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="comentario" Type="String" Nullable="false" MaxLength="250" FixedLength="true" Unicode="false" />
+          <Property Name="tip_aplic" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="num_aplic" Type="Decimal" Nullable="false" Precision="10" Scale="0" />
+          <Property Name="tip_aplix" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="num_aplix" Type="Decimal" Nullable="false" Precision="10" Scale="0" />
+          <Property Name="bloqueado" Type="Boolean" Nullable="false" />
+          <Property Name="aprobado" Type="Boolean" Nullable="false" />
+          <Property Name="usuario" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="digitado" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fecha_apr" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="cantidad_op" Type="Decimal" Nullable="false" Precision="15" Scale="5" />
+          <Property Name="impreso" Type="Boolean" Nullable="false" />
+          <Property Name="eliminado" Type="Boolean" Nullable="false" />
+          <Property Name="bodega_int" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="bodega_orig" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="solicita" Type="Boolean" Nullable="false" />
+          <Property Name="aceptado" Type="Boolean" Nullable="false" />
+          <Property Name="fecha_soli" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fecha_recep" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fecha_acep" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="recibido" Type="Boolean" Nullable="false" />
+          <Property Name="lote" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="num_recibo" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="usr_agr" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="usr_cor" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="centro" Type="String" Nullable="false" MaxLength="12" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="fcproduc">
+          <Key>
+            <PropertyRef Name="codigo" />
+          </Key>
+          <Property Name="codigo" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="imprimir" Type="Boolean" Nullable="false" />
+          <Property Name="bloquea" Type="Boolean" Nullable="false" />
+          <Property Name="importado" Type="Boolean" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="true" Unicode="false" />
+          <Property Name="imagen" Type="String" Nullable="false" MaxLength="120" FixedLength="true" Unicode="false" />
+          <Property Name="tipoitm" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="linea" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="proveedor" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="grupo" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="subgrupo" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="cuantos" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
+          <Property Name="unidad" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="peso" Type="Decimal" Nullable="false" Precision="20" Scale="10" />
+          <Property Name="med_peso" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="ubicacion" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="descuento" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+          <Property Name="coniva" Type="Boolean" Nullable="false" />
+          <Property Name="bloqueado" Type="Boolean" Nullable="false" />
+          <Property Name="servicio" Type="Boolean" Nullable="false" />
+          <Property Name="precio" Type="Decimal" Nullable="false" Precision="15" Scale="5" />
+          <Property Name="precio_2" Type="Decimal" Nullable="false" Precision="15" Scale="5" />
+          <Property Name="precio_3" Type="Decimal" Nullable="false" Precision="15" Scale="5" />
+          <Property Name="precio_4" Type="Decimal" Nullable="false" Precision="15" Scale="5" />
+          <Property Name="precio_5" Type="Decimal" Nullable="false" Precision="15" Scale="5" />
+          <Property Name="costo_fob" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
+          <Property Name="costo_loc" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
+          <Property Name="costo" Type="Decimal" Nullable="false" Precision="15" Scale="5" />
+          <Property Name="ult_costo" Type="Decimal" Nullable="false" Precision="15" Scale="5" />
+          <Property Name="minimo" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
+          <Property Name="medio" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
+          <Property Name="maximo" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
+          <Property Name="ult_vta" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ult_com" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="can_vta" Type="Decimal" Nullable="false" Precision="8" Scale="0" />
+          <Property Name="can_com" Type="Decimal" Nullable="false" Precision="8" Scale="0" />
+          <Property Name="prv1" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="pvp1" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
+          <Property Name="mar1" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="fec1" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="prv2" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="pvp2" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
+          <Property Name="mar2" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="fec2" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="prv3" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="pvp3" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
+          <Property Name="mar3" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="fec3" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="prv4" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="pvp4" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
+          <Property Name="mar4" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="fec4" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="prv5" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="pvp5" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
+          <Property Name="mar5" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="fec5" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="prv6" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="pvp6" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
+          <Property Name="mar6" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="fec6" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="desc_ampl" Type="String" Nullable="false" MaxLength="254" FixedLength="true" Unicode="false" />
+          <Property Name="comentario" Type="String" Nullable="false" MaxLength="250" FixedLength="true" Unicode="false" />
+          <Property Name="pcener" Type="Decimal" Nullable="false" Precision="12" Scale="0" />
+          <Property Name="pcfebr" Type="Decimal" Nullable="false" Precision="12" Scale="0" />
+          <Property Name="pcmarz" Type="Decimal" Nullable="false" Precision="12" Scale="0" />
+          <Property Name="pcabri" Type="Decimal" Nullable="false" Precision="12" Scale="0" />
+          <Property Name="pcmayo" Type="Decimal" Nullable="false" Precision="12" Scale="0" />
+          <Property Name="pcjuni" Type="Decimal" Nullable="false" Precision="12" Scale="0" />
+          <Property Name="pcjuli" Type="Decimal" Nullable="false" Precision="12" Scale="0" />
+          <Property Name="pcagos" Type="Decimal" Nullable="false" Precision="12" Scale="0" />
+          <Property Name="pcsept" Type="Decimal" Nullable="false" Precision="12" Scale="0" />
+          <Property Name="pcoctu" Type="Decimal" Nullable="false" Precision="12" Scale="0" />
+          <Property Name="pcnovi" Type="Decimal" Nullable="false" Precision="12" Scale="0" />
+          <Property Name="pcdici" Type="Decimal" Nullable="false" Precision="12" Scale="0" />
+          <Property Name="ppener" Type="Decimal" Nullable="false" Precision="12" Scale="0" />
+          <Property Name="ppfebr" Type="Decimal" Nullable="false" Precision="12" Scale="0" />
+          <Property Name="ppmarz" Type="Decimal" Nullable="false" Precision="12" Scale="0" />
+          <Property Name="ppabri" Type="Decimal" Nullable="false" Precision="12" Scale="0" />
+          <Property Name="ppmayo" Type="Decimal" Nullable="false" Precision="12" Scale="0" />
+          <Property Name="ppjuni" Type="Decimal" Nullable="false" Precision="12" Scale="0" />
+          <Property Name="ppjuli" Type="Decimal" Nullable="false" Precision="12" Scale="0" />
+          <Property Name="ppagos" Type="Decimal" Nullable="false" Precision="12" Scale="0" />
+          <Property Name="ppsept" Type="Decimal" Nullable="false" Precision="12" Scale="0" />
+          <Property Name="ppoctu" Type="Decimal" Nullable="false" Precision="12" Scale="0" />
+          <Property Name="ppnovi" Type="Decimal" Nullable="false" Precision="12" Scale="0" />
+          <Property Name="ppdici" Type="Decimal" Nullable="false" Precision="12" Scale="0" />
+          <Property Name="pdv_tipoitm" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="pdv_pizza" Type="Boolean" Nullable="false" />
+          <Property Name="pdv_yogurt" Type="Boolean" Nullable="false" />
+          <Property Name="ice" Type="Boolean" Nullable="false" />
+          <Property Name="irbp" Type="Boolean" Nullable="false" />
+          <Property Name="usr_agr" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="usr_cor" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="fec_agr" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fec_cor" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="und_uat" Type="Decimal" Nullable="false" Precision="18" Scale="5" />
+          <Property Name="val_uat1" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="val_uat2" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="val_uat3" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="val_uat4" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="val_uat5" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="val_uat6" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="prco_max" Type="Decimal" Nullable="false" Precision="25" Scale="15" />
+          <Property Name="ruta_foto" Type="String" Nullable="false" MaxLength="254" FixedLength="true" Unicode="false" />
+          <Property Name="porc_tole_op" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="cuenta_ventas_no_grava" Type="String" Nullable="false" MaxLength="12" FixedLength="true" Unicode="false" />
+          <Property Name="cuenta_ventas_si_grava" Type="String" Nullable="false" MaxLength="12" FixedLength="true" Unicode="false" />
+          <Property Name="cuenta_ventas_desc_no_grava" Type="String" Nullable="false" MaxLength="12" FixedLength="true" Unicode="false" />
+          <Property Name="cuenta_ventas_desc_si_grava" Type="String" Nullable="false" MaxLength="12" FixedLength="true" Unicode="false" />
+          <Property Name="gracostocap" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fcexipro">
+          <Key>
+            <PropertyRef Name="producto" />
+            <PropertyRef Name="bodega_int" />
+          </Key>
+          <Property Name="producto" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="bodega_int" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="bodega" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="stock" Type="Decimal" Nullable="false" Precision="20" Scale="5" />
+          <Property Name="stock_2" Type="Decimal" Nullable="false" Precision="20" Scale="5" />
+          <Property Name="orden" Type="Decimal" Nullable="false" Precision="8" Scale="0" />
+          <Property Name="usr_agr" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="usr_cor" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -290,6 +800,257 @@ advertencia 6002: La tabla o vista 'Nexpirion.dbo.VWFX_ProveedorMigrado' no tien
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="codigo" ColumnName="codigo" />
                 <ScalarProperty Name="tipo" ColumnName="tipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dbultnum">
+            <EntityTypeMapping TypeName="ModelNexpirion.dbultnum">
+              <MappingFragment StoreEntitySet="dbultnum">
+                <ScalarProperty Name="ruta_xml" ColumnName="ruta_xml" />
+                <ScalarProperty Name="usr_cor" ColumnName="usr_cor" />
+                <ScalarProperty Name="usr_agr" ColumnName="usr_agr" />
+                <ScalarProperty Name="formato3" ColumnName="formato3" />
+                <ScalarProperty Name="formato2" ColumnName="formato2" />
+                <ScalarProperty Name="formato1" ColumnName="formato1" />
+                <ScalarProperty Name="enviado" ColumnName="enviado" />
+                <ScalarProperty Name="serie" ColumnName="serie" />
+                <ScalarProperty Name="autoimpresor" ColumnName="autoimpresor" />
+                <ScalarProperty Name="doc_previo" ColumnName="doc_previo" />
+                <ScalarProperty Name="permite_aprob" ColumnName="permite_aprob" />
+                <ScalarProperty Name="imprime1" ColumnName="imprime1" />
+                <ScalarProperty Name="imprime" ColumnName="imprime" />
+                <ScalarProperty Name="elimina" ColumnName="elimina" />
+                <ScalarProperty Name="corrige" ColumnName="corrige" />
+                <ScalarProperty Name="agrega" ColumnName="agrega" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fcmovinv">
+            <EntityTypeMapping TypeName="ModelNexpirion.fcmovinv">
+              <MappingFragment StoreEntitySet="fcmovinv">
+                <ScalarProperty Name="usr_cor" ColumnName="usr_cor" />
+                <ScalarProperty Name="usr_agr" ColumnName="usr_agr" />
+                <ScalarProperty Name="lote" ColumnName="lote" />
+                <ScalarProperty Name="bodega_int" ColumnName="bodega_int" />
+                <ScalarProperty Name="comentario" ColumnName="comentario" />
+                <ScalarProperty Name="concepto" ColumnName="concepto" />
+                <ScalarProperty Name="digitado" ColumnName="digitado" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="eliminado" ColumnName="eliminado" />
+                <ScalarProperty Name="motivo" ColumnName="motivo" />
+                <ScalarProperty Name="ubicacion" ColumnName="ubicacion" />
+                <ScalarProperty Name="servicio" ColumnName="servicio" />
+                <ScalarProperty Name="vendedor" ColumnName="vendedor" />
+                <ScalarProperty Name="cliente" ColumnName="cliente" />
+                <ScalarProperty Name="sucursal" ColumnName="sucursal" />
+                <ScalarProperty Name="porc_desc" ColumnName="porc_desc" />
+                <ScalarProperty Name="tip_produc" ColumnName="tip_produc" />
+                <ScalarProperty Name="tip_prec" ColumnName="tip_prec" />
+                <ScalarProperty Name="promedio" ColumnName="promedio" />
+                <ScalarProperty Name="costo" ColumnName="costo" />
+                <ScalarProperty Name="costo_und" ColumnName="costo_und" />
+                <ScalarProperty Name="subtotal" ColumnName="subtotal" />
+                <ScalarProperty Name="precio_lst" ColumnName="precio_lst" />
+                <ScalarProperty Name="precio_vta" ColumnName="precio_vta" />
+                <ScalarProperty Name="descuento" ColumnName="descuento" />
+                <ScalarProperty Name="tipreg" ColumnName="tipreg" />
+                <ScalarProperty Name="pedido" ColumnName="pedido" />
+                <ScalarProperty Name="tip_ped" ColumnName="tip_ped" />
+                <ScalarProperty Name="stock" ColumnName="stock" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="und" ColumnName="und" />
+                <ScalarProperty Name="peso" ColumnName="peso" />
+                <ScalarProperty Name="fra" ColumnName="fra" />
+                <ScalarProperty Name="bodega" ColumnName="bodega" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="producto" ColumnName="producto" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="numreg" ColumnName="numreg" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="indocume">
+            <EntityTypeMapping TypeName="ModelNexpirion.indocume">
+              <MappingFragment StoreEntitySet="indocume">
+                <ScalarProperty Name="centro" ColumnName="centro" />
+                <ScalarProperty Name="usr_cor" ColumnName="usr_cor" />
+                <ScalarProperty Name="usr_agr" ColumnName="usr_agr" />
+                <ScalarProperty Name="num_recibo" ColumnName="num_recibo" />
+                <ScalarProperty Name="lote" ColumnName="lote" />
+                <ScalarProperty Name="recibido" ColumnName="recibido" />
+                <ScalarProperty Name="fecha_acep" ColumnName="fecha_acep" />
+                <ScalarProperty Name="fecha_recep" ColumnName="fecha_recep" />
+                <ScalarProperty Name="fecha_soli" ColumnName="fecha_soli" />
+                <ScalarProperty Name="aceptado" ColumnName="aceptado" />
+                <ScalarProperty Name="solicita" ColumnName="solicita" />
+                <ScalarProperty Name="bodega_orig" ColumnName="bodega_orig" />
+                <ScalarProperty Name="bodega_int" ColumnName="bodega_int" />
+                <ScalarProperty Name="eliminado" ColumnName="eliminado" />
+                <ScalarProperty Name="impreso" ColumnName="impreso" />
+                <ScalarProperty Name="cantidad_op" ColumnName="cantidad_op" />
+                <ScalarProperty Name="fecha_apr" ColumnName="fecha_apr" />
+                <ScalarProperty Name="digitado" ColumnName="digitado" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="aprobado" ColumnName="aprobado" />
+                <ScalarProperty Name="bloqueado" ColumnName="bloqueado" />
+                <ScalarProperty Name="num_aplix" ColumnName="num_aplix" />
+                <ScalarProperty Name="tip_aplix" ColumnName="tip_aplix" />
+                <ScalarProperty Name="num_aplic" ColumnName="num_aplic" />
+                <ScalarProperty Name="tip_aplic" ColumnName="tip_aplic" />
+                <ScalarProperty Name="comentario" ColumnName="comentario" />
+                <ScalarProperty Name="orden" ColumnName="orden" />
+                <ScalarProperty Name="fob" ColumnName="fob" />
+                <ScalarProperty Name="costo" ColumnName="costo" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="factor" ColumnName="factor" />
+                <ScalarProperty Name="porc_desc" ColumnName="porc_desc" />
+                <ScalarProperty Name="plazo" ColumnName="plazo" />
+                <ScalarProperty Name="concepto" ColumnName="concepto" />
+                <ScalarProperty Name="proveedor" ColumnName="proveedor" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="producto" ColumnName="producto" />
+                <ScalarProperty Name="fecha_com" ColumnName="fecha_com" />
+                <ScalarProperty Name="fecha_fac" ColumnName="fecha_fac" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="pedido" ColumnName="pedido" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fcproduc">
+            <EntityTypeMapping TypeName="ModelNexpirion.fcproduc">
+              <MappingFragment StoreEntitySet="fcproduc">
+                <ScalarProperty Name="gracostocap" ColumnName="gracostocap" />
+                <ScalarProperty Name="cuenta_ventas_desc_si_grava" ColumnName="cuenta_ventas_desc_si_grava" />
+                <ScalarProperty Name="cuenta_ventas_desc_no_grava" ColumnName="cuenta_ventas_desc_no_grava" />
+                <ScalarProperty Name="cuenta_ventas_si_grava" ColumnName="cuenta_ventas_si_grava" />
+                <ScalarProperty Name="cuenta_ventas_no_grava" ColumnName="cuenta_ventas_no_grava" />
+                <ScalarProperty Name="porc_tole_op" ColumnName="porc_tole_op" />
+                <ScalarProperty Name="ruta_foto" ColumnName="ruta_foto" />
+                <ScalarProperty Name="prco_max" ColumnName="prco_max" />
+                <ScalarProperty Name="val_uat6" ColumnName="val_uat6" />
+                <ScalarProperty Name="val_uat5" ColumnName="val_uat5" />
+                <ScalarProperty Name="val_uat4" ColumnName="val_uat4" />
+                <ScalarProperty Name="val_uat3" ColumnName="val_uat3" />
+                <ScalarProperty Name="val_uat2" ColumnName="val_uat2" />
+                <ScalarProperty Name="val_uat1" ColumnName="val_uat1" />
+                <ScalarProperty Name="und_uat" ColumnName="und_uat" />
+                <ScalarProperty Name="fec_cor" ColumnName="fec_cor" />
+                <ScalarProperty Name="fec_agr" ColumnName="fec_agr" />
+                <ScalarProperty Name="usr_cor" ColumnName="usr_cor" />
+                <ScalarProperty Name="usr_agr" ColumnName="usr_agr" />
+                <ScalarProperty Name="irbp" ColumnName="irbp" />
+                <ScalarProperty Name="ice" ColumnName="ice" />
+                <ScalarProperty Name="pdv_yogurt" ColumnName="pdv_yogurt" />
+                <ScalarProperty Name="pdv_pizza" ColumnName="pdv_pizza" />
+                <ScalarProperty Name="pdv_tipoitm" ColumnName="pdv_tipoitm" />
+                <ScalarProperty Name="ppdici" ColumnName="ppdici" />
+                <ScalarProperty Name="ppnovi" ColumnName="ppnovi" />
+                <ScalarProperty Name="ppoctu" ColumnName="ppoctu" />
+                <ScalarProperty Name="ppsept" ColumnName="ppsept" />
+                <ScalarProperty Name="ppagos" ColumnName="ppagos" />
+                <ScalarProperty Name="ppjuli" ColumnName="ppjuli" />
+                <ScalarProperty Name="ppjuni" ColumnName="ppjuni" />
+                <ScalarProperty Name="ppmayo" ColumnName="ppmayo" />
+                <ScalarProperty Name="ppabri" ColumnName="ppabri" />
+                <ScalarProperty Name="ppmarz" ColumnName="ppmarz" />
+                <ScalarProperty Name="ppfebr" ColumnName="ppfebr" />
+                <ScalarProperty Name="ppener" ColumnName="ppener" />
+                <ScalarProperty Name="pcdici" ColumnName="pcdici" />
+                <ScalarProperty Name="pcnovi" ColumnName="pcnovi" />
+                <ScalarProperty Name="pcoctu" ColumnName="pcoctu" />
+                <ScalarProperty Name="pcsept" ColumnName="pcsept" />
+                <ScalarProperty Name="pcagos" ColumnName="pcagos" />
+                <ScalarProperty Name="pcjuli" ColumnName="pcjuli" />
+                <ScalarProperty Name="pcjuni" ColumnName="pcjuni" />
+                <ScalarProperty Name="pcmayo" ColumnName="pcmayo" />
+                <ScalarProperty Name="pcabri" ColumnName="pcabri" />
+                <ScalarProperty Name="pcmarz" ColumnName="pcmarz" />
+                <ScalarProperty Name="pcfebr" ColumnName="pcfebr" />
+                <ScalarProperty Name="pcener" ColumnName="pcener" />
+                <ScalarProperty Name="comentario" ColumnName="comentario" />
+                <ScalarProperty Name="desc_ampl" ColumnName="desc_ampl" />
+                <ScalarProperty Name="fec6" ColumnName="fec6" />
+                <ScalarProperty Name="mar6" ColumnName="mar6" />
+                <ScalarProperty Name="pvp6" ColumnName="pvp6" />
+                <ScalarProperty Name="prv6" ColumnName="prv6" />
+                <ScalarProperty Name="fec5" ColumnName="fec5" />
+                <ScalarProperty Name="mar5" ColumnName="mar5" />
+                <ScalarProperty Name="pvp5" ColumnName="pvp5" />
+                <ScalarProperty Name="prv5" ColumnName="prv5" />
+                <ScalarProperty Name="fec4" ColumnName="fec4" />
+                <ScalarProperty Name="mar4" ColumnName="mar4" />
+                <ScalarProperty Name="pvp4" ColumnName="pvp4" />
+                <ScalarProperty Name="prv4" ColumnName="prv4" />
+                <ScalarProperty Name="fec3" ColumnName="fec3" />
+                <ScalarProperty Name="mar3" ColumnName="mar3" />
+                <ScalarProperty Name="pvp3" ColumnName="pvp3" />
+                <ScalarProperty Name="prv3" ColumnName="prv3" />
+                <ScalarProperty Name="fec2" ColumnName="fec2" />
+                <ScalarProperty Name="mar2" ColumnName="mar2" />
+                <ScalarProperty Name="pvp2" ColumnName="pvp2" />
+                <ScalarProperty Name="prv2" ColumnName="prv2" />
+                <ScalarProperty Name="fec1" ColumnName="fec1" />
+                <ScalarProperty Name="mar1" ColumnName="mar1" />
+                <ScalarProperty Name="pvp1" ColumnName="pvp1" />
+                <ScalarProperty Name="prv1" ColumnName="prv1" />
+                <ScalarProperty Name="can_com" ColumnName="can_com" />
+                <ScalarProperty Name="can_vta" ColumnName="can_vta" />
+                <ScalarProperty Name="ult_com" ColumnName="ult_com" />
+                <ScalarProperty Name="ult_vta" ColumnName="ult_vta" />
+                <ScalarProperty Name="maximo" ColumnName="maximo" />
+                <ScalarProperty Name="medio" ColumnName="medio" />
+                <ScalarProperty Name="minimo" ColumnName="minimo" />
+                <ScalarProperty Name="ult_costo" ColumnName="ult_costo" />
+                <ScalarProperty Name="costo" ColumnName="costo" />
+                <ScalarProperty Name="costo_loc" ColumnName="costo_loc" />
+                <ScalarProperty Name="costo_fob" ColumnName="costo_fob" />
+                <ScalarProperty Name="precio_5" ColumnName="precio_5" />
+                <ScalarProperty Name="precio_4" ColumnName="precio_4" />
+                <ScalarProperty Name="precio_3" ColumnName="precio_3" />
+                <ScalarProperty Name="precio_2" ColumnName="precio_2" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="servicio" ColumnName="servicio" />
+                <ScalarProperty Name="bloqueado" ColumnName="bloqueado" />
+                <ScalarProperty Name="coniva" ColumnName="coniva" />
+                <ScalarProperty Name="descuento" ColumnName="descuento" />
+                <ScalarProperty Name="ubicacion" ColumnName="ubicacion" />
+                <ScalarProperty Name="med_peso" ColumnName="med_peso" />
+                <ScalarProperty Name="peso" ColumnName="peso" />
+                <ScalarProperty Name="unidad" ColumnName="unidad" />
+                <ScalarProperty Name="cuantos" ColumnName="cuantos" />
+                <ScalarProperty Name="subgrupo" ColumnName="subgrupo" />
+                <ScalarProperty Name="grupo" ColumnName="grupo" />
+                <ScalarProperty Name="proveedor" ColumnName="proveedor" />
+                <ScalarProperty Name="linea" ColumnName="linea" />
+                <ScalarProperty Name="tipoitm" ColumnName="tipoitm" />
+                <ScalarProperty Name="imagen" ColumnName="imagen" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="importado" ColumnName="importado" />
+                <ScalarProperty Name="bloquea" ColumnName="bloquea" />
+                <ScalarProperty Name="imprimir" ColumnName="imprimir" />
+                <ScalarProperty Name="codigo" ColumnName="codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fcexipro">
+            <EntityTypeMapping TypeName="ModelNexpirion.fcexipro">
+              <MappingFragment StoreEntitySet="fcexipro">
+                <ScalarProperty Name="usr_cor" ColumnName="usr_cor" />
+                <ScalarProperty Name="usr_agr" ColumnName="usr_agr" />
+                <ScalarProperty Name="orden" ColumnName="orden" />
+                <ScalarProperty Name="stock_2" ColumnName="stock_2" />
+                <ScalarProperty Name="stock" ColumnName="stock" />
+                <ScalarProperty Name="bodega" ColumnName="bodega" />
+                <ScalarProperty Name="bodega_int" ColumnName="bodega_int" />
+                <ScalarProperty Name="producto" ColumnName="producto" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

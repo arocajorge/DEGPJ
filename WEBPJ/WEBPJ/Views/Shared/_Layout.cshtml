@@ -41,7 +41,7 @@
     <link rel="stylesheet" href="~/AdminLTE/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
     <!-- Bootstrap DatePicker -->
     <script src="~/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-    <script src="~/Scripts/moment.min.js"></script>
+    @*<script src="~/Scripts/moment.min.js"></script>*@
     <script src="~/Scripts/ScriptsGenerales.js"></script>
     @RenderSection("scripts", required: false)
     @Html.DevExpress().GetStyleSheets(
@@ -112,46 +112,49 @@
                             <span>MENÚ</span>
                         </a>
                         <ul class="treeview-menu">
-                            @if (@WEBPJ.Helps.SessionFixed.TipoUsuario == @WEBPJ.Info.Enumeradores.eTipoUsuario.ADMINISTRADOR.ToString() )
+                            @if (@WEBPJ.Helps.SessionFixed.TipoUsuario == @WEBPJ.Info.Enumeradores.eTipoUsuario.ADMINISTRADOR.ToString())
                             {
-                                <li class="treeview">
+                                <li><a href="/Usuario/Index"><i class="fa fa-circle-o"></i>Usuarios</a></li>
+                                <li><a href="/Producto/Index"><i class="fa fa-circle-o"></i>Productos</a></li>
+                                <li><a href="/Proveedor/Index"><i class="fa fa-circle-o"></i>Proveedores</a></li>
+                                <li><a href="/Dispositivo/Index"><i class="fa fa-circle-o"></i>Dispositivos</a></li>
+                                <li><a href="/Compra/Index"><i class="fa fa-circle-o"></i>Compras</a></li>
+                                <li><a href="/GenerarOrdenCompra/Index"><i class="fa fa-circle-o"></i>Aprobación Compras</a></li>
+                                <li><a href="/Reportes/Rpt_001"><i class="fa fa-circle-o"></i>Reporte</a></li>
+                                @*<li class="treeview">
                                     <a href="#">
-                                        <i class="fa fa-circle-o"></i> Mantenimientos
+                                        <i class="fa fa-circle-o"></i> Opciones
                                         <span class="pull-right-container">
                                             <i class="fa fa-angle-left pull-right"></i>
                                         </span>
                                     </a>
                                     <ul class="treeview-menu">
-                                        <li><a href="/Usuario/Index"><i class="fa fa-circle-o"></i>Usuario</a></li>
-                                        <li><a href="/Producto/Index"><i class="fa fa-circle-o"></i>Producto</a></li>
-                                        <li><a href="/Proveedor/Index"><i class="fa fa-circle-o"></i>Proveedor</a></li>
+                                        <li><a href="/Usuario/Index"><i class="fa fa-circle-o"></i>Usuarios</a></li>
+                                        <li><a href="/Producto/Index"><i class="fa fa-circle-o"></i>Productos</a></li>
+                                        <li><a href="/Proveedor/Index"><i class="fa fa-circle-o"></i>Proveedores</a></li>
+                                        <li><a href="/Dispositivo/Index"><i class="fa fa-circle-o"></i>Dispositivos</a></li>
+                                        <li><a href="/Compra/Index"><i class="fa fa-circle-o"></i>Compras</a></li>
+                                        <li><a href="/GenerarOrdenCompra/Index"><i class="fa fa-circle-o"></i>Aprobación de Compras</a></li>
                                     </ul>
-                                </li>
-                                <li class="treeview">
-                                    <a href="#">
-                                        <i class="fa fa-circle-o"></i> Transacciones
-                                        <span class="pull-right-container">
-                                            <i class="fa fa-angle-left pull-right"></i>
-                                        </span>
-                                    </a>
-                                    <ul class="treeview-menu">
-                                        <li><a href="/Compra/Index"><i class="fa fa-circle-o"></i>Compra</a></li>
-                                    </ul>
-                                </li>
+                                </li>*@
                             }
                             else
                             {
-                                <li class="treeview">
+                                <li><a href="/Compra/Index"><i class="fa fa-circle-o"></i>Compras</a></li>
+                                <li><a href="/GenerarOrdenCompra/Index"><i class="fa fa-circle-o"></i>Aprobación de Compras</a></li>
+                                <li><a href="/Reportes/Rpt_001"><i class="fa fa-circle-o"></i>Reporte</a></li>
+                                @*<li class="treeview">
                                     <a href="#">
-                                        <i class="fa fa-circle-o"></i> Transacciones
+                                        <i class="fa fa-circle-o"></i> Opciones
                                         <span class="pull-right-container">
                                             <i class="fa fa-angle-left pull-right"></i>
                                         </span>
                                     </a>
                                     <ul class="treeview-menu">
-                                        <li><a href="/Compra/Index"><i class="fa fa-circle-o"></i>Compra</a></li>
+                                        <li><a href="/Compra/Index"><i class="fa fa-circle-o"></i>Compras</a></li>
+                                        <li><a href="/GenerarOrdenCompra/Index"><i class="fa fa-circle-o"></i>Aprobación de Compras</a></li>
                                     </ul>
-                                </li>
+                                </li>*@
                             }                          
 
                         </ul>

@@ -9,7 +9,17 @@
 }
 
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
-
+<script>
+    var timerHandle = -1;
+    function OnBatchEditStartEditing(s, e) {
+        clearTimeout(timerHandle);
+    }
+    function OnBatchEditEndEditing(s, e) {
+        timerHandle = setTimeout(function () {
+            s.UpdateEdit();
+        }, 200);
+    }
+</script>
 @using (Html.BeginForm("Nuevo", "Compra", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     if (ViewBag.mensaje != null)
@@ -20,6 +30,8 @@
             </h4>
         </div>
     }
+    @Html.HiddenFor(q => q.Estado, new { @id = "Estado" });
+    @Html.HiddenFor(q => q.IdUsuario, new { @id = "IdUsuario" });
     @Html.HiddenFor(q => q.Precio, new { @id = "Precio" });
     @Html.HiddenFor(q => q.Total, new { @id = "Total" });
     @Html.HiddenFor(q => q.Calificacion, new { @id = "Calificacion" });
@@ -34,41 +46,6 @@
                     <h4 class="modal-title">Calificación</h4>
                 </div>
                 <div class="modal-body">
-                    @*<form class="form-horizontal">
-                        <div class="box-body">
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Proveedor:</label>
-                                <div class="col-sm-10">
-                                    <h3 class="col-sm-10" id="ProveedorCompra"></h3>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Cantidad:</label>
-                                <div class="col-sm-10">
-                                    <h3 class="form-group" id="CantidadCompra"></h3>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Precio:</label>
-                                <div class="col-sm-10">
-                                    <h3 class="form-group" id="PrecioCompra"></h3>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Total:</label>
-                                <div class="col-sm-10">
-                                    <h3 class="form-group" id="TotalCompra"></h3>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Calificacion:</label>
-                                <div class="col-sm-10">
-                                    <h3 class="form-group" id="CalificacionCompra"></h3>
-                                </div>
-                            </div>
-                        </div>
-                    </form>*@
-
                     <div class="row">
                         <div class="col-md-12">
                             <div class="col-md-12 form-group">
@@ -76,6 +53,22 @@
                                 <h3 id="ProveedorCompra"></h3>
                             </div>
                         </div >
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6 form-group">
+                                <label for="txtCantidad">Calificacion:</label>
+                                <h3 id="CalificacionCompra"></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-12 form-group">
+                                <label for="txtCantidad">Comprador:</label>
+                                <h3 id="Comprador"></h3>
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
@@ -101,14 +94,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="col-md-6 form-group">
-                                <label for="txtCantidad">Calificacion</label>
-                                <h3 id="CalificacionCompra"></h3>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Guardar</button>
@@ -123,7 +109,7 @@
             <div class="col-md-5">
                 <div class="form-group">
                     <label for="IdProveedor">Proveedor*</label>
-                    @Html.DropDownListFor(q => q.ProvCodigo, new SelectList(ViewBag.lst_proveedor, "Codigo", "Nombre"), new { @class = "form-control", @id = "ProvCodigo" })
+                    @Html.Partial("_CmbProveedor", Model.ProvCodigo)
                     @Html.ValidationMessageFor(q => q.ProvCodigo, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -157,15 +143,15 @@
         <div class="col-md-12">
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="Cantidad">Usuario</label>
-                    @Html.DropDownListFor(q => q.IdUsuario, new SelectList(ViewBag.lst_Usuarios, "IdUsuario", "Nombre"), new { @class = "form-control", @id = "IdUsuario" })
+                    <label for="Cantidad">Recolector</label>
+                    @Html.DropDownListFor(q => q.IdUsuario, new SelectList(ViewBag.lst_Usuarios, "IdUsuario", "Nombre"), new { @class = "form-control", @disabled= "disabled" })
                     @Html.ValidationMessageFor(q => q.IdUsuario, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="Cantidad">Estado</label>
-                    @Html.DropDownListFor(q => q.Estado, new SelectList(ViewBag.lst_Estado, "Key", "Value"), new { @class = "form-control", @id = "Estado" })
+                    @Html.DropDownListFor(q => q.Estado, new SelectList(ViewBag.lst_Estado, "Key", "Value"), new { @class = "form-control", @disabled = "disabled" })
                     @Html.ValidationMessageFor(q => q.Estado, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -193,7 +179,7 @@
         @Html.Action("GridViewPartial_CompraProductoDetalle")
     </div>
     <div class="box-footer">
-        <button type="button" class="btn btn-primary" onclick="Calificar();">Calificar</button>
+        <button type="button" class="btn btn-primary" id="BtnCalificar" onclick="Cali();">Calificar</button>
         <a class="btn btn-default" href="@Url.Action("Index", "Compra", new { Area ="General" }, null)">Cancelar</a>
     </div>
 
@@ -206,20 +192,16 @@
     $(function () {
     cargar_productos();
 
-    $("#ProvCodigo").change(function () {
-        cargar_productos();
-    });
-
     $("#IdProducto").change(function () {
         CargarProductoDetalle();
     });
 });
 
 function cargar_productos() {
-    if ($("#ProvCodigo").val() != "") {
+    if (ProvCodigo.GetValue() != "") {
         $("#IdProducto").empty();
         var datos = {
-            IdProveedor: $("#ProvCodigo").val()
+            IdProveedor: ProvCodigo.GetValue()
         }
         $.ajax({
             type: 'POST',
@@ -241,10 +223,26 @@ function cargar_productos() {
     }
 }
 
+function Cali() {
+    if (ProvCodigo.GetValue() != "" && $("#IdProducto").val() != 0 && $("#IdUsuario").val() != "" && $("#Estado").val() != "" && $("#Cantidad").val() > 0) {
+        $('#BtnCalificar').attr("disabled", true);
+        setTimeout(function () {
+            Calificar();
+            $('#BtnCalificar').attr("disabled", false);
+        }, 1000);
+    }
+    else {
+        alert("Faltan campos por registrar");
+    }
+}
+
 function Calificar() {
+    $('#BtnCalificar').attr("disabled", true);
+
     var datos = {
         IdTransaccionSession: $("#IdTransaccionSession").val(),
-        IdProveedor: $("#ProvCodigo").val(),
+        IdProveedor: ProvCodigo.GetValue(),
+        IdUsuario : $("#IdUsuario").val(),
         IdProducto: $("#IdProducto").val(),
         Cantidad: $("#Cantidad").val()
     }
@@ -264,18 +262,21 @@ function Calificar() {
             }
             else {
                 $("#ModalCompra").modal("show");
+                $('#BtnCalificar').attr("disabled", false);
             }
 
+            $("#ProveedorCompra").text(data.ProveedorCompra);
+            $("#CalificacionCompra").text(data.CalificacionCompra);
+            $("#Comprador").text(data.Comprador);
             $("#CantidadCompra").text(data.CantidadCompra);
             $("#PrecioCompra").text(data.PrecioCompra);
             $("#TotalCompra").text(data.TotalCompra);
-            $("#ProveedorCompra").text(data.ProveedorCompra);
-            $("#CalificacionCompra").text(data.CalificacionCompra);
-
+            
             $("#Precio").val(data.PrecioCompra);
-            $("#Total").val(data.TotalCompra);
+            $("#Total").val(data.Calculo);
             $("#Calificacion").val(data.CalificacionCompra);
-            GridViewPartial_CompraProductoDetalle.PerformCallback();
+
+            //GridViewPartial_CompraProductoDetalle.PerformCallback();  
         },
         error: function (error) {
         }

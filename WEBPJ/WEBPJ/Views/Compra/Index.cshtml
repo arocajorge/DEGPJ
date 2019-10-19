@@ -1,7 +1,7 @@
 ﻿@model WEBPJ.Info.Filtros_Info
 @using WEBPJ.Info
 @{
-    ViewBag.Title = "Compras";
+    ViewBag.Title = "Consulta de compras";
     if (string.IsNullOrEmpty(@WEBPJ.Helps.SessionFixed.IdUsuario))
     {
         Response.Redirect("~/Account/Login");
@@ -13,6 +13,9 @@
 @using (Html.BeginForm("Index", "Compra", FormMethod.Post, new { @role = "form", @class = "form", @id = "myform" }))
 {
     @Html.HiddenFor(q => q.IdTransaccionSession);
+    @Html.HiddenFor(q => q.IdUsuario);
+    @Html.HiddenFor(q => q.TipoUsuario, new { @id = "TipoUsuario" });
+    
     <div class="box ">
         <div class="box-header with-border">
             <div class="row">
@@ -34,9 +37,9 @@
                 <div class="col-md-12">
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="IdSucursal">Usuario*</label>
+                            <label for="IdSucursal">Recolector*</label>
                             <div class="form-group">
-                                @Html.DropDownListFor(q => q.IdUsuario, new SelectList(ViewBag.lst_Usuarios, "IdUsuario", "Nombre"), new { @class = "form-control", @id = "IdUsuario" })
+                                @Html.DropDownListFor(q => q.IdUsuario, new SelectList(ViewBag.lst_Usuarios, "IdUsuario", "Nombre"), new { @class = "form-control", @id = "IdUsuario", @disabled= "disabled" })
                                 @Html.ValidationMessageFor(q => q.IdUsuario, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -129,10 +132,22 @@
 }
 
 <script type="text/javascript">
+$(function () {
+    //VerUsuarios();
+});
+
+function VerUsuarios() {
+    if ($("#TipoUsuario").val() == "ADMINISTRADOR") {
+        $("#IdUsuario").prop("disabled", false);
+    }
+    else {
+        $("#IdUsuario").prop("disabled", true);
+    }
+}
      @*function guardar() {
         var datos = {
             IdTransaccionSession: $("#IdTransaccionSession").val(),
-            }        
+            }
         $.ajax({
             type: 'POST',
             data: JSON.stringify(datos),

@@ -8,8 +8,8 @@
         settings.Width = Unit.Percentage(100);
 
         //Configuración para que la grilla no muestre texto completo
-        settings.SettingsBehavior.AllowEllipsisInText = true;
-        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+        //settings.SettingsBehavior.AllowEllipsisInText = true;
+        //settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
         //CConfiguracion responsive
 
         //Configuracion responsive
@@ -20,7 +20,7 @@
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
 
         //Configuración scrolling y pager
-        settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Hidden;
+        settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Visible;
         settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
         settings.Settings.VerticalScrollableHeight = 400;
         settings.SettingsPager.Visible = true;
@@ -83,49 +83,49 @@
             c.Settings.AllowSort = DefaultBoolean.False;
             c.Width = Unit.Pixel(150);
         });
-        settings.Columns.Add("IdCompra", "ID").Width = Unit.Percentage(10);
-        settings.Columns.Add("IdUsuario", "IdUsuario").Width = Unit.Percentage(10);
-        settings.Columns.Add("ProvNombre", "Proveedor").Width = Unit.Percentage(10);
-        settings.Columns.Add("NomProducto", "Producto").Width = Unit.Percentage(10);     
+        settings.Columns.Add("IdCompra", "Código").Width = Unit.Pixel(80);
+        settings.Columns.Add("NomUsuario", "Recolector").Width = Unit.Pixel(200);
         settings.Columns.Add(column =>
         {
             column.FieldName = "Fecha";
             column.Caption = "Fecha";
-            column.Width = Unit.Percentage(8);
+            column.Width = Unit.Pixel(100);
             column.PropertiesEdit.DisplayFormatString = "d";
+        });
+        settings.Columns.Add("ProvNombre", "Proveedor").Width = Unit.Pixel(300);
+        settings.Columns.Add("NomProducto", "Producto").Width = Unit.Pixel(200);
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Comentario";
+            column.Caption = "Comentario";
+            column.Width = Unit.Pixel(300);
+            column.EditFormSettings.Visible = DefaultBoolean.True;
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "Calificacion";
             column.Caption = "Calificacion";
-            column.Width = Unit.Percentage(6);
+            column.Width = Unit.Pixel(100);
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "Cantidad";
             column.Caption = "Cantidad";
-            column.Width = Unit.Percentage(6);
+            column.Width = Unit.Pixel(100);
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "Precio";
             column.Caption = "Precio";
-            column.Width = Unit.Percentage(6);
+            column.Width = Unit.Pixel(100);
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "Total";
             column.Caption = "Total";
-            column.Width = Unit.Percentage(6);
+            column.Width = Unit.Pixel(100);
         });
-        settings.Columns.Add(column =>
-        {
-            column.FieldName = "Comentario";
-            column.Caption = "Comentario";
-            column.Width = Unit.Percentage(6);
-            column.EditFormSettings.Visible = DefaultBoolean.True;
-        });
-        settings.Columns.Add("EstadoCompra", "Estado").Width = Unit.Percentage(10);
-    });
+        
+        settings.Columns.Add("EstadoCompra", "Estado").Width = Unit.Pixel(100);    });
 }
 @grid.Bind(Model).GetHtml()

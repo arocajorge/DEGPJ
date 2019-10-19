@@ -109,6 +109,12 @@
     <Compile Include="Bases\Compra.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
+    <Compile Include="Bases\CompraDetalle.cs">
+      <DependentUpon>ModelGeneral.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Bases\Dispositivo.cs">
+      <DependentUpon>ModelGeneral.tt</DependentUpon>
+    </Compile>
     <Compile Include="Bases\LogError.cs">
       <DependentUpon>ModelGeneral.tt</DependentUpon>
     </Compile>
@@ -147,6 +153,8 @@
     <Compile Include="Controllers\ProductoDetalleController.cs" />
     <Compile Include="Controllers\ProveedorController.cs" />
     <Compile Include="Controllers\ProveedorProductoController.cs" />
+    <Compile Include="Data\Metodos.cs" />
+    <Compile Include="Models\CompraDetalleModel.cs" />
     <Compile Include="Models\CompraModel.cs" />
     <Compile Include="Models\ProductoDetalleModel.cs" />
     <Compile Include="Models\ProductoModel.cs" />

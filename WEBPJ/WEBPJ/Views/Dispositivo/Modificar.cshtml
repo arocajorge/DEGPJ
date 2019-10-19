@@ -1,0 +1,54 @@
+﻿@model WEBPJ.Info.Dispositivo_Info
+@{
+    ViewBag.Title = "Modificar dispositivo";
+    if (string.IsNullOrEmpty(@WEBPJ.Helps.SessionFixed.IdUsuario))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Modificar", "Dispositivo", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+    @Html.HiddenFor(q => q.IdDispositivo);
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Cantidad">Dispositivo</label>
+                    @Html.TextBoxFor(q => q.Dispositivo1, new { @class = "form-control", @id = "Dispositivo1" })
+                    @Html.ValidationMessageFor(q => q.Dispositivo1, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Cantidad">Descripción</label>
+                    @Html.TextBoxFor(q => q.di_Descripcion, new { @class = "form-control", @id = "di_Descripcion" })
+                    @Html.ValidationMessageFor(q => q.di_Descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "Dispositivo", new { Area ="General" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

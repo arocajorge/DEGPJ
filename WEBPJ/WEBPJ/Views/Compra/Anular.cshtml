@@ -21,6 +21,7 @@
         </div>
     }
     @Html.HiddenFor(q => q.IdCompra);
+    @Html.HiddenFor(q => q.IdProducto, new { @id = "IdProducto" });
     @Html.HiddenFor(q => q.Precio, new { @id= "Precio" });
     @Html.HiddenFor(q => q.Total, new { @id = "Total" });
     @Html.HiddenFor(q => q.Calificacion, new { @id = "Calificacion" });
@@ -31,14 +32,14 @@
             <div class="col-md-5">
                 <div class="form-group">
                     <label for="IdProveedor">Proveedor*</label>
-                    @Html.DropDownListFor(q => q.ProvCodigo, new SelectList(ViewBag.lst_proveedor, "Codigo", "Nombre"), new { @class = "form-control", @id = "ProvCodigo" })
+                    @Html.Partial("_CmbProveedor", Model.ProvCodigo)
                     @Html.ValidationMessageFor(q => q.ProvCodigo, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-md-5">
                 <div class="form-group">
                     <label for="Descripcion">Producto</label>
-                    @Html.DropDownListFor(q => q.IdProducto, new SelectList(ViewBag.lst_productos, "IdProducto", "Descripcion"), new { @class = "form-control", @id = "IdProducto" })
+                    @Html.DropDownListFor(q => q.IdProducto, new SelectList(ViewBag.lst_productos, "IdProducto", "Descripcion"), new { @class = "form-control", @id = "IdProducto", @disabled = "disabled" })
                     @Html.ValidationMessageFor(q => q.IdProducto, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -65,18 +66,19 @@
         <div class="col-md-12">
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="Cantidad">Usuario</label>
-                    @Html.DropDownListFor(q => q.IdUsuario, new SelectList(ViewBag.lst_Usuarios, "IdUsuario", "Nombre"), new { @class = "form-control", @id = "IdUsuario" })
+                    <label for="Cantidad">Recolector</label>
+                    @Html.DropDownListFor(q => q.IdUsuario, new SelectList(ViewBag.lst_Usuarios, "IdUsuario", "Nombre"), new { @class = "form-control", @id = "IdUsuario", @disabled = "disabled" })
                     @Html.ValidationMessageFor(q => q.IdUsuario, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="Cantidad">Estado</label>
-                    @Html.DropDownListFor(q => q.Estado, new SelectList(ViewBag.lst_Estado, "Key", "Value"), new { @class = "form-control", @id = "Estado" })
+                    @Html.DropDownListFor(q => q.Estado, new SelectList(ViewBag.lst_Estado, "Key", "Value"), new { @class = "form-control", @id = "Estado", @disabled = "disabled" })
                     @Html.ValidationMessageFor(q => q.Estado, "", new { @class = "text-danger" })
                 </div>
             </div>
+            
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="Cantidad">Cantidad</label>

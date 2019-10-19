@@ -3,6 +3,7 @@ using DevExpress.Web.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WEBPJ.Data;
@@ -25,7 +26,9 @@ namespace WEBPJ.Controllers
         Compra_List Lista_Compra = new Compra_List();
         CompraDetalle_List Lista_CompraDet = new CompraDetalle_List();
         ProductoDetalle_Data data_producto_detalle = new ProductoDetalle_Data();
+        Dispositivo_Data data_dispositivo = new Dispositivo_Data();
         string mensaje = string.Empty;
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
 
         #region Metodos ComboBox bajo demanda
@@ -53,10 +56,11 @@ namespace WEBPJ.Controllers
             Filtros_Info model = new Filtros_Info
             {
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
-                IdUsuario = "",
+                IdUsuario = (SessionFixed.TipoUsuario == @WEBPJ.Info.Enumeradores.eTipoUsuario.ADMINISTRADOR.ToString() ? "" : SessionFixed.IdUsuario),
+                TipoUsuario = SessionFixed.TipoUsuario,
                 Estado = "",
                 fecha_ini = DateTime.Now.Date.AddMonths(-1),
-                fecha_fin = DateTime.Now.Date
+                fecha_fin = DateTime.Now.Date,
             };
 
             lst_Compra = data_compra.get_list(model.fecha_ini, model.fecha_fin, model.IdUsuario, model.Estado);
@@ -68,7 +72,7 @@ namespace WEBPJ.Controllers
         public ActionResult Index(Filtros_Info model)
         {
             lst_Compra = data_compra.get_list(model.fecha_ini, model.fecha_fin, model.IdUsuario, model.Estado);
-            Lista_Compra.set_list(lst_Compra, model.IdTransaccionSession);
+            Lista_Compra.set_list(lst_Compra, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             cargar_combos_consulta();
             return View(model);
         }
@@ -163,7 +167,7 @@ namespace WEBPJ.Controllers
                 IdUsuario = SessionFixed.IdUsuario,
                 Estado = "P"
             };
-
+            ViewBag.EsAdministrador = (SessionFixed.TipoUsuario == @WEBPJ.Info.Enumeradores.eTipoUsuario.ADMINISTRADOR.ToString() ? true : false);
             model.lst_CompraDetProducto = new List<CompraDetalle_Info>();
             Lista_CompraDet.set_list(model.lst_CompraDetProducto, model.IdTransaccionSession);
             cargar_combos(model);
@@ -181,7 +185,8 @@ namespace WEBPJ.Controllers
             model.ProvNombre = info_proveedor.Nombre;
             model.ProvTipo = info_proveedor.Tipo;
             model.Codigo = info_producto.Codigo;
-
+            model.Dispositivo = Dns.GetHostName();
+            model.Comentario = (model.Comentario == null ? "" : model.Comentario);
             if (!validar(model, ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
@@ -193,13 +198,14 @@ namespace WEBPJ.Controllers
             if (!data_compra.GuardarBD(model))
             {
                 SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
+                ViewBag.mensaje = "No se ha podido guardar el registro";
                 cargar_combos(model);
                 return View(model);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Modificar", new { IdCompra = model.IdCompra, Exito = true });
         }
-        public ActionResult Modificar(int IdCompra = 0)
+        public ActionResult Modificar(int IdCompra = 0, bool Exito = false)
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -207,7 +213,7 @@ namespace WEBPJ.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
-
+            
             Compra_Info model = data_compra.get_info(IdCompra);
 
             if (model == null)
@@ -217,6 +223,11 @@ namespace WEBPJ.Controllers
             model.lst_CompraDetProducto = data_compra_det.get_list(Convert.ToInt32(model.IdCompra));
             Lista_CompraDet.set_list(model.lst_CompraDetProducto, model.IdTransaccionSession);
 
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
+            ViewBag.EsAdministrador = (SessionFixed.TipoUsuario == @WEBPJ.Info.Enumeradores.eTipoUsuario.ADMINISTRADOR.ToString() ? true : false);
+
             cargar_combos(model);
             return View(model);
         }
@@ -224,6 +235,12 @@ namespace WEBPJ.Controllers
         [HttpPost]
         public ActionResult Modificar(Compra_Info model)
         {
+            var info_compra = data_compra.get_info(model.IdCompra);
+            if (SessionFixed.TipoUsuario != @WEBPJ.Info.Enumeradores.eTipoUsuario.ADMINISTRADOR.ToString())
+            {
+                model.Estado = info_compra.Estado;
+            }
+
             model.lst_CompraDetProducto = Lista_CompraDet.get_list(model.IdTransaccionSession);
             var info_proveedor = data_proveedor.get_info("PRV", model.ProvCodigo);
             var info_producto = data_producto.get_info(model.IdProducto);
@@ -232,7 +249,7 @@ namespace WEBPJ.Controllers
             model.ProvCodigo = info_proveedor.Codigo;
             model.ProvNombre = info_proveedor.Nombre;
             model.ProvTipo = info_proveedor.Tipo;
-
+            model.Comentario = (model.Comentario == null ? "" : model.Comentario);
             if (!validar(model, ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
@@ -244,10 +261,12 @@ namespace WEBPJ.Controllers
             if (!data_compra.ModificarBD(model))
             {
                 SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
+                ViewBag.mensaje = "No se ha podido modificar el registro";
                 cargar_combos(model);
                 return View(model);
             }
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
+            return RedirectToAction("Modificar", new { IdCompra = model.IdCompra, Exito = true });
         }
 
         public ActionResult Anular(int IdCompra = 0)
@@ -265,6 +284,8 @@ namespace WEBPJ.Controllers
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             model.lst_CompraDetProducto = data_compra_det.get_list(Convert.ToInt32(model.IdCompra));
             Lista_CompraDet.set_list(model.lst_CompraDetProducto, model.IdTransaccionSession);
+
+            ViewBag.EsAdministrador = (SessionFixed.TipoUsuario == @WEBPJ.Info.Enumeradores.eTipoUsuario.ADMINISTRADOR.ToString() ? true : false);
             cargar_combos(model);
             return View(model);
         }
@@ -384,11 +405,12 @@ namespace WEBPJ.Controllers
             return Json(lst_producto_detalle, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult CalificarProducto(decimal IdTransaccionSession = 0, string IdProveedor = "", int IdProducto = 0, double Cantidad = 0)
+        public JsonResult CalificarProducto(decimal IdTransaccionSession = 0, string IdProveedor = "", string IdUsuario="", int IdProducto = 0, double Cantidad = 0)
         {
             var ListaDetalle = Lista_CompraDet.get_list(IdTransaccionSession);
             var Producto = data_producto.get_info(IdProducto);
             var Proveedor = data_proveedor.get_info("PRV", IdProveedor);
+            var Comprador = data_usuario.get_info(IdUsuario);
             var msg = "";
 
             foreach (var q in ListaDetalle)
@@ -493,12 +515,12 @@ namespace WEBPJ.Controllers
             var PrecioCompra = Precio.ToString("n2");
 
             Lista_CompraDet.set_list(ListaDetalle, IdTransaccionSession);
-            return Json(new { CantidadCompra = CantidadCompra, PrecioCompra = PrecioCompra, TotalCompra = TotalCompra, ProveedorCompra = Proveedor.Nombre, CalificacionCompra = CalificacionCompra, Mensaje= msg }, JsonRequestBehavior.AllowGet);
+            return Json(new { CantidadCompra = CantidadCompra, PrecioCompra = PrecioCompra, TotalCompra = TotalCompra, ProveedorCompra = Proveedor.Nombre, Comprador = Comprador.Nombre, CalificacionCompra = CalificacionCompra, Mensaje= msg, Calculo= Calculo }, JsonRequestBehavior.AllowGet);
         }
         #endregion
 
         #region ProductoDetalle
-        public ActionResult GridViewPartial_CompraProductoDetalle()
+        public ActionResult GridViewPartial_CompraProductoDetalleX()
         {
             SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
             var model = Lista_CompraDet.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
@@ -513,6 +535,29 @@ namespace WEBPJ.Controllers
 
             var model = Lista_CompraDet.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
             return PartialView("_GridViewPartial_CompraProductoDetalle", model);
+        }
+        #endregion
+
+        #region CompraDetalle
+        [ValidateInput(false)]
+        public ActionResult GridViewPartial_CompraProductoDetalle()
+        {
+            SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+            var model = Lista_CompraDet.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+
+            //ViewBag.BatchEditingOptions = options;
+            return PartialView("_GridViewPartial_CompraProductoDetalle", model);
+        }
+
+        [ValidateInput(false)]
+        public ActionResult BatchEditingUpdateModel(MVCxGridViewBatchUpdateValues<CompraDetalle_Info, int> updateValues)
+        {
+            foreach (var product in updateValues.Update)
+            {
+                if (updateValues.IsValid(product))
+                    Lista_CompraDet.UpdateRow(product, Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual));
+            }
+            return GridViewPartial_CompraProductoDetalle();
         }
         #endregion
     }
