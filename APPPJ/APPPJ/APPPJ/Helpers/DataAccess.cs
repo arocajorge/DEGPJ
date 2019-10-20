@@ -156,7 +156,7 @@ namespace APPPJ.Helpers
             {
                 Settings.IdCompra = Settings.IdCompra == "0.0" ? "0" : Settings.IdCompra;
                 model.IdCompra = Convert.ToInt32(Settings.IdCompra);
-                model.Codigo = string.IsNullOrEmpty(Settings.IdCompra) ? "0" : Settings.IdCompra;
+                model.Codigo = string.IsNullOrEmpty(Settings.IdCompra) ? "0" : Convert.ToInt32(Settings.IdCompra).ToString("000000000");
                 Settings.IdCompra = (Convert.ToInt32(string.IsNullOrEmpty(Settings.IdCompra) ? "0" : Settings.IdCompra) + 1).ToString("n0");
                 model.PKSQLite = GetId();
                 model.Dispositivo = CrossDeviceInfo.Current.Id;

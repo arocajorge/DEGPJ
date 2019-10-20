@@ -246,7 +246,7 @@
             #endregion
 
             #region Ultima compra
-            var response_compra = await api.GetObject<CompraModel>(Settings.UrlConexionActual, Settings.RutaCarpeta, "Compra", "IdUsuario=" + Settings.IdUsuario + "&Dispositivo=" + CrossDeviceInfo.Current.Id);
+            var response_compra = await api.GetObject<CompraModel>(Settings.UrlConexionActual, Settings.RutaCarpeta, "Compra", "IdUsuario=" + Usuario + "&Dispositivo=" + CrossDeviceInfo.Current.Id);
             if (!response_compra.IsSuccess)
             {
                 this.IsEnabled = true;
@@ -257,7 +257,6 @@
                     "Aceptar");
                 return;
             }
-
             var Compra = (CompraModel)response_compra.Result;
             Settings.IdCompra = Compra == null ? "0" : Compra.IdCompra.ToString("n0");
             #endregion
