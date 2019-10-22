@@ -29,6 +29,8 @@ namespace APPPJ.Droid
 			global::SQLite.Net.Platform.XamarinAndroid.Resource.String.ApplicationName = global::APPPJ.Droid.Resource.String.ApplicationName;
 			global::SQLite.Net.Platform.XamarinAndroid.Resource.String.Hello = global::APPPJ.Droid.Resource.String.Hello;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::APPPJ.Droid.Resource.Attribute.actionBarSize;
+			global::XF.Bluetooth.Printer.Plugin.Resource.String.ApplicationName = global::APPPJ.Droid.Resource.String.ApplicationName;
+			global::XF.Bluetooth.Printer.Plugin.Resource.String.Hello = global::APPPJ.Droid.Resource.String.Hello;
 		}
 		
 		public partial class Animation

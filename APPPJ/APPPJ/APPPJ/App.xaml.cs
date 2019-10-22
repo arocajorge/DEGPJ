@@ -28,9 +28,12 @@ namespace APPPJ
             }
         }
 
+        public static IPrinter Impresion = DependencyService.Get<IPrinter>();
+
         public App()
         {
             InitializeComponent();
+            
             if (string.IsNullOrEmpty(Settings.IdUsuario))
             {
                 MainViewModel.GetInstance().Login = new LoginViewModel();

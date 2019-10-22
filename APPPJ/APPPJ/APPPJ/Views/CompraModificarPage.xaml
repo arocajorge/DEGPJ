@@ -10,6 +10,15 @@
                 BindingContext="{Binding CompraModificar}">
                 <StackLayout
                     Padding="20">
+                    <Button
+                        BackgroundColor="LightGray"
+                        TextColor="Black"
+                        WidthRequest="200"
+                        Command="{Binding ImprimirCommand}"
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                        VerticalOptions="End"
+                        Text="Imprimir">
+                    </Button>
                     <Label
                         Text="Proveedor:"
                         TextColor="Black"

@@ -9,6 +9,11 @@ namespace APPPJ.ViewModels
     using Rg.Plugins.Popup.Extensions;
     using APPPJ.Views;
     using System.Collections.Generic;
+    using Android.Bluetooth;
+    using Java.IO;
+    using System.Linq;
+    using Android.OS;
+    using System.Text;
 
     public class CompraConfirmacionPopUpViewModel : BaseViewModel
     {
@@ -115,6 +120,130 @@ namespace APPPJ.ViewModels
                 await Application.Current.MainPage.Navigation.PopAllPopupAsync();
                 MainViewModel.GetInstance().Compra = new CompraViewModel();
                 Application.Current.MainPage = new MasterPage();
+            }
+            catch (Exception ex)
+            {
+                IsRunning = false;
+                IsEnabled = true;
+                await Application.Current.MainPage.DisplayAlert(
+                           "Alerta",
+                           ex.Message,
+                           "Aceptar");
+                return;
+            }
+        }
+
+        private async void Imprimir()
+        {
+            try
+            {
+                var mBluetoothAdapter = BluetoothAdapter.DefaultAdapter;
+
+                if (mBluetoothAdapter == null)
+                {
+                    IsRunning = false;
+                    IsEnabled = true;
+                    await Application.Current.MainPage.DisplayAlert(
+                               "Bluetooth",
+                               "No bluetooth adapter found",
+                               "Aceptar");
+                    return;
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert(
+                               "Bluetooth",
+                               "Bluetooth found",
+                               "Aceptar");
+                }
+
+                if (!mBluetoothAdapter.IsEnabled)
+                {
+                    mBluetoothAdapter.Enable();
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert(
+                            "Bluetooth",
+                            "Bluetooth Enabled",
+                            "Aceptar");
+                }
+
+                ICollection<BluetoothDevice> pairedDevices = mBluetoothAdapter.BondedDevices;
+                BluetoothDevice mmDevice = null;
+                if (pairedDevices.Count > 0)
+                {
+                    foreach (BluetoothDevice device in pairedDevices)
+                    {
+                        if (device.Name.Contains("TSP"))
+                        {
+                            mmDevice = device;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert(
+                            "Bluetooth",
+                            "Paired Devices not found",
+                            "Aceptar");
+                    return;
+                }
+
+                ParcelUuid uuid = mmDevice.GetUuids().ElementAt(0);
+
+                if (mmDevice == null)
+                {
+                    await Application.Current.MainPage.DisplayAlert(
+                            "Bluetooth",
+                            "No Device Found",
+                            "Aceptar");
+                    return;
+                }
+
+                var mmsSocket = mmDevice.CreateInsecureRfcommSocketToServiceRecord(uuid.Uuid);
+
+                mmsSocket.Connect();
+
+                if (mmsSocket.IsConnected)
+                {
+                    await Application.Current.MainPage.DisplayAlert(
+                            "Bluetooth",
+                            "Socket Connected Successfully",
+                            "Aceptar");
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert(
+                            "Bluetooth",
+                            "Socket Not Connected Successfully",
+                            "Aceptar");
+                    return;
+                }
+
+                var datastream = mmsSocket.OutputStream;
+
+                byte[] byteArray = Encoding.ASCII.GetBytes("Sample Text");
+
+                datastream.Write(byteArray, 0, byteArray.Length);
+                /*
+                BluetoothSocket socket = null;
+                BufferedReader inReader = null;
+                BufferedWriter outReader = null;
+                string bt_printer = AdminSettings.PrinterMACAddr;
+                if (string.IsNullOrEmpty(bt_printer)) bt_printer = "00:13:7B:49:D1:8C";
+                BluetoothDevice mmDevice = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(bt_printer);
+                UUID applicationUUID = UUID.FromString("00001101-0000-1000-8000-00805F9B34FB");
+                socket = mmDevice.CreateRfcommSocketToServiceRecord(applicationUUID);
+                socket.Connect();
+                inReader = new BufferedReader(new InputStreamReader(socket.InputStream));
+                outReader = new BufferedWriter(new OutputStreamWriter(socket.OutputStream));
+                byte[] printformat = { 0x1B, 0X21, FONT_TYPE };
+                //outReader.Write(printformat);
+                outReader.NewLine();
+                outReader.Write(text);
+                */
             }
             catch (Exception ex)
             {
