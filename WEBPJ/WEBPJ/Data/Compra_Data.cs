@@ -35,6 +35,7 @@ namespace WEBPJ.Data
                                 ProvCodigo = q.ProvCodigo,
                                 IdUsuario = q.IdUsuario,
                                 IdProducto = q.IdProducto,
+                                CodProducto = q.Codigo,
                                 Calificacion = q.Calificacion,
                                 Fecha = q.Fecha,
                                 Precio = q.Precio,
@@ -56,6 +57,7 @@ namespace WEBPJ.Data
                                 ProvCodigo = q.ProvCodigo,
                                 IdUsuario = q.IdUsuario,
                                 IdProducto = q.IdProducto,
+                                CodProducto = q.Codigo,
                                 Calificacion = q.Calificacion,
                                 Fecha = q.Fecha,
                                 Precio = q.Precio,
@@ -80,6 +82,7 @@ namespace WEBPJ.Data
                                 ProvCodigo = q.ProvCodigo,
                                 IdUsuario = q.IdUsuario,
                                 IdProducto = q.IdProducto,
+                                CodProducto = q.Codigo,
                                 Calificacion = q.Calificacion,
                                 Fecha = q.Fecha,
                                 Precio = q.Precio,
@@ -101,6 +104,7 @@ namespace WEBPJ.Data
                                 ProvCodigo = q.ProvCodigo,
                                 IdUsuario = q.IdUsuario,
                                 IdProducto = q.IdProducto,
+                                CodProducto = q.Codigo,
                                 Calificacion = q.Calificacion,
                                 Fecha = q.Fecha,
                                 Precio = q.Precio,
@@ -426,9 +430,10 @@ namespace WEBPJ.Data
             {
                 using (EntitiesNexpirion db = new EntitiesNexpirion())
                 {
-                    var info_producto = data_producto.get_info_ProductoNexp(info.Codigo.ToString().Trim());
-                    var info_proveedor = data_proveedor.get_info_ProveedorNexp(info.ProvCodigo.ToString().Trim());
-                    var info_bodega = data_producto.get_info_BodegaNexp(info.Codigo.ToString().Trim());
+                    var info_producto = data_producto.get_info_ProductoNexp(info.CodProducto.ToString().Trim());
+                    var info_proveedor_nx = data_proveedor.get_info_ProveedorNexp(info.ProvCodigo.ToString().Trim());
+                    var info_proveedor = data_proveedor.get_info("PRV",info.ProvCodigo.ToString().Trim());
+                    var info_bodega = data_producto.get_info_BodegaNexp(info.CodProducto.ToString().Trim());
                     var nombre = info_producto.nombre.ToString().Substring(0,59);
                     dbultnum entity = db.dbultnum.Where(q => q.tipo == "CO").FirstOrDefault();
                     var num_compra = entity.numero + 1;
@@ -444,8 +449,8 @@ namespace WEBPJ.Data
                         producto = info_producto.codigo,
                         nombre = nombre,
                         cantidad = Convert.ToDecimal(info.Cantidad),
-                        proveedor = info_proveedor.codigo,
-                        concepto = "",
+                        proveedor = info_proveedor_nx.codigo,
+                        concepto = info_proveedor.ConceptoCompra,
                         plazo = 0,
                         porc_desc = 0,
                         factor = 0,

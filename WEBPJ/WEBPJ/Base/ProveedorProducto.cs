@@ -19,7 +19,7 @@ namespace WEBPJ.Base
         public int Secuencia { get; set; }
         public int IdProducto { get; set; }
     
-        public virtual Proveedor Proveedor { get; set; }
         public virtual Producto Producto { get; set; }
+        public virtual Proveedor Proveedor { get; set; }
     }
 }

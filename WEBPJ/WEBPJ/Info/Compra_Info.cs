@@ -36,6 +36,7 @@ namespace WEBPJ.Info
 
 
         #region Campos que no existen en la tabla
+        public string CodProducto { get; set; }
         public string NomProducto { get; set; }
         public string NomUsuario { get; set; }
         public string EstadoCompra { get; set; }

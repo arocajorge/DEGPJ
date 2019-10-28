@@ -23,7 +23,8 @@ namespace WEBPJ.Data
                         Tipo = q.Tipo,
                         Codigo = q.Codigo,
                         Nombre = q.Nombre,
-                        Ruc = q.Ruc
+                        Ruc = q.Ruc,
+                        ConceptoCompra = q.ConceptoCompra
                     }).ToList();
                 }
                 return Lista;
@@ -75,7 +76,8 @@ namespace WEBPJ.Data
                         Tipo = Entity.Tipo,
                         Codigo = Entity.Codigo,
                         Nombre = Entity.Nombre,
-                        Ruc = Entity.Ruc
+                        Ruc = Entity.Ruc,
+                        ConceptoCompra = Entity.ConceptoCompra
                     };
                 }
 
@@ -125,7 +127,8 @@ namespace WEBPJ.Data
                         Tipo = info.Tipo,
                         Codigo = info.Codigo,
                         Nombre = info.Nombre,
-                        Ruc = info.Ruc
+                        Ruc = info.Ruc,
+                        ConceptoCompra = info.ConceptoCompra
                     });
 
                     //detalle
@@ -184,6 +187,7 @@ namespace WEBPJ.Data
                     entity.Tipo = info.Tipo;
                     entity.Codigo = info.Codigo;
                     entity.Ruc = info.Ruc;
+                    entity.ConceptoCompra = info.ConceptoCompra;
 
                     var lst_detalle = db.ProveedorProducto.Where(q => q.Tipo == info.Tipo && q.Codigo == info.Codigo).ToList();
                     db.ProveedorProducto.RemoveRange(lst_detalle);

@@ -32,11 +32,18 @@
                     @Html.ValidationMessageFor(q => q.Codigo, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label for="Descripcion">Tipo</label>
                     @Html.TextBoxFor(q => q.Tipo, new { @class = "form-control", @readonly = "readonly" })
                     @Html.ValidationMessageFor(q => q.Tipo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="Cantidad">Concepto compra</label>
+                    @Html.DropDownListFor(q => q.ConceptoCompra, new SelectList(ViewBag.lst_Concepto, "Key", "Value"), new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.ConceptoCompra, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>

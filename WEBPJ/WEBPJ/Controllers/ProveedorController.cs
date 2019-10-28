@@ -62,7 +62,7 @@ namespace WEBPJ.Controllers
             Proveedor_Info model = data_Proveedor.get_info_Nexpirion(Tipo, Codigo);
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             Lista_ProveedorProductoDetalle.set_list(new List<ProveedorProducto_Info>(), model.IdTransaccionSession);
-
+            cargar_combos();
             return View(model);
         }
 
@@ -75,13 +75,14 @@ namespace WEBPJ.Controllers
             {
                 ViewBag.mensaje = mensaje;
                 SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
-
+                cargar_combos();
                 return View(model);
             }
 
             if (!data_Proveedor.GuardarBD(model))
             {
                 SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
+                cargar_combos();
                 return View(model);
             }
 
@@ -105,6 +106,7 @@ namespace WEBPJ.Controllers
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             model.ListaProveedorProductoDetalle = data_ProveedorProducto.GetList(Convert.ToString(model.Codigo));
             Lista_ProveedorProductoDetalle.set_list(model.ListaProveedorProductoDetalle, model.IdTransaccionSession);
+            cargar_combos();
             return View(model);
         }
 
@@ -116,11 +118,13 @@ namespace WEBPJ.Controllers
             if (!Validar(model, ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
+                cargar_combos();
                 return View(model);
             }
 
             if (!data_Proveedor.ModificarBD(model))
             {
+                cargar_combos();
                 return View(model);
             }
             return RedirectToAction("Index");
@@ -138,6 +142,7 @@ namespace WEBPJ.Controllers
             Proveedor_Info model = data_Proveedor.get_info(Tipo, Codigo);
             if (!data_Proveedor.EliminarBD(model))
             {
+                cargar_combos();
                 ViewBag.mensaje = "No se ha podido eliminar el registro";
             };
 
@@ -146,6 +151,16 @@ namespace WEBPJ.Controllers
         #endregion
 
         #region Metodos
+        public void cargar_combos()
+        {
+            Dictionary<string, string> lst_Concepto = new Dictionary<string, string>();
+            lst_Concepto.Add("0009", "INGRESO POR COMPRA");
+            lst_Concepto.Add("0012", "IMPORTACION");
+            lst_Concepto.Add("0022", "LIQUIDACION DE COMPRAS");
+            lst_Concepto.Add("0023", "COMPRAS INTERNAS");
+            lst_Concepto.Add("0024", "SUMINISTROS DE FUMIGACION POTREROS");
+            ViewBag.lst_Concepto = lst_Concepto;
+        }
         public void cargar_combos_detalle()
         {
             var lst_Producto = data_producto.get_list(false);

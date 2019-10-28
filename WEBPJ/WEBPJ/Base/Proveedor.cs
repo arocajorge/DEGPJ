@@ -24,6 +24,7 @@ namespace WEBPJ.Base
         public string Codigo { get; set; }
         public string Nombre { get; set; }
         public string Ruc { get; set; }
+        public string ConceptoCompra { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProveedorProducto> ProveedorProducto { get; set; }

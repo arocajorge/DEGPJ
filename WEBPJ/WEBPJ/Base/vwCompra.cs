@@ -29,5 +29,6 @@ namespace WEBPJ.Base
         public string Estado { get; set; }
         public string NomProducto { get; set; }
         public string NomUsuario { get; set; }
+        public string Codigo { get; set; }
     }
 }

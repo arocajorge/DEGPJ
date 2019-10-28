@@ -15,6 +15,7 @@ namespace WEBPJ.Info
         public string Nombre { get; set; }
         [Required(ErrorMessage = ("el campo ruc es obligatorio"))]
         public string Ruc { get; set; }
+        public string ConceptoCompra { get; set; }
 
         #region Campos que no existen en la tabla
         public List<ProveedorProducto_Info> ListaProveedorProductoDetalle { get; set; }
