@@ -154,11 +154,11 @@ namespace WEBPJ.Controllers
         public void cargar_combos()
         {
             Dictionary<string, string> lst_Concepto = new Dictionary<string, string>();
-            lst_Concepto.Add("0009", "INGRESO POR COMPRA");
-            lst_Concepto.Add("0012", "IMPORTACION");
-            lst_Concepto.Add("0022", "LIQUIDACION DE COMPRAS");
-            lst_Concepto.Add("0023", "COMPRAS INTERNAS");
-            lst_Concepto.Add("0024", "SUMINISTROS DE FUMIGACION POTREROS");
+            lst_Concepto.Add("0009      ", "INGRESO POR COMPRA");
+            lst_Concepto.Add("0012      ", "IMPORTACION");
+            lst_Concepto.Add("0022      ", "LIQUIDACION DE COMPRAS");
+            lst_Concepto.Add("0023      ", "COMPRAS INTERNAS");
+            lst_Concepto.Add("0024      ", "SUMINISTROS DE FUMIGACION POTREROS");
             ViewBag.lst_Concepto = lst_Concepto;
         }
         public void cargar_combos_detalle()
