@@ -108,17 +108,20 @@
                     Settings.UrlConexionActual = Settings.UrlConexionInterna;
                 #endregion
 
-                var response_sinc = await api.Post<List<CompraSincronizacionModel>>(                 Settings.UrlConexionActual,                 Settings.RutaCarpeta,                 "Compra",                 this.ListaCompras);
-                if (!response_sinc.IsSuccess)
+                if (ListaCompras.Count > 0)
                 {
-                    this.IsEnabled = true;
-                    this.IsRunning = false;
-                    await Application.Current.MainPage.DisplayAlert(
-                        "Alerta",
-                        response_sinc.Message,
-                        "Aceptar");
-                    return;
-                } 
+                    var response_sinc = await api.Post<List<CompraSincronizacionModel>>(                 Settings.UrlConexionActual,                 Settings.RutaCarpeta,                 "Compra",                 this.ListaCompras);
+                    if (!response_sinc.IsSuccess)
+                    {
+                        this.IsEnabled = true;
+                        this.IsRunning = false;
+                        await Application.Current.MainPage.DisplayAlert(
+                            "Alerta",
+                            response_sinc.Message,
+                            "Aceptar");
+                        return;
+                    }
+                }
 
                 #region Usuario
                 var response_usuario = await api.GetList<UsuarioModel>(Settings.UrlConexionActual, Settings.RutaCarpeta, "Usuario", "?IdUsuario=" + Settings.IdUsuario);

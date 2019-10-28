@@ -55,6 +55,11 @@ namespace APPPJ.Helpers
         #endregion
 
         #region Funciones varias
+
+        public List<CompraDetalleModel> GetCompraDetalle(decimal IdCompra)
+        {
+            return this.connection.Table<CompraDetalleModel>().Where(q => q.IdCompra == IdCompra).ToList();
+        }
         public UsuarioModel GetUsuario(string IdUsuario, string Clave)
         {
             return this.connection.Table<UsuarioModel>().Where(q => q.IdUsuario.ToLower() == IdUsuario.ToLower() && q.Clave.ToLower() == Clave.ToLower()).FirstOrDefault();

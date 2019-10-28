@@ -443,7 +443,7 @@ namespace WEBPJ.Data
                         tipo = "CO",
                         numero = num_compra,
                         pedido = 0,
-                        fecha = DateTime.Now.Date,
+                        fecha = info.Fecha,
                         fecha_fac = info.Fecha,
                         fecha_com = info.Fecha,
                         producto = info_producto.codigo,

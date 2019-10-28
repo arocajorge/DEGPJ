@@ -171,25 +171,33 @@ namespace APPPJ.ViewModels
                 BluetoothSocket mmsSocket = device.CreateRfcommSocketToServiceRecord(uuid.Uuid);
                 await mmsSocket.ConnectAsync();
 
+                var Detalle = App.Data.GetCompraDetalle(_Compra.IdCompra);
+
                 string Reporte = string.Empty;
                 Reporte += "\n";
                 Reporte += "====NEXPIRION====" + "\n";
                 Reporte += "Compra # " + _Compra.Codigo + "\n";
+                Reporte += "Fecha # " + DateTime.Now.ToString() + "\n";
                 Reporte += "Recolector: " + Settings.IdUsuario + "\n";
                 Reporte += "Equipo: " + CrossDeviceInfo.Current.Id + "\n";
                 Reporte += "Proveedor: " + _Compra.ProvNombre + "\n";
                 Reporte += "Producto: " + _Compra.prDescripcion + "\n";
-                Reporte += "Cantidad: " + _Compra.Cantidad.ToString("n2") + "\n";
+                foreach (var item in Detalle)
+                {
+                    Reporte += item.Descripcion + ": " + item.Valor.ToString("n2") + "\n";
+                }
                 Reporte += "Calificacion: " + _Compra.Calificacion.ToString("n2") + "\n";
+                Reporte += "\n";
+                Reporte += "Cantidad: " + _Compra.Cantidad.ToString("n2") + "\n";
                 Reporte += "Precio: " + _Compra.Precio.ToString("n2") + "\n";
                 Reporte += "Total: " + _Compra.Total.ToString("n2") + "\n";
                 Reporte += "\n";
                 Reporte += "\n";
-                Reporte += "\n";
+
 
                 byte[] buffer = System.Text.Encoding.UTF8.GetBytes(Reporte);
                 mmsSocket.OutputStream.Write(buffer, 0, buffer.Length);
-                mmsSocket.OutputStream.Write(buffer, 0, buffer.Length);
+                //mmsSocket.OutputStream.Write(buffer, 0, buffer.Length);
                 mmsSocket.Close();
 
                 IsEnabled = true;
