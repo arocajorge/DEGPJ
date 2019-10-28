@@ -14,6 +14,7 @@ namespace APPPJ.ViewModels
     using System.Linq;
     using Android.OS;
     using System.Text;
+    using Plugin.DeviceInfo;
 
     public class CompraConfirmacionPopUpViewModel : BaseViewModel
     {
@@ -117,6 +118,9 @@ namespace APPPJ.ViewModels
                            "Compra "+ _Compra.Codigo+" registrada exitósamente",
                            "Aceptar");
                 }
+
+                Imprimir();
+
                 await Application.Current.MainPage.Navigation.PopAllPopupAsync();
                 MainViewModel.GetInstance().Compra = new CompraViewModel();
                 Application.Current.MainPage = new MasterPage();
@@ -137,6 +141,8 @@ namespace APPPJ.ViewModels
         {
             try
             {
+                IsEnabled = false;
+                IsRunning = true;
                 var mBluetoothAdapter = BluetoothAdapter.DefaultAdapter;
 
                 if (mBluetoothAdapter == null)
@@ -145,105 +151,49 @@ namespace APPPJ.ViewModels
                     IsEnabled = true;
                     await Application.Current.MainPage.DisplayAlert(
                                "Bluetooth",
-                               "No bluetooth adapter found",
+                               "No se encuentra adaptador bluetooth",
                                "Aceptar");
                     return;
-                }
-                else
-                {
-                    await Application.Current.MainPage.DisplayAlert(
-                               "Bluetooth",
-                               "Bluetooth found",
-                               "Aceptar");
                 }
 
                 if (!mBluetoothAdapter.IsEnabled)
                 {
                     mBluetoothAdapter.Enable();
                 }
-                else
-                {
-                    await Application.Current.MainPage.DisplayAlert(
-                            "Bluetooth",
-                            "Bluetooth Enabled",
-                            "Aceptar");
-                }
 
-                ICollection<BluetoothDevice> pairedDevices = mBluetoothAdapter.BondedDevices;
-                BluetoothDevice mmDevice = null;
-                if (pairedDevices.Count > 0)
-                {
-                    foreach (BluetoothDevice device in pairedDevices)
-                    {
-                        if (device.Name.Contains("TSP"))
-                        {
-                            mmDevice = device;
-                            break;
-                        }
-                    }
-                }
-                else
-                {
-                    await Application.Current.MainPage.DisplayAlert(
-                            "Bluetooth",
-                            "Paired Devices not found",
-                            "Aceptar");
-                    return;
-                }
+                BluetoothDevice device = (from bd in mBluetoothAdapter.BondedDevices
+                                          where bd.Name.StartsWith("PT200")
+                                          select bd).FirstOrDefault();
+                if (device == null)
+                    throw new Exception("Dispositivo no encontrado");
 
-                ParcelUuid uuid = mmDevice.GetUuids().ElementAt(0);
+                ParcelUuid uuid = device.GetUuids().ElementAt(0);
+                BluetoothSocket mmsSocket = device.CreateRfcommSocketToServiceRecord(uuid.Uuid);
+                await mmsSocket.ConnectAsync();
 
-                if (mmDevice == null)
-                {
-                    await Application.Current.MainPage.DisplayAlert(
-                            "Bluetooth",
-                            "No Device Found",
-                            "Aceptar");
-                    return;
-                }
+                string Reporte = string.Empty;
+                Reporte += "\n";
+                Reporte += "====NEXPIRION====" + "\n";
+                Reporte += "Compra # " + _Compra.Codigo + "\n";
+                Reporte += "Recolector: " + Settings.IdUsuario + "\n";
+                Reporte += "Equipo: " + CrossDeviceInfo.Current.Id + "\n";
+                Reporte += "Proveedor: " + _Compra.ProvNombre + "\n";
+                Reporte += "Producto: " + _Compra.prDescripcion + "\n";
+                Reporte += "Cantidad: " + _Compra.Cantidad.ToString("n2") + "\n";
+                Reporte += "Calificacion: " + _Compra.Calificacion.ToString("n2") + "\n";
+                Reporte += "Precio: " + _Compra.Precio.ToString("n2") + "\n";
+                Reporte += "Total: " + _Compra.Total.ToString("n2") + "\n";
+                Reporte += "\n";
+                Reporte += "\n";
+                Reporte += "\n";
 
-                var mmsSocket = mmDevice.CreateInsecureRfcommSocketToServiceRecord(uuid.Uuid);
+                byte[] buffer = System.Text.Encoding.UTF8.GetBytes(Reporte);
+                mmsSocket.OutputStream.Write(buffer, 0, buffer.Length);
+                mmsSocket.OutputStream.Write(buffer, 0, buffer.Length);
+                mmsSocket.Close();
 
-                mmsSocket.Connect();
-
-                if (mmsSocket.IsConnected)
-                {
-                    await Application.Current.MainPage.DisplayAlert(
-                            "Bluetooth",
-                            "Socket Connected Successfully",
-                            "Aceptar");
-                }
-                else
-                {
-                    await Application.Current.MainPage.DisplayAlert(
-                            "Bluetooth",
-                            "Socket Not Connected Successfully",
-                            "Aceptar");
-                    return;
-                }
-
-                var datastream = mmsSocket.OutputStream;
-
-                byte[] byteArray = Encoding.ASCII.GetBytes("Sample Text");
-
-                datastream.Write(byteArray, 0, byteArray.Length);
-                /*
-                BluetoothSocket socket = null;
-                BufferedReader inReader = null;
-                BufferedWriter outReader = null;
-                string bt_printer = AdminSettings.PrinterMACAddr;
-                if (string.IsNullOrEmpty(bt_printer)) bt_printer = "00:13:7B:49:D1:8C";
-                BluetoothDevice mmDevice = BluetoothAdapter.DefaultAdapter.GetRemoteDevice(bt_printer);
-                UUID applicationUUID = UUID.FromString("00001101-0000-1000-8000-00805F9B34FB");
-                socket = mmDevice.CreateRfcommSocketToServiceRecord(applicationUUID);
-                socket.Connect();
-                inReader = new BufferedReader(new InputStreamReader(socket.InputStream));
-                outReader = new BufferedWriter(new OutputStreamWriter(socket.OutputStream));
-                byte[] printformat = { 0x1B, 0X21, FONT_TYPE };
-                //outReader.Write(printformat);
-                outReader.NewLine();
-                outReader.Write(text);
-                */
+                IsEnabled = true;
+                IsRunning = false;
             }
             catch (Exception ex)
             {

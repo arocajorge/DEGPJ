@@ -49,7 +49,7 @@ namespace APPPJ.Droid
                 BufferedWriter outReader = null;
 
                 BluetoothDevice device = (from bd in mBluetoothAdapter.BondedDevices
-                                          where bd.Name.StartsWith("AL")
+                                          where bd.Name.StartsWith("PT200")
                                           select bd).FirstOrDefault();
                 if (device == null)
                     throw new Exception("Dispositivo no encontrado");

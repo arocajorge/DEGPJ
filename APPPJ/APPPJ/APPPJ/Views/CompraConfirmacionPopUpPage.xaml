@@ -27,69 +27,90 @@
             </StackLayout>
              <Label
                 TextColor="Black"
-                FontSize="Large"
+                FontSize="Medium"
                 FontAttributes="Bold"
                 Text="Proveedor:">
             </Label>
             <Label
                 TextColor="Teal"
                 FontSize="Large"
-                HorizontalTextAlignment="End"
+                HorizontalTextAlignment="Center"
                 Text="{Binding Proveedor}"></Label>
-            <Label
+
+            <StackLayout
+                Orientation="Horizontal">
+                <Label
                 TextColor="Black"
-                FontSize="Large"
+                FontSize="Medium"
                 FontAttributes="Bold"
                 Text="Recolector:">
-            </Label>
-            <Label
+                </Label>
+                <Label
                 TextColor="Teal"
                 FontSize="Large"
-                HorizontalTextAlignment="End"
+                HorizontalOptions="EndAndExpand"
                 Text="{Binding IdUsuario}"></Label>
-            <Label
+            </StackLayout>
+
+            <StackLayout
+                Orientation="Horizontal">
+                <Label
                 TextColor="Black"
-                FontSize="Large"
-                FontAttributes="Bold"
-                Text="Calificación:">
-            </Label>
-            <Label
-                TextColor="Teal"
-                FontSize="Large"
-                HorizontalTextAlignment="End"
-                Text="{Binding Calificacion,StringFormat='{0:N2}'}"></Label>
-            <Label
-                TextColor="Black"
-                FontSize="Large"
+                FontSize="Medium"
                 FontAttributes="Bold"
                 Text="Cantidad:">
-            </Label>
-            <Label
+                </Label>
+                <Label
                 TextColor="Teal"
                 FontSize="Large"
-                HorizontalTextAlignment="End"
+                HorizontalOptions="EndAndExpand"
                 Text="{Binding Cantidad}"></Label>
-            <Label
+            </StackLayout>
+            
+            <StackLayout
+                Orientation="Horizontal">
+                <Label
                 TextColor="Black"
+                FontSize="Medium"
+                FontAttributes="Bold"
+                Text="Calificación:">
+                </Label>
+                <Label
+                TextColor="Teal"
                 FontSize="Large"
+                HorizontalOptions="EndAndExpand"
+                Text="{Binding Calificacion,StringFormat='{0:N2}'}"></Label>
+            </StackLayout>
+
+            <StackLayout
+                Orientation="Horizontal">
+                <Label
+                TextColor="Black"
+                FontSize="Medium"
                 FontAttributes="Bold"
                 Text="Precio:"></Label>
-            <Label
+                <Label
                 TextColor="Teal"
                 FontSize="Large"
-                HorizontalTextAlignment="End"
+                HorizontalOptions="EndAndExpand"
                 Text="{Binding Precio,StringFormat='{0:C2}'}"
                 ></Label>
-            <Label
+            </StackLayout>
+
+            <StackLayout
+                Orientation="Horizontal">
+                <Label
                 TextColor="Black"
-                FontSize="Large"
+                FontSize="Medium"
                 FontAttributes="Bold"
                 Text="Total:"></Label>
-            <Label 
+                <Label 
                 TextColor="Teal"
                 FontSize="Large"
-                HorizontalTextAlignment="End"
+                HorizontalOptions="EndAndExpand"
                 Text="{Binding Total,StringFormat='{0:C2}'}"></Label>
+            </StackLayout>
+            
              <ActivityIndicator
                     IsRunning="{Binding IsRunning}"
                     VerticalOptions="CenterAndExpand">
