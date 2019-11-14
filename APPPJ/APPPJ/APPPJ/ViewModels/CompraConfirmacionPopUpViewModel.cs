@@ -102,7 +102,7 @@ namespace APPPJ.ViewModels
                 IsEnabled = false;
                 IsRunning = true;
 
-                _Compra.Fecha = DateTime.Now.Date;
+                //_Compra.Fecha = DateTime.Now.Date;
                 _Compra.Cantidad = Cantidad;
                 _Compra.Precio = Precio;
                 _Compra.Total = Total;
@@ -177,7 +177,7 @@ namespace APPPJ.ViewModels
                 Reporte += "\n";
                 Reporte += "====NEXPIRION====" + "\n";
                 Reporte += "Compra # " + _Compra.Codigo + "\n";
-                Reporte += "Fecha # " + DateTime.Now.ToString() + "\n";
+                Reporte += "Fecha # " + _Compra.Fecha.Date.ToString("dd/MM/yyyy") + "\n";
                 Reporte += "Recolector: " + Settings.IdUsuario + "\n";
                 Reporte += "Equipo: " + CrossDeviceInfo.Current.Id + "\n";
                 Reporte += "Proveedor: " + _Compra.ProvNombre + "\n";

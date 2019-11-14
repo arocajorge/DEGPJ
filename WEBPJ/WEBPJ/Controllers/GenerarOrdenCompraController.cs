@@ -95,11 +95,11 @@ namespace WEBPJ.Controllers
                     Compra_Info info_compra = new Compra_Info();
                     //info_compra.lst_CompraDetProducto = new List<CompraDetalle_Info>();
 
-                    info_compra = data_compra.get_info(Convert.ToInt32(item.Key));
+                    info_compra = data_compra.get_info(Convert.ToDecimal(item.Key));
                     var info_producto = data_producto.get_info(info_compra.IdProducto);
                     info_compra.CodProducto = info_producto.Codigo;
                     info_compra.NomProducto = info_producto.Descripcion;
-                    info_compra.lst_CompraDetProducto = data_compra_det.get_list(Convert.ToInt32(item.Key));
+                    info_compra.lst_CompraDetProducto = data_compra_det.get_list(Convert.ToDecimal(item.Key));
                     if (info_compra != null)
                     {
                         info_compra.Estado = "A";

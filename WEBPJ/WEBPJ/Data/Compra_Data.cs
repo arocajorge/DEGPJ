@@ -153,7 +153,8 @@ namespace WEBPJ.Data
                         Cantidad = Entity.Cantidad,
                         Total = Entity.Total,
                         Comentario = Entity.Comentario,
-                        Estado = Entity.Estado
+                        Estado = Entity.Estado,
+                        Codigo= Entity.Codigo
                     };
                 }
 
@@ -480,7 +481,7 @@ namespace WEBPJ.Data
                         fecha_acep = DateTime.Now.Date,
                         recibido = false,
                         lote = "",
-                        num_recibo = "",
+                        num_recibo = info.Codigo,
                         usr_agr = "",
                         usr_cor = "",
                         centro = ""

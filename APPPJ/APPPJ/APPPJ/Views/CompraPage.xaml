@@ -20,17 +20,29 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        
                         <Label
                             Grid.Column="0"
                             Grid.Row="0"
+                            FontAttributes="Bold"
+                            Text="Fecha">
+                        </Label>
+                        <DatePicker                            
+                            Grid.Column="1"
+                            Grid.Row="0"    
+                            Date="{Binding Fecha, Mode=TwoWay}">
+                            <DatePicker.Format>dd/MM/yyyy</DatePicker.Format>
+                        </DatePicker>
+                        <Label
+                            Grid.Column="0"
+                            Grid.Row="1"
                             FontAttributes="Bold"
                             Text="Proveedor:">
                         </Label>
                         <Button
                             Grid.Column="1"
-                            Grid.Row="0"       
+                            Grid.Row="1"       
                             Grid.RowSpan="2"
                             Command="{Binding BuscarProveedorCommand}"
                             HorizontalOptions="End"
@@ -38,7 +50,7 @@
                         </Button>
                         <Label
                             Grid.Column="0"
-                            Grid.Row="1"
+                            Grid.Row="2"
                             FontAttributes="None"
                             TextColor="Black"
                             Text="{Binding NomProveedor, Mode=TwoWay}">
@@ -46,13 +58,13 @@
                         
                         <Label
                             Grid.Column="0"
-                            Grid.Row="2"
+                            Grid.Row="3"
                             FontAttributes="Bold"
                             Text="Producto:">
                         </Label>
                         <Button
                             Grid.Column="1"
-                            Grid.Row="2"       
+                            Grid.Row="3"       
                             Grid.RowSpan="2"
                             Command="{Binding BuscarProductoCommand}"
                             HorizontalOptions="End"
@@ -61,7 +73,7 @@
                         </Button>
                         <Label
                             Grid.Column="0"
-                            Grid.Row="3"
+                            Grid.Row="4"
                             FontAttributes="None"
                             TextColor="Black"
                             Text="{Binding NomProducto, Mode=TwoWay}">

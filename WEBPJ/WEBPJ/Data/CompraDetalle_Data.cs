@@ -9,7 +9,7 @@ namespace WEBPJ.Data
 {
     public class CompraDetalle_Data
     {
-        public List<CompraDetalle_Info> get_list(int IdCompra)
+        public List<CompraDetalle_Info> get_list(decimal IdCompra)
         {
             try
             {

@@ -25,6 +25,7 @@ namespace APPPJ.ViewModels
         private string _NomProducto;
         private int _Height;
         private double _Cantidad;
+        private DateTime _Fecha;
         private ObservableCollection<ProductoDetalleModel> _ListaDetalle;
         #endregion
 
@@ -74,6 +75,11 @@ namespace APPPJ.ViewModels
             get { return this._Height; }
             set { SetValue(ref this._Height, value); }
         }
+        public DateTime Fecha
+        {
+            get { return this._Fecha; }
+            set { SetValue(ref this._Fecha, value); }
+        }
         #endregion
 
         #region MyRegion
@@ -83,6 +89,7 @@ namespace APPPJ.ViewModels
             Compra = new CompraModel();
             Height = 0;
             Cantidad = 0;
+            Fecha = DateTime.Now.Date;
         }
         #endregion
 
@@ -191,6 +198,28 @@ namespace APPPJ.ViewModels
                 IsRunning = true;
                 IsEnabled = false;
 
+                if (Fecha == null)
+                {
+                    IsRunning = false;
+                    IsEnabled = true;
+                    await Application.Current.MainPage.DisplayAlert(
+                            "Alerta",
+                            "El campo fecha es obligatorio",
+                            "Aceptar");
+                    return;
+                }
+
+                if (Fecha == DateTime.MinValue)
+                {
+                    IsRunning = false;
+                    IsEnabled = true;
+                    await Application.Current.MainPage.DisplayAlert(
+                            "Alerta",
+                            "El campo fecha es obligatorio",
+                            "Aceptar");
+                    return;
+                }
+
                 if (string.IsNullOrEmpty(Compra.ProvCodigo))
                 {
                     IsRunning = false;
@@ -247,7 +276,7 @@ namespace APPPJ.ViewModels
                     return;
                 }
 
-
+                Compra.Fecha = Fecha;
                 foreach (var q in ListaDetalle)
                 {
                     q.PonderacionFinal = 0;
