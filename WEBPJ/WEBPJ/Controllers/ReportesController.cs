@@ -22,7 +22,7 @@ namespace WEBPJ.Controllers
         #region Metodos ComboBox bajo demanda
         public ActionResult CmbProveedor_Rpt()
         {
-            Compra_Info model = new Compra_Info();
+            Filtros_Info model = new Filtros_Info();
             return PartialView("_CmbProveedor_Rpt", model);
         }
         public List<Proveedor_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args)

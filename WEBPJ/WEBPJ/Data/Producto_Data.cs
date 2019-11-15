@@ -277,7 +277,8 @@ namespace WEBPJ.Data
                     {
                         codigo = Entity.codigo,
                         nombre = Entity.nombre,
-                        tipoitm = Entity.tipoitm
+                        tipoitm = Entity.tipoitm,
+                        peso = Entity.peso
                     };
                 }
 
