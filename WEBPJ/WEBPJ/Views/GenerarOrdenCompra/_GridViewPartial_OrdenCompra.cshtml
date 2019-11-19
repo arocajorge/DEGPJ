@@ -48,7 +48,7 @@
         });
 
         //Evento para pintar de rojo las filas anuladas
-        settings.Columns.Add("IdCompra", "ID").Width = Unit.Percentage(10);
+        settings.Columns.Add("CodCompra", "Recibo").Width = Unit.Percentage(10);
         settings.Columns.Add("IdUsuario", "IdUsuario").Width = Unit.Percentage(10);
         settings.Columns.Add("ProvNombre", "Proveedor").Width = Unit.Percentage(10);
         settings.Columns.Add("NomProducto", "Producto").Width = Unit.Percentage(10);
@@ -97,6 +97,7 @@
         settings.ClientSideEvents.BeginCallback = "function(s,e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); OnBeginCallback(s,e); }";
         settings.ClientSideEvents.Init = "function(s,e) { GridViewPartial_OrdenCompra.PerformCallback(); }";
 
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Cantidad").DisplayFormat = "{0:n2}";
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Total").DisplayFormat = "{0:n2}";
         settings.Settings.ShowFooter = true;
     });

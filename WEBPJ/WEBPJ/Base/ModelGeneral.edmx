@@ -163,6 +163,7 @@ advertencia 6002: La tabla o vista 'DB_PRECIOJUSTO.dbo.vwCompra' no tiene defini
           <Property Name="NomProducto" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="NomUsuario" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="Codigo" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="CodCompra" Type="varchar" MaxLength="100" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DB_PRECIOJUSTO.dbo.vwProveedorProducto' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -269,7 +270,8 @@ advertencia 6002: La tabla o vista 'DB_PRECIOJUSTO.dbo.vwProveedorProducto' no t
     [vwCompra].[Estado] AS [Estado], 
     [vwCompra].[NomProducto] AS [NomProducto], 
     [vwCompra].[NomUsuario] AS [NomUsuario], 
-    [vwCompra].[Codigo] AS [Codigo]
+    [vwCompra].[Codigo] AS [Codigo], 
+    [vwCompra].[CodCompra] AS [CodCompra]
     FROM [dbo].[vwCompra] AS [vwCompra]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwProveedorProducto" EntityType="Self.vwProveedorProducto" store:Type="Views" store:Schema="dbo">
@@ -581,6 +583,7 @@ advertencia 6002: La tabla o vista 'DB_PRECIOJUSTO.dbo.vwProveedorProducto' no t
           <Property Name="NomProducto" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="NomUsuario" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="Codigo" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CodCompra" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -727,6 +730,7 @@ advertencia 6002: La tabla o vista 'DB_PRECIOJUSTO.dbo.vwProveedorProducto' no t
           <EntitySetMapping Name="vwCompra">
             <EntityTypeMapping TypeName="ModelGeneral.vwCompra">
               <MappingFragment StoreEntitySet="vwCompra">
+                <ScalarProperty Name="CodCompra" ColumnName="CodCompra" />
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="NomUsuario" ColumnName="NomUsuario" />
                 <ScalarProperty Name="NomProducto" ColumnName="NomProducto" />

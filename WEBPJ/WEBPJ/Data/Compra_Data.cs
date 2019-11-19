@@ -44,7 +44,8 @@ namespace WEBPJ.Data
                                 Comentario = q.Comentario,
                                 Estado = q.Estado,
                                 NomProducto = q.NomProducto,
-                                NomUsuario = q.NomUsuario
+                                NomUsuario = q.NomUsuario,
+                                CodCompra = q.CodCompra
                             }).ToList();
                         }
                         else
@@ -66,7 +67,8 @@ namespace WEBPJ.Data
                                 Comentario = q.Comentario,
                                 Estado = q.Estado,
                                 NomProducto = q.NomProducto,
-                                NomUsuario = q.NomUsuario
+                                NomUsuario = q.NomUsuario,
+                                CodCompra = q.CodCompra
                             }).ToList();
                         }                       
                     }
@@ -91,7 +93,8 @@ namespace WEBPJ.Data
                                 Comentario = q.Comentario,
                                 Estado = q.Estado,
                                 NomProducto = q.NomProducto,
-                                NomUsuario = q.NomUsuario
+                                NomUsuario = q.NomUsuario,
+                                CodCompra = q.CodCompra
                             }).ToList();
                         }
                         else
@@ -113,7 +116,8 @@ namespace WEBPJ.Data
                                 Comentario = q.Comentario,
                                 Estado = q.Estado,
                                 NomProducto = q.NomProducto,
-                                NomUsuario = q.NomUsuario
+                                NomUsuario = q.NomUsuario,
+                                CodCompra = q.CodCompra
                             }).ToList();
                         }
                        
@@ -481,7 +485,7 @@ namespace WEBPJ.Data
                         fecha_acep = DateTime.Now.Date,
                         recibido = false,
                         lote = "",
-                        num_recibo = info.Codigo,
+                        num_recibo = Convert.ToDecimal(info.Codigo).ToString(),
                         usr_agr = "",
                         usr_cor = "",
                         centro = ""
@@ -574,7 +578,8 @@ namespace WEBPJ.Data
                         Comentario = q.Comentario,
                         Estado = q.Estado,
                         NomProducto = q.NomProducto,
-                        NomUsuario = q.NomUsuario
+                        NomUsuario = q.NomUsuario,
+                        CodCompra = q.CodCompra
                     }).ToList();       
                 }
 

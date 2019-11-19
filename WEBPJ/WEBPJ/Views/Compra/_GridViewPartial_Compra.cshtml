@@ -83,7 +83,7 @@
             c.Settings.AllowSort = DefaultBoolean.False;
             c.Width = Unit.Pixel(150);
         });
-        settings.Columns.Add("IdCompra", "Código").Width = Unit.Pixel(80);
+        settings.Columns.Add("CodCompra", "Recibo").Width = Unit.Pixel(80);
         settings.Columns.Add("NomUsuario", "Recolector").Width = Unit.Pixel(200);
         settings.Columns.Add(column =>
         {
@@ -125,7 +125,12 @@
             column.Caption = "Total";
             column.Width = Unit.Pixel(100);
         });
-        
-        settings.Columns.Add("EstadoCompra", "Estado").Width = Unit.Pixel(100);    });
+
+        settings.Columns.Add("EstadoCompra", "Estado").Width = Unit.Pixel(100);
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Cantidad").DisplayFormat = "{0:n2}";
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Total").DisplayFormat = "{0:n2}";
+        settings.Settings.ShowFooter = true;
+    });
+
 }
 @grid.Bind(Model).GetHtml()

@@ -41,6 +41,7 @@ namespace WEBPJ.Info
         public string NomUsuario { get; set; }
         public string EstadoCompra { get; set; }
         public List<CompraDetalle_Info> lst_CompraDetProducto { get; set; }
+        public string CodCompra { get; internal set; }
         #endregion
     }
 }

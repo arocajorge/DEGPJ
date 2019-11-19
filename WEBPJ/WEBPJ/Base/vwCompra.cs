@@ -30,5 +30,6 @@ namespace WEBPJ.Base
         public string NomProducto { get; set; }
         public string NomUsuario { get; set; }
         public string Codigo { get; set; }
+        public string CodCompra { get; set; }
     }
 }
