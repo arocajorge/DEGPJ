@@ -290,6 +290,7 @@
     <Compile Include="Data\CompraDetalle_Data.cs" />
     <Compile Include="Data\Compra_Data.cs" />
     <Compile Include="Data\Dispositivo_Data.cs" />
+    <Compile Include="Data\LogError_Data.cs" />
     <Compile Include="Data\ProductoDetalle_Data.cs" />
     <Compile Include="Data\Producto_Data.cs" />
     <Compile Include="Data\ProveedorProducto_Data.cs" />
@@ -312,6 +313,7 @@
     <Compile Include="Info\Filtros_Info.cs" />
     <Compile Include="Info\Compra_Info.cs" />
     <Compile Include="Info\indocume_Info.cs" />
+    <Compile Include="Info\LogError_Info.cs" />
     <Compile Include="Info\ProductoDetalle_Info.cs" />
     <Compile Include="Info\Producto_Info.cs" />
     <Compile Include="Info\ProveedorProducto_Info.cs" />
@@ -7607,7 +7609,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>51209</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,7 +13,7 @@ namespace WEBPJ.Data
         Dispositivo_Data data_dispositivo = new Dispositivo_Data();
         Producto_Data data_producto = new Producto_Data();
         Proveedor_Data data_proveedor = new Proveedor_Data();
-
+        LogError_Data data_log = new LogError_Data();
         public List<Compra_Info> get_list(DateTime fecha_ini, DateTime fecha_fin, string IdUsuario, string Estado)
         {
             try
@@ -314,8 +315,13 @@ namespace WEBPJ.Data
             }
             catch (Exception EX)
             {
-
-                throw;
+                data_log.GuardarDB(new LogError_Info
+                {
+                    Controlador = "GenerarOrdenCompra",
+                    Error = "Error: " + EX.ToString() + " " + string.Format("Compra: {0}", JsonConvert.SerializeObject(info)),
+                    IdUsuario = info.IdUsuario
+                });
+                return true;
             }
         }
 
@@ -422,10 +428,15 @@ namespace WEBPJ.Data
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception EX)
             {
-
-                throw;
+                data_log.GuardarDB(new LogError_Info
+                {
+                    Controlador = "GenerarOrdenCompra",
+                    Error = "Error: " + EX.ToString() + " " + string.Format("Compra: {0}", JsonConvert.SerializeObject(info)),
+                    IdUsuario = info.IdUsuario
+                });
+                return true;
             }
         }
 
@@ -543,7 +554,13 @@ namespace WEBPJ.Data
             }
             catch (Exception EX)
             {
-                throw;
+                data_log.GuardarDB(new LogError_Info
+                {
+                    Controlador = "GenerarOrdenCompra",
+                    Error = "Error: "+EX.ToString()+" "+ string.Format("Compra: {0}", JsonConvert.SerializeObject(info)),
+                    IdUsuario = info.IdUsuario
+                });
+                return false;
             }
         }
 
