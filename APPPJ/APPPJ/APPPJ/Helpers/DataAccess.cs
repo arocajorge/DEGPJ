@@ -165,7 +165,7 @@ namespace APPPJ.Helpers
                 Settings.IdCompra = (Convert.ToDecimal(string.IsNullOrEmpty(Settings.IdCompra) ? "0" : Settings.IdCompra) + 1).ToString("n0");
                 model.PKSQLite = GetId();
                 model.Dispositivo = CrossDeviceInfo.Current.Id;
-
+                model.Fecha = DateTime.Now.Date;
                 this.connection.Insert(model);
 
                 foreach (var item in ListaDetalle)

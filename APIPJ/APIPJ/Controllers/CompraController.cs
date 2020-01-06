@@ -47,9 +47,14 @@ namespace APIPJ.Controllers
             decimal IdCompra = data.GetIdCompra(IdUsuario);
             int SecuenciaDispositivoComp = data.GetIdDispositivo(IdUsuario, Dispositivo);
             try
-            {                
+            {
+
+                Usuario usuario = null;
                 foreach (var item in value)
                 {
+                    if(usuario != null)
+                        usuario = db.Usuario.Where(q => q.IdUsuario.ToLower() == item.IdUsuario.ToLower()).FirstOrDefault();
+
                     db.Compra.Add(new Compra
                     {
                         IdCompra = item.IdCompra = IdCompra++,
