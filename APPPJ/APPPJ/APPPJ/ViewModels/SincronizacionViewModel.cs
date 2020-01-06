@@ -240,8 +240,17 @@
                         "Aceptar");
                     return;
                 }
-                App.Data.DeleteAll<CompraModel>();
-                App.Data.DeleteAll<CompraDetalleModel>();
+
+                foreach (var item in ListaCompras)
+                {
+                    var compra = App.Data.Guardar(new CompraModel
+                    {
+                        IdCompra = item.IdCompra,
+                        PKSQLite = item.PKSQLite,
+                        Comentario = item.Comentario,
+                        Sincronizado = true
+                    }, new List<CompraDetalleModel>());
+                }
 
                 var Compra = (CompraModel)response_compra.Result;
                 Settings.IdCompra = Compra == null ? "0" : Compra.IdCompra.ToString("n0");

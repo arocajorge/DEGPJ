@@ -54,6 +54,8 @@
 
         [JsonProperty("Dispositivo")]
         public string Dispositivo { get; set; }
+
+        public bool Sincronizado { get; set; }
         /*
         [JsonProperty("ListaDetalle")]
         public List<CompraDetalleModel> ListaDetalle { get; set; }

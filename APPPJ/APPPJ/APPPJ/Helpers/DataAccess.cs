@@ -113,7 +113,7 @@ namespace APPPJ.Helpers
 
         public List<CompraSincronizacionModel> GetListCompras()
         {
-           var lst = this.connection.Table<CompraModel>().ToList().Select(q=> new CompraSincronizacionModel
+           var lst = this.connection.Table<CompraModel>().Where(q=> q.Sincronizado == false).ToList().Select(q=> new CompraSincronizacionModel
            {
                IdCompra = q.IdCompra,
                ProvCodigo = q.ProvCodigo,
@@ -129,7 +129,9 @@ namespace APPPJ.Helpers
                Total = q.Total,
                Comentario = q.Comentario,
                Estado = q.Estado,
-               Dispositivo = q.Dispositivo
+               Dispositivo = q.Dispositivo,
+               Sincronizado = q.Sincronizado,
+               PKSQLite = q.PKSQLite
            }).ToList();
             foreach (var item in lst)
             {
@@ -154,7 +156,6 @@ namespace APPPJ.Helpers
             else
                 return Lista.Max(q => q.PKSQLite) + 1;
         }
-
         public bool Guardar(CompraModel model, List<CompraDetalleModel> ListaDetalle)
         {
             if (model.PKSQLite == 0)
@@ -166,6 +167,7 @@ namespace APPPJ.Helpers
                 model.PKSQLite = GetId();
                 model.Dispositivo = CrossDeviceInfo.Current.Id;
                 model.Fecha = DateTime.Now.Date;
+                model.Sincronizado = false;
                 this.connection.Insert(model);
 
                 foreach (var item in ListaDetalle)
@@ -181,6 +183,7 @@ namespace APPPJ.Helpers
                 if (Entity != null)
                 {
                     Entity.Comentario = model.Comentario;
+                    Entity.Sincronizado = model.Sincronizado;
                     this.connection.Update(Entity);
                 }
             }

@@ -72,7 +72,8 @@ namespace APPPJ.ViewModels
                 Total = l.Total,
                 Comentario = l.Comentario,
                 Estado = l.Estado,
-                prDescripcion = l.prDescripcion
+                prDescripcion = l.prDescripcion,
+                Sincronizado = l.Sincronizado
             });
         }
 

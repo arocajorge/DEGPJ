@@ -53,5 +53,7 @@
 
         [JsonProperty("ListaDetalle")]
         public List<CompraDetalleModel> ListaDetalle { get; set; }
+        public bool Sincronizado { get; internal set; }
+        public int PKSQLite { get; internal set; }
     }
 }

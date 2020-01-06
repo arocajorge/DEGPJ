@@ -25,6 +25,7 @@
         private bool _IsEnabled;
         private bool _IsRunning;
         private string _Comentario;
+        private bool _Sincronizado;
         #endregion
 
         #region Propiedades
@@ -37,6 +38,11 @@
         {
             get { return this._IsRunning; }
             set { SetValue(ref this._IsRunning, value); }
+        }
+        public bool Sincronizado
+        {
+            get { return this._Sincronizado; }
+            set { SetValue(ref this._Sincronizado, value); }
         }
         public CompraModel Compra
         {
@@ -55,6 +61,7 @@
         {
             Compra = _Model;
             Comentario = Compra.Comentario;
+            Sincronizado = Compra.Sincronizado;
             IsEnabled = true;
         }
         #endregion
@@ -157,7 +164,7 @@
                             "Aceptar");
                     return;
                 }
-
+                Compra.Sincronizado = Sincronizado;
                 Compra.Comentario = Comentario;
 
                 if (App.Data.Guardar(Compra, new System.Collections.Generic.List<CompraDetalleModel>()))

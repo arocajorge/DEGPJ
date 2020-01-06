@@ -64,7 +64,7 @@
                         Text="{Binding Compra.Precio,StringFormat='{0:C2}'}"
                         ></Label>
                     </StackLayout>
-            <StackLayout
+                    <StackLayout
                         Orientation="Horizontal">
                 <Label
                 TextColor="Black"
@@ -75,6 +75,17 @@
                 HorizontalTextAlignment="End"
                             HorizontalOptions="EndAndExpand"
                 Text="{Binding Compra.Total,StringFormat='{0:C2}'}"></Label>
+                    </StackLayout>
+                    <StackLayout
+                        Orientation="Horizontal">
+                        <Label
+                            TextColor="Black"
+                            FontAttributes="Bold"
+                            Text="Sincronizado:"></Label>
+                        <Switch                
+                            IsToggled="{Binding Sincronizado, Mode=TwoWay}"
+                            HorizontalOptions="End">
+                        </Switch>
                     </StackLayout>
                     <Label
                             FontSize="Medium"
