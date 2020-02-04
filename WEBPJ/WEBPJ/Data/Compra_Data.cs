@@ -446,6 +446,8 @@ namespace WEBPJ.Data
             {
                 using (EntitiesNexpirion db = new EntitiesNexpirion())
                 {
+                    db.SetCommandTimeOut(3000);
+
                     var info_producto = data_producto.get_info_ProductoNexp(info.CodProducto.ToString().Trim());
                     var info_proveedor_nx = data_proveedor.get_info_ProveedorNexp(info.ProvCodigo.ToString().Trim());
                     var info_proveedor = data_proveedor.get_info("PRV",info.ProvCodigo.ToString().Trim());

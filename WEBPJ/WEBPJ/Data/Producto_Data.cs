@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,6 +10,7 @@ namespace WEBPJ.Data
 {
     public class Producto_Data
     {
+        LogError_Data data_log = new LogError_Data();
         public List<Producto_Info> get_list(bool MostrarAnulados)
         {
             try
@@ -58,10 +60,15 @@ namespace WEBPJ.Data
                 }
                 return Lista;
             }
-            catch (Exception)
+            catch (Exception EX)
             {
-
-                throw;
+                data_log.GuardarDB(new LogError_Info
+                {
+                    Controlador = "Producto_Data",
+                    Error = "Error: " + EX.ToString() + " " + string.Format("get_list: " + MostrarAnulados.ToString()),
+                    IdUsuario = ""
+                });
+                return new List<Producto_Info>();
             }
         }
 
@@ -95,9 +102,15 @@ namespace WEBPJ.Data
 
                 return info;
             }
-            catch (Exception)
+            catch (Exception EX)
             {
-                throw;
+                data_log.GuardarDB(new LogError_Info
+                {
+                    Controlador = "Producto_Data",
+                    Error = "Error: " + EX.ToString() + " " + string.Format("get_info: "+ IdProducto.ToString()),
+                    IdUsuario = ""
+                });
+                return null;
             }
         }
 
@@ -116,10 +129,15 @@ namespace WEBPJ.Data
                 }
                 return ID;
             }
-            catch (Exception)
+            catch (Exception EX)
             {
-
-                throw;
+                data_log.GuardarDB(new LogError_Info
+                {
+                    Controlador = "Producto_Data",
+                    Error = "Error: " + EX.ToString() + " " + string.Format("get_id: {0}"),
+                    IdUsuario = ""
+                });
+                return 1;
             }
         }
 
@@ -174,7 +192,13 @@ namespace WEBPJ.Data
             }
             catch (Exception EX)
             {
-                throw;
+                data_log.GuardarDB(new LogError_Info
+                {
+                    Controlador = "Producto_Data",
+                    Error = "Error: " + EX.ToString() + " " + string.Format("GuardarBD: {0}", JsonConvert.SerializeObject(info)),
+                    IdUsuario = ""
+                });
+                return false;
             }
         }
 
@@ -230,10 +254,15 @@ namespace WEBPJ.Data
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception EX)
             {
-
-                throw;
+                data_log.GuardarDB(new LogError_Info
+                {
+                    Controlador = "Producto_Data",
+                    Error = "Error: " + EX.ToString() + " " + string.Format("ModificarBD: {0}", JsonConvert.SerializeObject(info)),
+                    IdUsuario = ""
+                });
+                return false;
             }
         }
 
@@ -256,10 +285,15 @@ namespace WEBPJ.Data
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception EX)
             {
-
-                throw;
+                data_log.GuardarDB(new LogError_Info
+                {
+                    Controlador = "Producto_Data",
+                    Error = "Error: " + EX.ToString() + " " + string.Format("AnularBD: {0}", JsonConvert.SerializeObject(info)),
+                    IdUsuario = ""
+                });
+                return false;
             }
         }
 
@@ -270,6 +304,7 @@ namespace WEBPJ.Data
                 fcproduc_Info info = new fcproduc_Info();
                 using (EntitiesNexpirion Context = new EntitiesNexpirion())
                 {
+                    Context.SetCommandTimeOut(3000);
                     fcproduc Entity = Context.fcproduc.Where(q => q.codigo.ToString().Trim() == Codigo).FirstOrDefault();
 
                     if (Entity == null) return null;
@@ -284,9 +319,15 @@ namespace WEBPJ.Data
 
                 return info;
             }
-            catch (Exception)
+            catch (Exception EX)
             {
-                throw;
+                data_log.GuardarDB(new LogError_Info
+                {
+                    Controlador = "Producto_Data",
+                    Error = "Error: " + EX.ToString() + " " + string.Format("get_info_ProductoNexp: {0}", JsonConvert.SerializeObject(new { Codigo = Codigo })),
+                    IdUsuario = ""
+                });
+                return null;
             }
         }
 
@@ -297,6 +338,7 @@ namespace WEBPJ.Data
                 fcexipro_Info info = new fcexipro_Info();
                 using (EntitiesNexpirion Context = new EntitiesNexpirion())
                 {
+                    Context.SetCommandTimeOut(3000);
                     fcexipro Entity = Context.fcexipro.Where(q => q.producto.ToString().Trim() == Codigo && q.bodega_int!="").FirstOrDefault();
 
                     if (Entity == null) return null;
@@ -310,9 +352,15 @@ namespace WEBPJ.Data
 
                 return info;
             }
-            catch (Exception)
+            catch (Exception EX)
             {
-                throw;
+                data_log.GuardarDB(new LogError_Info
+                {
+                    Controlador = "Producto_Data",
+                    Error = "Error: " + EX.ToString() + " " + string.Format("get_info_BodegaNexp: {0}", JsonConvert.SerializeObject(new { Codigo = Codigo })),
+                    IdUsuario = ""
+                });
+                return null;
             }
         }
     }

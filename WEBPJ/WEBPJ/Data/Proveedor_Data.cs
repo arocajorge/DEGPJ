@@ -1,4 +1,5 @@
 ﻿using DevExpress.Web;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace WEBPJ.Data
 {
     public class Proveedor_Data
     {
+        LogError_Data data_log = new LogError_Data();
         public List<Proveedor_Info> get_list()
         {
             try
@@ -29,10 +31,15 @@ namespace WEBPJ.Data
                 }
                 return Lista;
             }
-            catch (Exception)
+            catch (Exception EX)
             {
-
-                throw;
+                data_log.GuardarDB(new LogError_Info
+                {
+                    Controlador = "Proveedor_Data",
+                    Error = "Error: " + EX.ToString() + " " + string.Format("get_list: "),
+                    IdUsuario = ""
+                });
+                return new List<Proveedor_Info>();
             }
         }
 
@@ -54,10 +61,15 @@ namespace WEBPJ.Data
                 }
                 return Lista;
             }
-            catch (Exception)
+            catch (Exception EX)
             {
-
-                throw;
+                data_log.GuardarDB(new LogError_Info
+                {
+                    Controlador = "Proveedor_Data",
+                    Error = "Error: " + EX.ToString() + " " + string.Format("get_list_Nexpirion: "),
+                    IdUsuario = ""
+                });
+                return null;
             }
         }
 
@@ -68,6 +80,7 @@ namespace WEBPJ.Data
                 Proveedor_Info info = new Proveedor_Info();
                 using (EntitiesGeneral Context = new EntitiesGeneral())
                 {
+                    Context.SetCommandTimeOut(3000);
                     Proveedor Entity = Context.Proveedor.Where(q => q.Tipo == Tipo && q.Codigo == Codigo).FirstOrDefault();
 
                     if (Entity == null) return null;
@@ -83,9 +96,15 @@ namespace WEBPJ.Data
 
                 return info;
             }
-            catch (Exception)
+            catch (Exception EX)
             {
-                throw;
+                data_log.GuardarDB(new LogError_Info
+                {
+                    Controlador = "Proveedor_Data",
+                    Error = "Error: " + EX.ToString() + " " + string.Format("get_info: "+Tipo + " "+Codigo),
+                    IdUsuario = ""
+                });
+                return null;
             }
         }
 
@@ -110,9 +129,15 @@ namespace WEBPJ.Data
 
                 return info;
             }
-            catch (Exception)
+            catch (Exception EX)
             {
-                throw;
+                data_log.GuardarDB(new LogError_Info
+                {
+                    Controlador = "Proveedor_Data",
+                    Error = "Error: " + EX.ToString() + " " + string.Format("get_info_Nexpirion: "+Tipo+" "+Codigo),
+                    IdUsuario = ""
+                });
+                return null;
             }
         }
 
@@ -167,7 +192,13 @@ namespace WEBPJ.Data
             }
             catch (Exception EX)
             {
-                throw;
+                data_log.GuardarDB(new LogError_Info
+                {
+                    Controlador = "Proveedor_Data",
+                    Error = "Error: " + EX.ToString() + " " + string.Format("GuardarBD: {0}", JsonConvert.SerializeObject(info)),
+                    IdUsuario = ""
+                });
+                return false;
             }
         }
 
@@ -228,10 +259,15 @@ namespace WEBPJ.Data
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception EX)
             {
-
-                throw;
+                data_log.GuardarDB(new LogError_Info
+                {
+                    Controlador = "Proveedor_Data",
+                    Error = "Error: " + EX.ToString() + " " + string.Format("Modificar: {0}", JsonConvert.SerializeObject(info)),
+                    IdUsuario = ""
+                });
+                return false;
             }
         }
 
@@ -257,10 +293,15 @@ namespace WEBPJ.Data
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception EX)
             {
-
-                throw;
+                data_log.GuardarDB(new LogError_Info
+                {
+                    Controlador = "Proveedor_Data",
+                    Error = "Error: " + EX.ToString() + " " + string.Format("EliminarBD: {0}", JsonConvert.SerializeObject(info)),
+                    IdUsuario = ""
+                });
+                return false;
             }
         }
 
@@ -313,6 +354,7 @@ namespace WEBPJ.Data
                 fcclient_Info info = new fcclient_Info();
                 using (EntitiesNexpirion Context = new EntitiesNexpirion())
                 {
+                    Context.SetCommandTimeOut(3000);
                     fcclient Entity = Context.fcclient.Where(q => q.codigo.ToString().Trim() == Codigo).FirstOrDefault();
 
                     if (Entity == null) return null;
@@ -328,9 +370,15 @@ namespace WEBPJ.Data
 
                 return info;
             }
-            catch (Exception)
+            catch (Exception EX)
             {
-                throw;
+                data_log.GuardarDB(new LogError_Info
+                {
+                    Controlador = "Proveedor_Data",
+                    Error = "Error: " + EX.ToString() + " " + string.Format("get_info_ProveedorNexp: "+Codigo),
+                    IdUsuario = ""
+                });
+                return null;
             }
         }
 

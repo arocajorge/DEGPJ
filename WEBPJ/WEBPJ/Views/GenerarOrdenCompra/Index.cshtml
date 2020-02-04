@@ -24,7 +24,7 @@
 </script>
 @using (Html.BeginForm("Index", "GenerarOrdenCompra", FormMethod.Post, new { @role = "form", @class = "form", @id = "myform" }))
 {
-    @Html.HiddenFor(q => q.IdTransaccionSession);
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" });
     <div class="box ">
         <div class="box-header with-border">
             <div class="row">

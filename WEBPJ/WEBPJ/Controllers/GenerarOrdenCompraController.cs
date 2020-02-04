@@ -29,14 +29,14 @@ namespace WEBPJ.Controllers
 
             Filtros_Info model = new Filtros_Info
             {
-                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
+                IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual),
                 IdUsuario = "",
                 Estado = "P",
                 fecha_ini = DateTime.Now.Date.AddMonths(-1),
                 fecha_fin = DateTime.Now.Date
             };
 
-            lst_Compra = data_compra.get_list(model.fecha_ini, model.fecha_fin, model.IdUsuario, model.Estado);
+            lst_Compra = data_compra.get_list(model.fecha_ini, model.fecha_fin, "", model.Estado);
             ListaOrdenCompra.set_list(lst_Compra, model.IdTransaccionSession);
             cargar_combos_consulta();
             return View(model);
@@ -45,7 +45,7 @@ namespace WEBPJ.Controllers
         public ActionResult Index(Filtros_Info model)
         {
             model.Estado = "P";
-            lst_Compra = data_compra.get_list(model.fecha_ini, model.fecha_fin, model.IdUsuario, model.Estado);
+            lst_Compra = data_compra.get_list(model.fecha_ini, model.fecha_fin, "", model.Estado);
             ListaOrdenCompra.set_list(lst_Compra, model.IdTransaccionSession);
             cargar_combos_consulta();
             return View(model);

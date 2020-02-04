@@ -22,6 +22,7 @@ namespace WEBPJ.Data
                         IdUsuario = info.IdUsuario ?? " ",
                         Fecha = DateTime.Now
                     });
+                    db.SaveChanges();
                 }
                 return true;
             }
