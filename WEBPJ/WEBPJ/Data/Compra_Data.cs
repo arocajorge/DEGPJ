@@ -447,11 +447,21 @@ namespace WEBPJ.Data
                 using (EntitiesNexpirion db = new EntitiesNexpirion())
                 {
                     db.SetCommandTimeOut(3000);
+                    if (db.indocume.Where(q => q.num_recibo == info.Codigo && q.eliminado == false && q.fecha == info.Fecha).Count() > 0)
+                        return true;
 
                     var info_producto = data_producto.get_info_ProductoNexp(info.CodProducto.ToString().Trim());
+                    if (info_producto == null)
+                        return true;
                     var info_proveedor_nx = data_proveedor.get_info_ProveedorNexp(info.ProvCodigo.ToString().Trim());
+                    if (info_proveedor_nx == null)
+                        return true;
                     var info_proveedor = data_proveedor.get_info("PRV",info.ProvCodigo.ToString().Trim());
+                    if (info_proveedor == null)
+                        return true;
                     var info_bodega = data_producto.get_info_BodegaNexp(info.CodProducto.ToString().Trim());
+                    if (info_bodega == null)
+                        return true;
                     var nombre = info_producto.nombre.ToString().Substring(0,59);
                     dbultnum entity = db.dbultnum.Where(q => q.tipo == "CO").FirstOrDefault();
                     var num_compra = entity.numero + 1;
