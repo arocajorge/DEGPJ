@@ -106,9 +106,9 @@ namespace APPPJ.Helpers
             return Lista;
         }
 
-        public List<CompraModel> GetListModificar()
+        public List<CompraModel> GetListModificar(DateTime Fecha)
         {
-            return this.connection.Table<CompraModel>().ToList();
+            return this.connection.Table<CompraModel>().Where(q=> q.Fecha == Fecha).ToList();
         }
 
         public List<CompraSincronizacionModel> GetListCompras()

@@ -9,6 +9,12 @@
     <StackLayout
             BindingContext="{Binding CompraConsulta}"
             Padding="5">
+            <DatePicker
+                HorizontalOptions="CenterAndExpand"
+                TextColor="Black"
+                Date="{Binding Fecha, Mode=TwoWay}">
+                <DatePicker.Format>dd/MM/yyyy</DatePicker.Format>
+            </DatePicker>
             <ListView 
                 BackgroundColor="White"
                 HasUnevenRows="True"

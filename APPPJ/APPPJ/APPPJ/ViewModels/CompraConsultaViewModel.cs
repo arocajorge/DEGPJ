@@ -12,6 +12,7 @@ namespace APPPJ.ViewModels
         #region variables
         ObservableCollection<CompraModel> _ListaCompras;
         private bool _IsRefreshing;
+        private DateTime _Fecha;
         #endregion
 
         #region Propiedades
@@ -31,6 +32,15 @@ namespace APPPJ.ViewModels
                 SetValue(ref this._IsRefreshing, value);
             }
         }
+        public DateTime Fecha
+        {
+            get { return this._Fecha; }
+            set
+            {
+                SetValue(ref this._Fecha, value);
+                CargarCompras();
+            }
+        }
         #endregion
         #region Singleton
         private static CompraConsultaViewModel instance;
@@ -48,6 +58,7 @@ namespace APPPJ.ViewModels
         #region Constructor
         public CompraConsultaViewModel()
         {
+            Fecha = DateTime.Now.Date;
             CargarCompras();
         }
         #endregion
@@ -80,7 +91,7 @@ namespace APPPJ.ViewModels
         public void CargarCompras()
         {
             IsRefreshing = true;
-            ListaCompras = new ObservableCollection<CompraModel>(ToEgresoItemViewModel(App.Data.GetListModificar()));
+            ListaCompras = new ObservableCollection<CompraModel>(ToEgresoItemViewModel(App.Data.GetListModificar(Fecha)));
             IsRefreshing = false;
         }
         #endregion
